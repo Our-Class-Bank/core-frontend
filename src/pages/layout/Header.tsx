@@ -5,11 +5,11 @@ import LogoutBtn from "./LogoutBtn";
 const Wrapper = styled.div`
   background: #2f3fd4;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  height: 100px;
+  height: 120px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
+  padding: 40px;
 `;
 const Logo = styled.span`
   display: flex;
