@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import whiteMoneyIcon from "../../assets/images/whiteMoney.png";
-import whiteArrowIcon from "../../assets/images/whiteArrow.png";
-import whiteWorkListIcon from "../../assets/images/whiteWorkList.png";
+import { ReactComponent as MyBankIcon } from "../../assets/images/MyBankIcon.svg";
+import { ReactComponent as TransferIcon } from "../../assets/images/TransferIcon.svg";
+import { ReactComponent as WorkListIcon } from "../../assets/images/WorkListIcon.svg";
 
 const Wrapper = styled.div`
   width: 270px;
@@ -31,22 +31,16 @@ const NavText = styled.span`
   font-weight: 500;
   font-size: 28px;
   line-height: 27px;
-  padding: 5px;
+  padding: 12px;
 
   color: #ffffff;
-`;
-
-const NavIcon = styled.img`
-  width: 50px;
-  height: 50px;
-  padding: 5px;
 `;
 
 const NameBlock = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
+  padding: 30px;
   width: 195px;
   height: 60px;
   color: #fff;
@@ -78,15 +72,15 @@ function SideBar() {
         <Text>님</Text>
       </NameBlock>
       <NavLink to="/">
-        <NavIcon src={whiteMoneyIcon} alt="money" />
+        <MyBankIcon fill="white" />
         <NavText>내 통장</NavText>
       </NavLink>
       <NavLink to="/transfer">
-        <NavIcon src={whiteArrowIcon} alt="arrow" />
+        <TransferIcon fill="white" />
         <NavText>입출금</NavText>
       </NavLink>
       <NavLink to="/work-list">
-        <NavIcon src={whiteWorkListIcon} alt="money" />
+        <WorkListIcon fill="white" />
         <NavText>관리내역</NavText>
       </NavLink>
     </Wrapper>
