@@ -5,6 +5,8 @@ export const Wrapper = styled.div`
   width: 270px;
   height: 100vh;
   background: #2f3fd4;
+  position: fixed;
+  padding-top: 100px;
 `;
 
 export const NavLink = styled(Link)`
@@ -23,13 +25,11 @@ export const NavLink = styled(Link)`
 `;
 
 export const NavText = styled.span`
-  font-family: "Noto Sans";
   font-style: normal;
   font-weight: 500;
   font-size: 28px;
   line-height: 27px;
   padding: 12px;
-
   color: #ffffff;
 `;
 
@@ -42,6 +42,7 @@ export const NameBlock = styled.div`
   height: 60px;
   color: #fff;
 `;
+
 export const Name = styled.span`
   font-family: "Noto Sans";
   font-style: normal;
@@ -51,6 +52,7 @@ export const Name = styled.span`
 
   color: #ffffff;
 `;
+
 export const Text = styled.span`
   font-family: "Noto Sans";
   font-style: normal;

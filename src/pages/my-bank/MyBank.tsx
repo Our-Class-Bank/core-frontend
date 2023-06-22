@@ -1,11 +1,6 @@
-import Header from "../layout/Header";
-import SideBar from "../layout/SideBar";
+import { Container } from "@/style/common/CommonStyle";
+
 function MyBank() {
-  return (
-    <>
-      <Header />
-      <SideBar />
-    </>
-  );
+  return <Container>MyBank</Container>;
 }
 export default MyBank;
