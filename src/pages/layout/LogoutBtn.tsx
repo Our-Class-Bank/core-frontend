@@ -1,4 +1,4 @@
-import { Button, Text } from "../../../src/style/layout/LogoutBtnStyle";
+import { Button, Text } from "@/style/layout/LogoutBtnStyle";
 
 function LogoutBtn() {
   return (
