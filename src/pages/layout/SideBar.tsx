@@ -1,6 +1,6 @@
-import { ReactComponent as MyBankIcon } from "../../assets/images/MyBankIcon.svg";
-import { ReactComponent as TransferIcon } from "../../assets/images/TransferIcon.svg";
-import { ReactComponent as WorkListIcon } from "../../assets/images/WorkListIcon.svg";
+import { ReactComponent as MyBankIcon } from "@/assets/images/MyBankIcon.svg";
+import { ReactComponent as TransferIcon } from "@/assets/images/TransferIcon.svg";
+import { ReactComponent as WorkListIcon } from "@/assets/images/WorkListIcon.svg";
 import {
   Wrapper,
   NavLink,
@@ -8,7 +8,7 @@ import {
   NameBlock,
   Name,
   Text,
-} from "../../../src/style/layout/SideBarStyle.tsx";
+} from "@/src/style/layout/SideBarStyle.tsx";
 function SideBar() {
   const userName = "김은행";
   return (
