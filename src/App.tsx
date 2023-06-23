@@ -1,6 +1,8 @@
 import { createGlobalStyle } from "styled-components";
 import RoutePage from "@/routes/RoutePage";
 import { BrowserRouter } from "react-router-dom";
+import Header from "@/pages/layout/Header";
+import SideBar from "@/pages/layout/SideBar";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -31,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     line-height: 1;
     font-weight: 300;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
   }
   ol, ul {
     list-style: none;
@@ -60,6 +62,8 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   return (
     <BrowserRouter>
+      <Header />
+      <SideBar />
       <RoutePage />
       <GlobalStyle />
     </BrowserRouter>
