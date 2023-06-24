@@ -7,23 +7,38 @@ export const Wrapper = styled.div`
   background: #2f3fd4;
   position: fixed;
   padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 `;
 
 export const NavLink = styled(Link)`
   display: flex;
   align-items: center;
-  padding: 0px 30px;
-  width: 100%;
+  width: 90%;
   height: 60px;
   color: #fff;
   text-decoration: none;
-  margin: 10px 0px;
+  svg {
+    fill: #fff;
+  }
 
   &:hover {
-    background-color: #1f2cb6;
+    background-color: #fff;
+    border-radius: 10px 0px 0px 10px;
+    svg {
+      fill: #2f3fd4;
+    }
+
+    span {
+      color: #2f3fd4;
+    }
   }
 `;
-
+export const NavContainer = styled.span`
+  width: 100%;
+  margin-left: 20px;
+`;
 export const NavText = styled.span`
   font-style: normal;
   font-weight: 500;
@@ -38,13 +53,12 @@ export const NameBlock = styled.div`
   justify-content: center;
   align-items: center;
   padding: 30px;
-  width: 195px;
+  width: 100%;
   height: 60px;
   color: #fff;
 `;
 
 export const Name = styled.span`
-  font-family: "Noto Sans";
   font-style: normal;
   font-weight: 600;
   font-size: 28px;
@@ -54,7 +68,6 @@ export const Name = styled.span`
 `;
 
 export const Text = styled.span`
-  font-family: "Noto Sans";
   font-style: normal;
   font-weight: 200;
   font-size: 28px;

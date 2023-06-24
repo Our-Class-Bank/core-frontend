@@ -1,6 +1,3 @@
-import { ReactComponent as MyBankIcon } from "@/assets/images/MyBankIcon.svg";
-import { ReactComponent as TransferIcon } from "@/assets/images/TransferIcon.svg";
-import { ReactComponent as WorkListIcon } from "@/assets/images/WorkListIcon.svg";
 import {
   Wrapper,
   NavLink,
@@ -8,7 +5,12 @@ import {
   NameBlock,
   Name,
   Text,
-} from "@/src/style/layout/SideBarStyle.tsx";
+  NavContainer,
+} from "@/style/layout/SideBarStyle.tsx";
+
+import { ReactComponent as MyBankIcon } from "@/assets/images/MyBankIcon.svg";
+import { ReactComponent as TransferIcon } from "@/assets/images/TransferIcon.svg";
+import { ReactComponent as WorkListIcon } from "@/assets/images/WorkListIcon.svg";
 function SideBar() {
   const userName = "김은행";
   return (
@@ -18,16 +20,22 @@ function SideBar() {
         <Text>님</Text>
       </NameBlock>
       <NavLink to="/">
-        <MyBankIcon fill="white" />
-        <NavText>내 통장</NavText>
+        <NavContainer>
+          <MyBankIcon />
+          <NavText>내 통장</NavText>
+        </NavContainer>
       </NavLink>
       <NavLink to="/transfer">
-        <TransferIcon fill="white" />
-        <NavText>입출금</NavText>
+        <NavContainer>
+          <TransferIcon />
+          <NavText>입출금</NavText>
+        </NavContainer>
       </NavLink>
       <NavLink to="/work-list">
-        <WorkListIcon fill="white" />
-        <NavText>관리내역</NavText>
+        <NavContainer>
+          <WorkListIcon />
+          <NavText>관리내역</NavText>
+        </NavContainer>
       </NavLink>
     </Wrapper>
   );
