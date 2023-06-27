@@ -1,8 +1,9 @@
-import { createGlobalStyle } from "styled-components";
+import { ThemeProvider, createGlobalStyle, styled } from "styled-components";
 import RoutePage from "@/routes/RoutePage";
 import { BrowserRouter } from "react-router-dom";
 import Header from "@/pages/layout/Header";
 import SideBar from "@/pages/layout/SideBar";
+import defaultTheme from "@/style/theme";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -59,14 +60,22 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const Container = styled.div`
+  display: flex;
+`;
+
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <SideBar />
-      <RoutePage />
-      <GlobalStyle />
-    </BrowserRouter>
+    <ThemeProvider theme={defaultTheme}>
+      <BrowserRouter>
+        <Header />
+        <Container>
+          <SideBar />
+          <RoutePage />
+        </Container>
+        <GlobalStyle />
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

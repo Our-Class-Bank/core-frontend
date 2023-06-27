@@ -5,8 +5,7 @@ export const Wrapper = styled.div`
   width: 270px;
   height: 100vh;
   background: #2f3fd4;
-  position: fixed;
-  padding-top: 100px;
+  position: sticky;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -49,10 +48,10 @@ export const NavText = styled.span`
 `;
 
 export const NameBlock = styled.div`
+  padding: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 30px;
   width: 100%;
   height: 60px;
   color: #fff;
