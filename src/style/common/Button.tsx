@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import styled from "styled-components";
 
 interface StyledBtnProps {
@@ -25,6 +25,7 @@ const StyledBtn = styled.button<StyledBtnProps>`
 interface ButtonProps extends StyledBtnProps {
   onClick: () => void;
   children?: React.ReactNode;
+  value: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -37,9 +38,12 @@ const Button: React.FC<ButtonProps> = ({
   margin,
   onClick,
   children,
+  value,
 }) => {
   return (
     <StyledBtn
+      type="button"
+      value={value}
       border={border}
       color={color}
       backgroundcolor={backgroundcolor}
@@ -53,5 +57,4 @@ const Button: React.FC<ButtonProps> = ({
     </StyledBtn>
   );
 };
-
 export default Button;

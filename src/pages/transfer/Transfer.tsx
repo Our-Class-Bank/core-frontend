@@ -1,8 +1,8 @@
-import StudentList from "@/components/transfer/StudentList";
+import TransferForm from "@/components/transfer/TransferForm";
 function Transfer() {
   return (
     <>
-      <StudentList />
+      <TransferForm />
     </>
   );
 }

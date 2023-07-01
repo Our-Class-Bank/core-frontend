@@ -1,18 +1,12 @@
-import SmallBtn from "@/style/common/SmallBtn";
+import FormBtn from "@/style/common/FormBtn";
 import { useState } from "react";
 
-function StudentBtn({ children }) {
-  const [isActive, setIsActive] = useState(false);
+function StudentBtn({ children, handleClick }) {
+  const onClick = (children) => handleClick(children);
 
-  const handleClick = () => {
-    console.log(children);
-    setIsActive(!isActive);
-  };
   return (
     <>
-      <SmallBtn onClick={handleClick} isActive={isActive}>
-        {children}
-      </SmallBtn>
+      <FormBtn onClick={onClick}>{children}</FormBtn>
     </>
   );
 }
