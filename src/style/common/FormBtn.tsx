@@ -23,7 +23,12 @@ const FormBtn: React.FC = ({ onClick, children, isCurrent }) => {
   };
 
   return (
-    <Button onClick={onClick} type="button" value={children} {...buttonStyle}>
+    <Button
+      onClick={onClick}
+      buttonType="button"
+      value={children}
+      {...buttonStyle}
+    >
       {children}
     </Button>
   );
