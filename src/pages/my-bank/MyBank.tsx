@@ -1,4 +1,4 @@
-import TransactionList from "@/components/TransactionList";
+import TransactionList from "@/components/transactionLog/TransactionList";
 import { Container } from "@/style/common/CommonStyle";
 
 function MyBank() {

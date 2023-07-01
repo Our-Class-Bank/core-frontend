@@ -20,7 +20,7 @@ function TransactionLog({ logData }: ILogData) {
   const { type1, type2, type3, amount, balance } = logData;
   return (
     <TestContainer>
-      <Test logType={type1}>
+      <Test $logType={type1}>
         <p>{type2}</p>
         <p>
           {type1 === "입금" ? "+" : "-"}
