@@ -9,6 +9,7 @@ interface StyledBtnProps {
   width: string;
   fontWeight: string;
   margin: string;
+  type: string;
 }
 
 const StyledBtn = styled.button<StyledBtnProps>`
@@ -39,10 +40,11 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   children,
   value,
+  type,
 }) => {
   return (
     <StyledBtn
-      type="button"
+      type={type}
       value={value}
       border={border}
       color={color}

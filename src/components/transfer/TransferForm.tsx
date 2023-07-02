@@ -6,6 +6,7 @@ import {
 import FormBtn from "@/style/common/FormBtn";
 import StudentList from "./StudentList";
 import { useForm } from "react-hook-form";
+import BigBtn from "@/style/common/BigBtn";
 
 const TypeSelection = ({ watchType, setValue }) => (
   <InputContainer>
@@ -67,9 +68,13 @@ const DetailInput = ({ register }) => (
 function TransferForm() {
   const { register, setValue, handleSubmit, watch } = useForm();
 
+  const watchStudents = watch("students", []);
   const watchType = watch("type");
   const watchCategory = watch("category");
-  const watchStudents = watch("students", []);
+  const watchAmount = watch("amount");
+
+  const isValid =
+    watchType && watchCategory && watchAmount && watchStudents.length > 0;
 
   return (
     <Form onSubmit={handleSubmit(console.log)}>
@@ -78,7 +83,7 @@ function TransferForm() {
       <CategorySelection watchCategory={watchCategory} setValue={setValue} />
       <AmountInput register={register} />
       <DetailInput register={register} />
-      <button>제출</button>
+      <BigBtn disabled={!isValid}>다음</BigBtn>
     </Form>
   );
 }
