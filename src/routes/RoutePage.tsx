@@ -6,9 +6,9 @@ import WorkList from "@/pages/WorkList";
 function RoutePage() {
   return (
     <Routes>
-      <Route path="/transfer" element={<MyBank />} />
+      <Route path="/" element={<MyBank />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/" element={<Transfer />} />
+      <Route path="/transfer" element={<Transfer />} />
       <Route path="/work-list" element={<WorkList />} />
     </Routes>
   );
