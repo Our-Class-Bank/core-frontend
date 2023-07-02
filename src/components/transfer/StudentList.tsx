@@ -30,28 +30,26 @@ const students: string[] = [
   "25.김은행",
   "26.임은행",
 ];
-//multiple values를 어떻게 setValue로 넣을 것인가.
-//setValue를 이용하되, array를 만들어 넣자.
-const StudentList = ({ setValue, watchStudents }) => {
-  const handleStudentClick = (event) => {
-    //여기서 student 가져오기 위해 FormBtn에서 value를 받을 수 있게 함
-    const clickedStudent = event.target.value;
-    let updatedStudents = [];
-    const previousStudents = watchStudents;
-    const existingStudentIndex = previousStudents.findIndex(
-      (previousStudent) => previousStudent === clickedStudent
-    );
-    console.log(existingStudentIndex);
-    if (existingStudentIndex > -1) {
-      //이미 있는 학생일 경우, 다시 클릭된 것이므로 해당 학생 삭제
-      updatedStudents = previousStudents.filter(
-        (_, index) => index !== existingStudentIndex
-      );
-    } else {
-      //학생이 없을 경우, 해당 학생 추가
-      updatedStudents = [...previousStudents, clickedStudent];
-    }
-    console.log(updatedStudents);
+
+type StudentListProps = {
+  setValue: (name: string, value: boolean) => void;
+  watchStudents: string[];
+};
+
+const StudentList = ({ setValue, watchStudents }: StudentListProps) => {
+  const [selectedStudents, setSelectedStudents] =
+    useState<string[]>(watchStudents);
+
+  const handleStudentClick = (student: string) => {
+    const updatedStudents = selectedStudents.includes(student)
+      ? //이미 클릭되어있는 student일 경우, selectedStudents에서 삭제 및 unClick
+        selectedStudents.filter(
+          (selectedStudent) => selectedStudent !== student
+        )
+      : //아직 클릭되어있지 않은 student일 경우, selectedStudents에 추가
+        [...selectedStudents, student];
+
+    setSelectedStudents(updatedStudents);
     setValue("students", updatedStudents);
   };
 
@@ -60,8 +58,8 @@ const StudentList = ({ setValue, watchStudents }) => {
       <Container>
         {students.map((student: string, index: number) => (
           <FormBtn
-            onClick={handleStudentClick}
-            isCurrent={watchStudents.includes(student)}
+            onClick={() => handleStudentClick(student)}
+            isCurrent={selectedStudents.includes(student)}
             key={index}
           >
             {student}

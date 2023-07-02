@@ -5,10 +5,24 @@ import {
 } from "@/style/transfer/TransferFormStyle";
 import FormBtn from "@/style/common/FormBtn";
 import StudentList from "./StudentList";
-import { useForm } from "react-hook-form";
 import BigBtn from "@/style/common/BigBtn";
+import { useForm } from "react-hook-form";
 
-const TypeSelection = ({ watchType, setValue }) => (
+type TransferFormData = {
+  type: string;
+  category: string;
+  amount: number;
+  detail: string;
+  students: string[];
+};
+
+const TypeSelection = ({
+  watchType,
+  setValue,
+}: {
+  watchType: string;
+  setValue: Function;
+}) => (
   <InputContainer>
     <h3>분류</h3>
     <FormBtn
@@ -26,7 +40,13 @@ const TypeSelection = ({ watchType, setValue }) => (
   </InputContainer>
 );
 
-const CategorySelection = ({ watchCategory, setValue }) => (
+const CategorySelection = ({
+  watchCategory,
+  setValue,
+}: {
+  watchCategory: string;
+  setValue: Function;
+}) => (
   <InputContainer>
     <h3>항목</h3>
     <FormBtn
@@ -50,7 +70,7 @@ const CategorySelection = ({ watchCategory, setValue }) => (
   </InputContainer>
 );
 
-const AmountInput = ({ register }) => (
+const AmountInput = ({ register }: { register: Function }) => (
   <InputContainer>
     <h3>금액</h3>
     <Input type="number" width="114px" {...register("amount")} />
@@ -58,7 +78,7 @@ const AmountInput = ({ register }) => (
   </InputContainer>
 );
 
-const DetailInput = ({ register }) => (
+const DetailInput = ({ register }: { register: Function }) => (
   <InputContainer>
     <h3>내용</h3>
     <Input type="text" width="424px" {...register("detail")} />
@@ -76,8 +96,12 @@ function TransferForm() {
   const isValid =
     watchType && watchCategory && watchAmount && watchStudents.length > 0;
 
+  const onSubmit = (data: TransferFormData) => {
+    console.log(data); // Access the form data here
+  };
+
   return (
-    <Form onSubmit={handleSubmit(console.log)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <StudentList watchStudents={watchStudents} setValue={setValue} />
       <TypeSelection watchType={watchType} setValue={setValue} />
       <CategorySelection watchCategory={watchCategory} setValue={setValue} />

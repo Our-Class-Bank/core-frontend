@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React from "react";
 import styled from "styled-components";
 
 interface StyledBtnProps {
@@ -9,7 +9,7 @@ interface StyledBtnProps {
   width: string;
   fontWeight: string;
   margin: string;
-  type: string;
+  buttonType: string;
 }
 
 const StyledBtn = styled.button<StyledBtnProps>`
@@ -40,11 +40,11 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   children,
   value,
-  type,
+  buttonType,
 }) => {
   return (
     <StyledBtn
-      type={type}
+      type={buttonType}
       value={value}
       border={border}
       color={color}
