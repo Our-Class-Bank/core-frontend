@@ -1,4 +1,4 @@
-import { ThemeProvider, createGlobalStyle } from "styled-components";
+import { ThemeProvider, createGlobalStyle, styled } from "styled-components";
 import RoutePage from "@/routes/RoutePage";
 import { BrowserRouter } from "react-router-dom";
 import Header from "@/pages/layout/Header";
@@ -60,13 +60,19 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const Container = styled.div`
+  display: flex;
+`;
+
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <BrowserRouter>
         <Header />
-        <SideBar />
-        <RoutePage />
+        <Container>
+          <SideBar />
+          <RoutePage />
+        </Container>
         <GlobalStyle />
       </BrowserRouter>
     </ThemeProvider>
