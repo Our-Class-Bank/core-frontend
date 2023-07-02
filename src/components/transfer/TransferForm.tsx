@@ -97,7 +97,7 @@ function TransferForm() {
     watchType && watchCategory && watchAmount && watchStudents.length > 0;
 
   const onSubmit = (data: TransferFormData) => {
-    console.log(data); // Access the form data here
+    console.log(data);
   };
 
   return (
