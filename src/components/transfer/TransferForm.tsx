@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Form,
   InputContainer,
@@ -26,21 +27,21 @@ const TypeSelection = ({
   <InputContainer>
     <h3>분류</h3>
     <FormBtn
-      isCurrent={watchType === "수입"}
-      onClick={() => setValue("type", "수입")}
-    >
-      수입
-    </FormBtn>
-    <FormBtn
       isCurrent={watchType === "지출"}
       onClick={() => setValue("type", "지출")}
     >
       지출
     </FormBtn>
+    <FormBtn
+      isCurrent={watchType === "수입"}
+      onClick={() => setValue("type", "수입")}
+    >
+      수입
+    </FormBtn>
   </InputContainer>
 );
 
-const CategorySelection = ({
+const MinusCategorySelection = ({
   watchCategory,
   setValue,
 }: {
@@ -60,6 +61,36 @@ const CategorySelection = ({
       onClick={() => setValue("category", "벌금")}
     >
       벌금
+    </FormBtn>
+    <FormBtn
+      isCurrent={watchCategory === "기타"}
+      onClick={() => setValue("category", "기타")}
+    >
+      기타
+    </FormBtn>
+  </InputContainer>
+);
+
+const PlusCategorySelection = ({
+  watchCategory,
+  setValue,
+}: {
+  watchCategory: string;
+  setValue: Function;
+}) => (
+  <InputContainer>
+    <h3>항목</h3>
+    <FormBtn
+      isCurrent={watchCategory === "월금"}
+      onClick={() => setValue("category", "월금")}
+    >
+      월금
+    </FormBtn>
+    <FormBtn
+      isCurrent={watchCategory === "상금"}
+      onClick={() => setValue("category", "상금")}
+    >
+      상금
     </FormBtn>
     <FormBtn
       isCurrent={watchCategory === "기타"}
@@ -104,7 +135,17 @@ function TransferForm() {
     <Form onSubmit={handleSubmit(onSubmit)}>
       <StudentList watchStudents={watchStudents} setValue={setValue} />
       <TypeSelection watchType={watchType} setValue={setValue} />
-      <CategorySelection watchCategory={watchCategory} setValue={setValue} />
+      {watchType === "수입" ? (
+        <PlusCategorySelection
+          watchCategory={watchCategory}
+          setValue={setValue}
+        />
+      ) : (
+        <MinusCategorySelection
+          watchCategory={watchCategory}
+          setValue={setValue}
+        />
+      )}
       <AmountInput register={register} />
       <DetailInput register={register} />
       <BigBtn disabled={!isValid}>다음</BigBtn>
