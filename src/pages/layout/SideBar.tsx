@@ -9,7 +9,6 @@ import {
 } from "@/style/layout/SideBarStyle.tsx";
 import { ReactComponent as MyBankIcon } from "@/assets/images/MyBankIcon.svg";
 import { ReactComponent as TransferIcon } from "@/assets/images/TransferIcon.svg";
-import { ReactComponent as WorkListIcon } from "@/assets/images/WorkListIcon.svg";
 function SideBar() {
   const userName = "김은행";
 
@@ -37,13 +36,6 @@ function SideBar() {
             <NavContainer>
               <TransferIcon fill="white" />
               <NavText>입출금</NavText>
-            </NavContainer>
-          </NavLink>
-
-          <NavLink to="/work-list">
-            <NavContainer>
-              <WorkListIcon fill="white" />
-              <NavText>관리내역</NavText>
             </NavContainer>
           </NavLink>
         </Wrapper>
