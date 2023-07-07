@@ -1,12 +1,11 @@
 import { styled } from "styled-components";
 import BigBtn from "@/style/common/BigBtn";
 
-export const Form = styled.form`
+export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 580px;
-  height: 653px;
   border-radius: 10px;
   border: 1px solid #dfecff;
   background-color: #fff;
