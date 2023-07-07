@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-  max-height: 100%; /* Add this line */
+  max-height: 100%;
   overflow: auto;
   &::-webkit-scrollbar {
     border-radius: 5px;

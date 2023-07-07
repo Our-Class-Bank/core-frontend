@@ -1,10 +1,10 @@
-import TransferForm from "@/components/transfer/TransferForm";
+import TransferModal from "@/components/transfer/TransferModal";
 import { Container } from "@/style/common/CommonStyle";
 
 function Transfer() {
   return (
     <Container>
-      <TransferForm />
+      <TransferModal />
     </Container>
   );
 }

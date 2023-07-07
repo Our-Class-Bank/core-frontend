@@ -1,9 +1,4 @@
-import React from "react";
-import {
-  Form,
-  InputContainer,
-  Input,
-} from "@/style/transfer/TransferFormStyle";
+import { InputContainer, Input } from "@/style/transfer/TransferFormStyle";
 import FormBtn from "@/style/common/FormBtn";
 import StudentList from "./StudentList";
 import BigBtn from "@/style/common/BigBtn";
@@ -116,7 +111,7 @@ const DetailInput = ({ register }: { register: Function }) => (
   </InputContainer>
 );
 
-function TransferForm() {
+function TransferForm({ onSubmit }) {
   const { register, setValue, handleSubmit, watch } = useForm();
 
   const watchStudents = watch("students", []);
@@ -127,12 +122,8 @@ function TransferForm() {
   const isValid =
     watchType && watchCategory && watchAmount && watchStudents.length > 0;
 
-  const onSubmit = (data: TransferFormData) => {
-    console.log(data);
-  };
-
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <StudentList watchStudents={watchStudents} setValue={setValue} />
       <TypeSelection watchType={watchType} setValue={setValue} />
       {watchType === "수입" ? (
@@ -149,7 +140,7 @@ function TransferForm() {
       <AmountInput register={register} />
       <DetailInput register={register} />
       <BigBtn disabled={!isValid}>다음</BigBtn>
-    </Form>
+    </form>
   );
 }
 
