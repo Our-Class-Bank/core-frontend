@@ -8,7 +8,7 @@ import {
   NameBlock,
   Name,
   Text,
-} from "@/src/style/layout/SideBarStyle.tsx";
+} from "@/style/layout/SideBarStyle.tsx";
 function SideBar() {
   const userName = "김은행";
   return (
