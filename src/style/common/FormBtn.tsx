@@ -7,8 +7,8 @@ const BUTTON_ACTIVE_COLOR = "#2F3FD4";
 const btnDefault = {
   color: BUTTON_DEFAULT_COLOR,
   backgroundcolor: "white",
-  height: "42px",
-  width: "94px",
+  height: "38px",
+  width: "90px",
   fontWeight: "600",
   margin: "5px",
 };

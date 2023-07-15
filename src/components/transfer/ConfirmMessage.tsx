@@ -8,7 +8,7 @@ import {
   MinusIcon,
   ConfirmBtn,
 } from "@/style/transfer/ConfirmMessageStyle";
-function ConfirmMessage({ submittedData }) {
+function ConfirmMessage({ submittedData, showForm }) {
   const { type, amount, students } = submittedData;
   const firstStudent = students[0];
   const numberOfRestStudents = students.length - 1;
@@ -42,7 +42,7 @@ function ConfirmMessage({ submittedData }) {
         </Line>
         <Line>
           <ConfirmBtn>예</ConfirmBtn>
-          <ConfirmBtn>아니오</ConfirmBtn>
+          <ConfirmBtn onClick={showForm}>아니오</ConfirmBtn>
         </Line>
       </Text>
     </>

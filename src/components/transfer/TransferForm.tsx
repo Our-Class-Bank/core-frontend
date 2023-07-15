@@ -1,7 +1,11 @@
-import { InputContainer, Input } from "@/style/transfer/TransferFormStyle";
+import {
+  InputContainer,
+  Input,
+  Form,
+  NextBtn,
+} from "@/style/transfer/TransferFormStyle";
 import FormBtn from "@/style/common/FormBtn";
 import StudentList from "./StudentList";
-import BigBtn from "@/style/common/BigBtn";
 import { useForm } from "react-hook-form";
 
 type TransferFormData = {
@@ -12,13 +16,7 @@ type TransferFormData = {
   students: string[];
 };
 
-const TypeSelection = ({
-  watchType,
-  setValue,
-}: {
-  watchType: string;
-  setValue: Function;
-}) => (
+const TypeSelection = ({ setValue, watchType }: { setValue: Function }) => (
   <InputContainer>
     <h3>분류</h3>
     <FormBtn
@@ -111,7 +109,7 @@ const DetailInput = ({ register }: { register: Function }) => (
   </InputContainer>
 );
 
-function TransferForm({ onSubmit }) {
+function TransferForm({ onSubmit, submittedData }) {
   const { register, setValue, handleSubmit, watch } = useForm();
 
   const watchStudents = watch("students", []);
@@ -123,7 +121,7 @@ function TransferForm({ onSubmit }) {
     watchType && watchCategory && watchAmount && watchStudents.length > 0;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <StudentList watchStudents={watchStudents} setValue={setValue} />
       <TypeSelection watchType={watchType} setValue={setValue} />
       {watchType === "수입" ? (
@@ -139,8 +137,8 @@ function TransferForm({ onSubmit }) {
       )}
       <AmountInput register={register} />
       <DetailInput register={register} />
-      <BigBtn disabled={!isValid}>다음</BigBtn>
-    </form>
+      <NextBtn disabled={!isValid}>다음</NextBtn>
+    </Form>
   );
 }
 
