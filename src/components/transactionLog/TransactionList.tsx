@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import TransactionLog from "@/components/transactionLog/TransactionLog";
 import {
   DatePoint,

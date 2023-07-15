@@ -49,10 +49,11 @@ export const Line = styled.span`
   padding: 10px;
 `;
 
-export const ConfirmBtn = ({ name, children }) => {
+export const ConfirmBtn = ({ children, onClick }) => {
   const theme = useTheme();
   return (
     <Button
+      onClick={onClick}
       type="button"
       border={`2px solid ${theme.mainBlue}`}
       color={theme.mainBlue}

@@ -4,8 +4,8 @@ const WHITE_COLOR = "#FFF";
 const BLUE_COLOR = "#2F3FD4";
 
 const btnDefault = {
-  height: "59px",
-  width: "530px",
+  height: "50px",
+  width: "100%",
   fontWeight: "600",
   margin: "10px 0px",
 };
