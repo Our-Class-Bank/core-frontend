@@ -1,5 +1,10 @@
 import { useTable } from "react-table";
-import { Thead, Table, Tbody } from "@/style/credit/ClassCreditTableStyle";
+import {
+  Thead,
+  Table,
+  Tbody,
+  StyledDetailIcon,
+} from "@/style/credit/ClassCreditTableStyle";
 
 const classCreditData = [
   { attendanceNumber: 1, name: "권아현", score: "71점" },
@@ -13,9 +18,16 @@ const columns = [
   { Header: "점수", accessor: "score" },
 ];
 
-function ClassCreditTable() {
+function ClassCreditTable(props) {
+  const { handleCreditDetailStudent, handleStudentDetailMode } = props;
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data: classCreditData });
+
+  const handleClick = (row) => {
+    const studentName = row.cells[1].value;
+    handleCreditDetailStudent(studentName);
+    handleStudentDetailMode(true);
+  };
 
   return (
     <Table {...getTableProps()}>
@@ -32,10 +44,11 @@ function ClassCreditTable() {
         {rows.map((row) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()}>
+            <tr {...row.getRowProps()} onClick={() => handleClick(row)}>
               {row.cells.map((cell) => (
                 <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
               ))}
+              <StyledDetailIcon />
             </tr>
           );
         })}

@@ -38,4 +38,6 @@ export const Tbody = styled.tbody`
   }
 `;
 
-export const StyledDetailIcon = styled(DetailIcon)``;
+export const StyledDetailIcon = styled(DetailIcon)`
+  position: relative;
+`;
