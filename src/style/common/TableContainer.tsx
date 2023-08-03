@@ -1,12 +1,11 @@
 import styled from "styled-components";
-
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
 const Container = styled.div`
-  width: 250px;
+  width: ${(props) => (props.width ? props.width : "250px")};
   height: 531px;
   border: 1px solid #d9d9d9;
   border-radius: 10px;
@@ -19,15 +18,25 @@ const Title = styled.h1`
   font-style: normal;
   font-weight: 600;
   margin-left: 8px;
-  margin-bottom: 17px;
+`;
+
+const TitleWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 48px;
 `;
 
 function TableContainer(props) {
-  const { title } = props;
+  const { title, width, buttonPart } = props;
   return (
     <Wrapper>
-      <Title>{title}</Title>
-      <Container>{props.children}</Container>
+      <TitleWrapper>
+        <Title>{title}</Title>
+        {buttonPart}
+      </TitleWrapper>
+
+      <Container width={width}>{props.children}</Container>
     </Wrapper>
   );
 }

@@ -1,4 +1,8 @@
-import { Wrapper, Container } from "@/style/transfer/StudentListStyle";
+import {
+  Wrapper,
+  StudentBtns,
+  Container,
+} from "@/style/transfer/StudentListStyle";
 import FormBtn from "@/style/common/FormBtn";
 import { useState } from "react";
 
@@ -34,9 +38,10 @@ const students: string[] = [
 type StudentListProps = {
   setValue: (name: string, value: boolean) => void;
   watchStudents: string[];
+  height: string;
 };
 
-const StudentList = ({ setValue, watchStudents }: StudentListProps) => {
+const StudentList = ({ setValue, watchStudents, height }: StudentListProps) => {
   const [selectedStudents, setSelectedStudents] =
     useState<string[]>(watchStudents);
 
@@ -54,17 +59,19 @@ const StudentList = ({ setValue, watchStudents }: StudentListProps) => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper height={height}>
       <Container>
-        {students.map((student: string, index: number) => (
-          <FormBtn
-            onClick={() => handleStudentClick(student)}
-            isCurrent={selectedStudents.includes(student)}
-            key={index}
-          >
-            {student}
-          </FormBtn>
-        ))}
+        <StudentBtns>
+          {students.map((student: string, index: number) => (
+            <FormBtn
+              onClick={() => handleStudentClick(student)}
+              isCurrent={selectedStudents.includes(student)}
+              key={index}
+            >
+              {student}
+            </FormBtn>
+          ))}
+        </StudentBtns>
       </Container>
     </Wrapper>
   );

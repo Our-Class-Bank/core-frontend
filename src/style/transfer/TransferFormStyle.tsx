@@ -16,6 +16,7 @@ export const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 5px;
 `;
 
 export const InputContainer = styled.div`
@@ -47,6 +48,7 @@ export const Input = styled.input`
 
   &:focus {
     border: 2px solid #2f3fd4;
+    background-color: #ffffff;
   }
 `;
 

@@ -6,14 +6,14 @@ const BUTTON_ACTIVE_COLOR = "#2F3FD4";
 
 const btnDefault = {
   color: BUTTON_DEFAULT_COLOR,
-  backgroundcolor: "white",
+  backgroundColor: "white",
   height: "38px",
   width: "90px",
   fontWeight: "600",
   margin: "5px",
 };
 
-const FormBtn: React.FC = ({ onClick, children, isCurrent }) => {
+const FormBtn: React.FC = ({ onClick, children, isCurrent, buttonType }) => {
   const buttonStyle = {
     ...btnDefault,
     color: isCurrent ? BUTTON_ACTIVE_COLOR : BUTTON_DEFAULT_COLOR,
@@ -25,7 +25,7 @@ const FormBtn: React.FC = ({ onClick, children, isCurrent }) => {
   return (
     <Button
       onClick={onClick}
-      buttonType="button"
+      buttonType={buttonType ? buttonType : "button"}
       value={children}
       {...buttonStyle}
     >

@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const Wrapper = styled.div`
   width: 485px;
-  height: 262px;
+  height: ${(props) => (props.height ? props.height : "262px")};
   background: ${(props) => props.theme.subGray};
   border-radius: 10px;
   display: flex;
@@ -12,6 +12,11 @@ export const Wrapper = styled.div`
   overflow: auto;
 `;
 export const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const StudentBtns = styled.div`
   display: flex;
   flex-wrap: wrap;
   max-height: 100%;

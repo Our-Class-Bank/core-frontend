@@ -40,4 +40,7 @@ export const Tbody = styled.tbody`
 
 export const StyledDetailIcon = styled(DetailIcon)`
   position: relative;
+  right: 15px;
+  top: 10%;
+  transform: translateY(-50%);
 `;

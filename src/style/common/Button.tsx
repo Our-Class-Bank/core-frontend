@@ -16,7 +16,7 @@ const StyledBtn = styled.button<StyledBtnProps>`
   border-radius: 10px;
   border: ${({ border }) => border};
   color: ${({ color }) => color};
-  background-color: ${({ backgroundcolor }) => backgroundcolor};
+  background-color: ${({ backgroundColor }) => backgroundColor};
   height: ${({ height }) => height};
   width: ${({ width }) => width};
   font-weight: ${({ fontWeight }) => fontWeight};
@@ -32,7 +32,7 @@ interface ButtonProps extends StyledBtnProps {
 const Button: React.FC<ButtonProps> = ({
   border,
   color,
-  backgroundcolor,
+  backgroundColor,
   height,
   width,
   fontWeight,
@@ -41,14 +41,16 @@ const Button: React.FC<ButtonProps> = ({
   children,
   value,
   buttonType,
+  form,
 }) => {
   return (
     <StyledBtn
+      form={form}
       type={buttonType}
       value={value}
       border={border}
       color={color}
-      backgroundcolor={backgroundcolor}
+      backgroundColor={backgroundColor}
       height={height}
       width={width}
       fontWeight={fontWeight}
