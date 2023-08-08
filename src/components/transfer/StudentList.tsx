@@ -45,34 +45,33 @@ const StudentList = ({ setValue, watchStudents, height }: StudentListProps) => {
   const [selectedStudents, setSelectedStudents] =
     useState<string[]>(watchStudents);
 
-  const handleStudentClick = (student: string) => {
-    const updatedStudents = selectedStudents.includes(student)
-      ? //이미 클릭되어있는 student일 경우, selectedStudents에서 삭제 및 unClick
-        selectedStudents.filter(
-          (selectedStudent) => selectedStudent !== student
-        )
-      : //아직 클릭되어있지 않은 student일 경우, selectedStudents에 추가
-        [...selectedStudents, student];
+  console.log(watchStudents);
+  console.log(selectedStudents);
 
-    setSelectedStudents(updatedStudents);
+  const handleStudentClick = (student: string) => {
+    const updatedStudents = watchStudents.includes(student)
+      ? //이미 클릭되어있는 student일 경우, selectedStudents에서 삭제 및 unClick
+        watchStudents.filter((watchStudent) => watchStudent !== student)
+      : //아직 클릭되어있지 않은 student일 경우, selectedStudents에 추가
+        [...watchStudents, student];
+
+    //setSelectedStudents(updatedStudents);
     setValue("students", updatedStudents);
   };
 
   return (
     <Wrapper height={height}>
-      <Container>
-        <StudentBtns>
-          {students.map((student: string, index: number) => (
-            <FormBtn
-              onClick={() => handleStudentClick(student)}
-              isCurrent={selectedStudents.includes(student)}
-              key={index}
-            >
-              {student}
-            </FormBtn>
-          ))}
-        </StudentBtns>
-      </Container>
+      <StudentBtns>
+        {students.map((student: string, index: number) => (
+          <FormBtn
+            onClick={() => handleStudentClick(student)}
+            isCurrent={watchStudents.includes(student)}
+            key={index}
+          >
+            {student}
+          </FormBtn>
+        ))}
+      </StudentBtns>
     </Wrapper>
   );
 };

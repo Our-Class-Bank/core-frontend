@@ -14,7 +14,7 @@ const BigBtn: React.FC = ({ children, disabled, onClick }) => {
   const buttonStyle = {
     ...btnDefault,
     color: disabled ? BLUE_COLOR : WHITE_COLOR,
-    backgroundcolor: disabled ? WHITE_COLOR : BLUE_COLOR,
+    backgroundColor: disabled ? WHITE_COLOR : BLUE_COLOR,
     border: disabled ? `1px solid ${BLUE_COLOR}` : "none",
   };
 

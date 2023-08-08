@@ -11,11 +11,7 @@ export const Wrapper = styled.div`
   padding: 9px 28px;
   overflow: auto;
 `;
-export const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+
 export const StudentBtns = styled.div`
   display: flex;
   flex-wrap: wrap;

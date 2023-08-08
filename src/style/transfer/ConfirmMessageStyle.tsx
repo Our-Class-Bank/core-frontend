@@ -57,7 +57,7 @@ export const ConfirmBtn = ({ children, onClick }) => {
       type="button"
       border={`2px solid ${theme.mainBlue}`}
       color={theme.mainBlue}
-      backgroundcolor="#fff"
+      backgroundColor="#fff"
       height="60px"
       width="230px"
       fontWeight="600"

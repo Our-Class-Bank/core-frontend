@@ -28,11 +28,12 @@ const TitleWrapper = styled.div`
 `;
 
 function TableContainer(props) {
-  const { title, width, buttonPart } = props;
+  const { title, width, buttonPart, titlePart } = props;
   return (
     <Wrapper>
       <TitleWrapper>
-        <Title>{title}</Title>
+        {!titlePart && <Title>{title}</Title>}
+        {titlePart}
         {buttonPart}
       </TitleWrapper>
 

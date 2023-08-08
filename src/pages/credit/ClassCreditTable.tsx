@@ -1,4 +1,4 @@
-import { useTable } from "react-table";
+import { useTable, Cell, HeaderGroup, Row } from "react-table"; // Import necessary types
 import {
   Thead,
   Table,
@@ -6,7 +6,14 @@ import {
   StyledDetailIcon,
 } from "@/style/credit/ClassCreditTableStyle";
 
-const classCreditData = [
+// Define type for your data
+interface ClassCreditData {
+  attendanceNumber: number;
+  name: string;
+  score: string;
+}
+
+const classCreditData: ClassCreditData[] = [
   { attendanceNumber: 1, name: "권아현", score: "71점" },
   { attendanceNumber: 2, name: "권아현", score: "72점" },
   { attendanceNumber: 3, name: "남궁민수", score: "73점" },
@@ -18,21 +25,24 @@ const columns = [
   { Header: "점수", accessor: "score" },
 ];
 
-function ClassCreditTable(props) {
-  const { handleCreditDetailStudent, handleStudentDetailMode } = props;
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data: classCreditData });
+interface Props {
+  changeToStudentCredit: (studentName: string) => void;
+}
 
-  const handleClick = (row) => {
-    const studentName = row.cells[1].value;
-    handleCreditDetailStudent(studentName);
-    handleStudentDetailMode(true);
+function ClassCreditTable(props: Props) {
+  const { changeToStudentCredit } = props;
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable<ClassCreditData>({ columns, data: classCreditData });
+
+  const handleClick = (row: Row<ClassCreditData>) => {
+    const studentName = row.cells[1].value as string;
+    changeToStudentCredit(studentName);
   };
 
   return (
     <Table {...getTableProps()}>
       <Thead>
-        {headerGroups.map((headerGroup) => (
+        {headerGroups.map((headerGroup: HeaderGroup<ClassCreditData>) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
               <th {...column.getHeaderProps()}>{column.render("Header")}</th>
@@ -44,9 +54,15 @@ function ClassCreditTable(props) {
         {rows.map((row) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()} onClick={() => handleClick(row)}>
-              {row.cells.map((cell) => (
-                <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+            <tr
+              {...row.getRowProps()}
+              onClick={() => handleClick(row)}
+              key={row.id}
+            >
+              {row.cells.map((cell: Cell<ClassCreditData>) => (
+                <td {...cell.getCellProps()} key={cell.column.id}>
+                  {cell.render("Cell")}
+                </td>
               ))}
               <StyledDetailIcon />
             </tr>

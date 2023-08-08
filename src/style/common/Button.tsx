@@ -4,7 +4,7 @@ import styled from "styled-components";
 interface StyledBtnProps {
   border: string;
   color: string;
-  backgroundcolor: string;
+  backgroundColor: string;
   height: string;
   width: string;
   fontWeight: string;

@@ -65,9 +65,6 @@ function CreditForm(props) {
     });
   };
   return (
-    //왜 해결된지 모르겠지만 해결이 되었다.
-    //처음 코드: onSubmit={handleSubmit(data)}
-    //해결된 코드: onSubmit={handleSubmit(onSubmit)}
     <Form id="creditForm" onSubmit={handleSubmit(onSubmit)}>
       <DetailInput register={register} />
       <StudentList
