@@ -4,8 +4,8 @@ const WHITE_COLOR = "#FFF";
 const BLUE_COLOR = "#2F3FD4";
 
 const btnDefault = {
-  height: "59px",
-  width: "530px",
+  height: "50px",
+  width: "100%",
   fontWeight: "600",
   margin: "10px 0px",
 };
@@ -14,7 +14,7 @@ const BigBtn: React.FC = ({ children, disabled, onClick }) => {
   const buttonStyle = {
     ...btnDefault,
     color: disabled ? BLUE_COLOR : WHITE_COLOR,
-    backgroundcolor: disabled ? WHITE_COLOR : BLUE_COLOR,
+    backgroundColor: disabled ? WHITE_COLOR : BLUE_COLOR,
     border: disabled ? `1px solid ${BLUE_COLOR}` : "none",
   };
 

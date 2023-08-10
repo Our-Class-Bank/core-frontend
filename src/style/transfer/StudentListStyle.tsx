@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 
 export const Wrapper = styled.div`
-  width: 530px;
-  height: 252px;
+  width: 485px;
+  height: ${(props) => (props.height ? props.height : "262px")};
   background: ${(props) => props.theme.subGray};
   border-radius: 10px;
   display: flex;
@@ -11,10 +11,11 @@ export const Wrapper = styled.div`
   padding: 9px 28px;
   overflow: auto;
 `;
-export const Container = styled.div`
+
+export const StudentBtns = styled.div`
   display: flex;
   flex-wrap: wrap;
-  max-height: 100%; /* Add this line */
+  max-height: 100%;
   overflow: auto;
   &::-webkit-scrollbar {
     border-radius: 5px;
