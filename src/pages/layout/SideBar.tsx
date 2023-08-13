@@ -40,13 +40,6 @@ function SideBar() {
               <NavText>입출금</NavText>
             </NavContainer>
           </NavLink>
-
-          <NavLink to="/work-list">
-            <NavContainer>
-              <WorkListIcon fill="white" />
-              <NavText>관리내역</NavText>
-            </NavContainer>
-          </NavLink>
         </Wrapper>
       )}
     </>
