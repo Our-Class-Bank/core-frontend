@@ -3,6 +3,8 @@ import { styled } from "styled-components";
 export const TransctionListWrapper = styled.div`
   display: flex;
   position: relative;
+  width: 100%;
+  grid-row: 1;
 `;
 
 export const TransctionLogWrapper = styled.div`
