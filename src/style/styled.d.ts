@@ -5,6 +5,9 @@ declare module "styled-components" {
     mainBlue: string;
     mainSky: string;
     mainGray: string;
+    subGray: string;
     fontGray: string;
+    blueGray: string;
+    borderGray: string;
   }
 }
