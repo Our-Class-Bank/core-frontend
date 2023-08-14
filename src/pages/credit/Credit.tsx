@@ -60,8 +60,9 @@ const Credit: React.FC = () => {
     setIsCreditChangeAll(boolean);
   };
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data) => {
     console.log(data);
+    console.log("this is executed");
   };
 
   const SubmitBtn: React.FC<{ onClick: () => void }> = ({ onClick }) => (

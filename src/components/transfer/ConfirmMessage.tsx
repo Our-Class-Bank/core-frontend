@@ -1,3 +1,4 @@
+import React from "react";
 import {
   BigText,
   Text,
@@ -8,11 +9,28 @@ import {
   MinusIcon,
   ConfirmBtn,
 } from "@/style/transfer/ConfirmMessageStyle";
-function ConfirmMessage({ submittedData, showForm }) {
+
+interface StudentData {
+  firstStudent: string;
+  numberOfRestStudents: number;
+}
+
+interface SubmittedData {
+  type: "수입" | "지출";
+  amount: number;
+  students: string[];
+}
+
+interface ConfirmMessageProps {
+  submittedData: SubmittedData;
+  showForm: () => void;
+}
+
+function ConfirmMessage({ submittedData, showForm }: ConfirmMessageProps) {
   const { type, amount, students } = submittedData;
   const firstStudent = students[0];
   const numberOfRestStudents = students.length - 1;
-  const studentBlock =
+  const studentBlock: string =
     students.length === 1
       ? firstStudent
       : `${firstStudent}외 ${numberOfRestStudents}명의 학생`;
