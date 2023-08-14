@@ -62,7 +62,6 @@ const Credit: React.FC = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    console.log("this is executed");
   };
 
   const SubmitBtn: React.FC<{ onClick: () => void }> = ({ onClick }) => (
@@ -70,6 +69,7 @@ const Credit: React.FC = () => {
       isFormValid={isFormValid}
       buttonType="submit"
       onClick={onClick}
+      form="creditForm"
     >
       입력
     </FormHandleBtn>
