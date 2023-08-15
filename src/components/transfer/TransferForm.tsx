@@ -1,3 +1,4 @@
+import React from "react";
 import {
   InputContainer,
   Input,
@@ -8,15 +9,14 @@ import FormBtn from "@/style/common/FormBtn";
 import StudentList from "./StudentList";
 import { useForm } from "react-hook-form";
 
-type TransferFormData = {
-  type: string;
-  category: string;
-  amount: number;
-  detail: string;
-  students: string[];
-};
+interface TransferFormProps {
+  onSubmit: (data: any) => void;
+}
 
-const TypeSelection = ({ setValue, watchType }: { setValue: Function }) => (
+const TypeSelection: React.FC<{ watchType: string; setValue: Function }> = ({
+  watchType,
+  setValue,
+}) => (
   <InputContainer>
     <h3>분류</h3>
     <FormBtn
@@ -34,13 +34,10 @@ const TypeSelection = ({ setValue, watchType }: { setValue: Function }) => (
   </InputContainer>
 );
 
-const MinusCategorySelection = ({
-  watchCategory,
-  setValue,
-}: {
+const MinusCategorySelection: React.FC<{
   watchCategory: string;
   setValue: Function;
-}) => (
+}> = ({ watchCategory, setValue }) => (
   <InputContainer>
     <h3>항목</h3>
     <FormBtn
@@ -49,28 +46,13 @@ const MinusCategorySelection = ({
     >
       마켓
     </FormBtn>
-    <FormBtn
-      isCurrent={watchCategory === "벌금"}
-      onClick={() => setValue("category", "벌금")}
-    >
-      벌금
-    </FormBtn>
-    <FormBtn
-      isCurrent={watchCategory === "기타"}
-      onClick={() => setValue("category", "기타")}
-    >
-      기타
-    </FormBtn>
   </InputContainer>
 );
 
-const PlusCategorySelection = ({
-  watchCategory,
-  setValue,
-}: {
+const PlusCategorySelection: React.FC<{
   watchCategory: string;
   setValue: Function;
-}) => (
+}> = ({ watchCategory, setValue }) => (
   <InputContainer>
     <h3>항목</h3>
     <FormBtn
@@ -79,22 +61,10 @@ const PlusCategorySelection = ({
     >
       월금
     </FormBtn>
-    <FormBtn
-      isCurrent={watchCategory === "상금"}
-      onClick={() => setValue("category", "상금")}
-    >
-      상금
-    </FormBtn>
-    <FormBtn
-      isCurrent={watchCategory === "기타"}
-      onClick={() => setValue("category", "기타")}
-    >
-      기타
-    </FormBtn>
   </InputContainer>
 );
 
-const AmountInput = ({ register }: { register: Function }) => (
+const AmountInput: React.FC<{ register: Function }> = ({ register }) => (
   <InputContainer>
     <h3>금액</h3>
     <Input type="number" width="114px" {...register("amount")} />
@@ -102,14 +72,14 @@ const AmountInput = ({ register }: { register: Function }) => (
   </InputContainer>
 );
 
-const DetailInput = ({ register }: { register: Function }) => (
+const DetailInput: React.FC<{ register: Function }> = ({ register }) => (
   <InputContainer>
     <h3>내용</h3>
     <Input type="text" width="424px" {...register("detail")} />
   </InputContainer>
 );
 
-function TransferForm({ onSubmit, submittedData }) {
+const TransferForm: React.FC<TransferFormProps> = ({ onSubmit }) => {
   const { register, setValue, handleSubmit, watch } = useForm();
 
   const watchStudents = watch("students", []);
@@ -121,7 +91,7 @@ function TransferForm({ onSubmit, submittedData }) {
     watchType && watchCategory && watchAmount && watchStudents.length > 0;
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form id="trasferForm" onSubmit={handleSubmit(onSubmit)}>
       <StudentList watchStudents={watchStudents} setValue={setValue} />
       <TypeSelection watchType={watchType} setValue={setValue} />
       {watchType === "수입" ? (
@@ -137,9 +107,11 @@ function TransferForm({ onSubmit, submittedData }) {
       )}
       <AmountInput register={register} />
       <DetailInput register={register} />
-      <NextBtn disabled={!isValid}>다음</NextBtn>
+      <NextBtn disabled={!isValid} onClick={handleSubmit(onSubmit)}>
+        다음
+      </NextBtn>
     </Form>
   );
-}
+};
 
 export default TransferForm;

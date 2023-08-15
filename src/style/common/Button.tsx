@@ -4,19 +4,18 @@ import styled from "styled-components";
 interface StyledBtnProps {
   border: string;
   color: string;
-  backgroundColor: string;
+  backgroundcolor: string;
   height: string;
   width: string;
   fontWeight: string;
   margin: string;
-  buttonType: string;
 }
 
 const StyledBtn = styled.button<StyledBtnProps>`
   border-radius: 10px;
   border: ${({ border }) => border};
   color: ${({ color }) => color};
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  background-color: ${({ backgroundcolor }) => backgroundcolor};
   height: ${({ height }) => height};
   width: ${({ width }) => width};
   font-weight: ${({ fontWeight }) => fontWeight};
@@ -24,22 +23,22 @@ const StyledBtn = styled.button<StyledBtnProps>`
 `;
 
 interface ButtonProps extends StyledBtnProps {
-  onClick: () => void;
+  onClick: (data: any) => void;
   children?: React.ReactNode;
-  value: string;
+  form?: string;
+  buttonType: "submit" | "reset" | "button";
 }
 
 const Button: React.FC<ButtonProps> = ({
   border,
   color,
-  backgroundColor,
+  backgroundcolor,
   height,
   width,
   fontWeight,
   margin,
   onClick,
   children,
-  value,
   buttonType,
   form,
 }) => {
@@ -47,10 +46,9 @@ const Button: React.FC<ButtonProps> = ({
     <StyledBtn
       form={form}
       type={buttonType}
-      value={value}
       border={border}
       color={color}
-      backgroundColor={backgroundColor}
+      backgroundcolor={backgroundcolor}
       height={height}
       width={width}
       fontWeight={fontWeight}

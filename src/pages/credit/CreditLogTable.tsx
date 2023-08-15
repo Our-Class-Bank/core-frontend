@@ -20,7 +20,7 @@ const creditLogData = [
 const columns = [
   {
     Header: "내용",
-    accessor: (row) => (
+    accessor: (row: any) => (
       <div>
         <BlackTxt>{row.content}</BlackTxt>
         <GrayTxt>{row.date}</GrayTxt>
@@ -29,7 +29,7 @@ const columns = [
   },
   {
     Header: "점수",
-    accessor: (row) => (
+    accessor: (row: any) => (
       <div>
         <BlueTxt>{row.change}</BlueTxt>
         <GrayTxt>{row.score}</GrayTxt>
@@ -45,20 +45,20 @@ function CreditLogTable() {
   return (
     <Table {...getTableProps()}>
       <Thead>
-        {headerGroups.map((headerGroup) => (
+        {headerGroups.map((headerGroup: any) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
+            {headerGroup.headers.map((column: any) => (
               <th {...column.getHeaderProps()}>{column.render("Header")}</th>
             ))}
           </tr>
         ))}
       </Thead>
       <Tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
+        {rows.map((row: any) => {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => (
+              {row.cells.map((cell: any) => (
                 <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
               ))}
             </tr>

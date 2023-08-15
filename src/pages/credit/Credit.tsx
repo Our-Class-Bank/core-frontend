@@ -23,15 +23,17 @@ const TitleContainer = styled.span`
   display: flex;
   align-items: center;
 `;
-
-interface Props {
-  changeToStudentCredit: (studentName: string) => void;
-}
+const Title = styled.h1`
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  margin-left: 8px;
+`;
 
 const Credit: React.FC = () => {
   //"우리반 신용점수" 컴포넌트 관련
   const [studentDetailMode, setStudentDetailMode] = useState(false);
-  const [creditDetailStudent, setCreditDetailStudent] = useState("");
+  const [creditDetailStudent, setCreditDetailStudent] = useState<string>("");
 
   const changeToStudentCredit = (studentName: string) => {
     setStudentDetailMode(true);
@@ -46,10 +48,12 @@ const Credit: React.FC = () => {
   const containerTitle = studentDetailMode ? (
     <TitleContainer>
       <BackIcon onClick={backToClassCredit} />
-      <Blue>{creditDetailStudent}</Blue>의 신용점수 내역
+      <Title>
+        <Blue>{creditDetailStudent}</Blue>의 신용점수 내역
+      </Title>
     </TitleContainer>
   ) : (
-    <>우리반 신용점수</>
+    <Title>우리반 신용점수</Title>
   );
 
   //"입력 & 전체변경" 컴포넌트 관련
@@ -60,16 +64,18 @@ const Credit: React.FC = () => {
     setIsCreditChangeAll(boolean);
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     console.log(data);
   };
 
-  const SubmitBtn: React.FC<{ onClick: () => void }> = ({ onClick }) => (
+  const SubmitBtn: React.FC<{ onClick: (data: any) => void }> = ({
+    onClick,
+  }) => (
     <FormHandleBtn
-      isFormValid={isFormValid}
-      buttonType="submit"
       onClick={onClick}
+      buttonType="submit"
       form="creditForm"
+      isFormValid={isFormValid}
     >
       입력
     </FormHandleBtn>
@@ -78,7 +84,7 @@ const Credit: React.FC = () => {
   return (
     <Container>
       <Horizontal>
-        <TableContainer title={containerTitle}>
+        <TableContainer titlePart={containerTitle}>
           {!studentDetailMode && (
             <ClassCreditTable changeToStudentCredit={changeToStudentCredit} />
           )}

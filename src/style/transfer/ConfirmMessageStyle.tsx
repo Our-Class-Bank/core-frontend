@@ -1,7 +1,16 @@
+import React from "react";
 import { styled, useTheme } from "styled-components";
 import { ReactComponent as Plus } from "@/assets/images/Plus.svg";
 import { ReactComponent as Minus } from "@/assets/images/Minus.svg";
 import Button from "../common/Button";
+import { FormValues } from "@/components/transfer/TransferModal";
+
+interface ConfirmBtnProps {
+  children: React.ReactNode;
+  onClick: (data: FormValues) => void;
+  buttonType: "submit" | "reset" | "button";
+  form: string;
+}
 
 export const BigText = styled.span`
   font-size: 24px;
@@ -49,15 +58,19 @@ export const Line = styled.span`
   padding: 10px;
 `;
 
-export const ConfirmBtn = ({ children, onClick }) => {
-  const theme = useTheme();
+export const ConfirmBtn: React.FC<ConfirmBtnProps> = ({
+  children,
+  onClick,
+  buttonType,
+}) => {
+  const theme = useTheme() ?? { mainBlue: "#000000" };
   return (
     <Button
       onClick={onClick}
-      type="button"
+      buttonType={buttonType}
       border={`2px solid ${theme.mainBlue}`}
       color={theme.mainBlue}
-      backgroundColor="#fff"
+      backgroundcolor="#fff"
       height="60px"
       width="230px"
       fontWeight="600"

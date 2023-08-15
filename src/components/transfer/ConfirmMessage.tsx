@@ -1,4 +1,3 @@
-import React from "react";
 import {
   BigText,
   Text,
@@ -9,24 +8,19 @@ import {
   MinusIcon,
   ConfirmBtn,
 } from "@/style/transfer/ConfirmMessageStyle";
-
-interface StudentData {
-  firstStudent: string;
-  numberOfRestStudents: number;
-}
-
-interface SubmittedData {
-  type: "수입" | "지출";
-  amount: number;
-  students: string[];
-}
+import { FormValues } from "./TransferModal";
 
 interface ConfirmMessageProps {
-  submittedData: SubmittedData;
+  submittedData: FormValues;
   showForm: () => void;
+  onSubmit: (data: FormValues) => void;
 }
 
-function ConfirmMessage({ submittedData, showForm }: ConfirmMessageProps) {
+function ConfirmMessage({
+  submittedData,
+  showForm,
+  onSubmit,
+}: ConfirmMessageProps) {
   const { type, amount, students } = submittedData;
   const firstStudent = students[0];
   const numberOfRestStudents = students.length - 1;
@@ -59,8 +53,20 @@ function ConfirmMessage({ submittedData, showForm }: ConfirmMessageProps) {
           <BigText>{amount}진스</BigText>를 입력하시겠습니까?
         </Line>
         <Line>
-          <ConfirmBtn>예</ConfirmBtn>
-          <ConfirmBtn onClick={showForm}>아니오</ConfirmBtn>
+          <ConfirmBtn
+            onClick={onSubmit}
+            buttonType="submit"
+            form="transferForm"
+          >
+            예
+          </ConfirmBtn>
+          <ConfirmBtn
+            onClick={showForm}
+            buttonType="button"
+            form="transferForm"
+          >
+            아니오
+          </ConfirmBtn>
         </Line>
       </Text>
     </>

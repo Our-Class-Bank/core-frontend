@@ -1,6 +1,10 @@
 import { styled } from "styled-components";
 
-export const Wrapper = styled.div`
+interface WrapperProps {
+  height?: string;
+}
+
+export const Wrapper = styled.div<WrapperProps>`
   width: 485px;
   height: ${(props) => (props.height ? props.height : "262px")};
   background: ${(props) => props.theme.subGray};
@@ -17,6 +21,7 @@ export const StudentBtns = styled.div`
   flex-wrap: wrap;
   max-height: 100%;
   overflow: auto;
+
   &::-webkit-scrollbar {
     border-radius: 5px;
     width: 10px;
