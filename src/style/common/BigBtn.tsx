@@ -9,17 +9,21 @@ const btnDefault = {
   fontWeight: "600",
   margin: "10px 0px",
 };
-
-const BigBtn: React.FC = ({ children, disabled, onClick }) => {
+interface BigBtnProps {
+  disabled?: boolean;
+  onClick: (data: any) => void;
+  children: React.ReactNode;
+}
+const BigBtn: React.FC<BigBtnProps> = ({ children, disabled, onClick }) => {
   const buttonStyle = {
     ...btnDefault,
     color: disabled ? BLUE_COLOR : WHITE_COLOR,
-    backgroundColor: disabled ? WHITE_COLOR : BLUE_COLOR,
+    backgroundcolor: disabled ? WHITE_COLOR : BLUE_COLOR,
     border: disabled ? `1px solid ${BLUE_COLOR}` : "none",
   };
 
   return (
-    <Button {...buttonStyle} type="submit" onClick={onClick}>
+    <Button {...buttonStyle} buttonType="submit" onClick={onClick}>
       {children}
     </Button>
   );

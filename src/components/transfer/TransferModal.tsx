@@ -1,30 +1,38 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Wrapper } from "@/style/transfer/TransferFormStyle";
 import TransferForm from "./TransferForm";
 import ConfirmMessage from "./ConfirmMessage";
-function TransferModal() {
-  const [showConfirmMessage, setShowConfirmMessage] = useState(false);
-  const [submittedData, setSubmittedData] = useState<TransferFormData | null>(
-    null
-  );
+import { SubmitHandler } from "react-hook-form";
 
-  const handleSubmit = (data) => {
+export type FormValues = {
+  type: "수입" | "지출";
+  amount: number;
+  students: string[];
+};
+
+function TransferModal() {
+  const [showConfirmMessage, setShowConfirmMessage] = useState<boolean>(false);
+  const [submittedData, setSubmittedData] = useState<FormValues | null>(null);
+
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     setSubmittedData(data);
     setShowConfirmMessage(true);
   };
 
   const showForm = () => {
     setShowConfirmMessage(false);
-    console.log("show FOrm");
+    console.log("show Form");
   };
 
   return (
     <Wrapper>
-      {!showConfirmMessage && (
-        <TransferForm onSubmit={handleSubmit} submittedData={submittedData} />
-      )}
+      {!showConfirmMessage && <TransferForm onSubmit={onSubmit} />}
       {showConfirmMessage && (
-        <ConfirmMessage submittedData={submittedData} showForm={showForm} />
+        <ConfirmMessage
+          onSubmit={onSubmit}
+          submittedData={submittedData as FormValues}
+          showForm={showForm}
+        />
       )}
     </Wrapper>
   );

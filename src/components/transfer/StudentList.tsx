@@ -1,10 +1,5 @@
-import {
-  Wrapper,
-  StudentBtns,
-  Container,
-} from "@/style/transfer/StudentListStyle";
+import { Wrapper, StudentBtns } from "@/style/transfer/StudentListStyle";
 import FormBtn from "@/style/common/FormBtn";
-import { useState } from "react";
 
 const students: string[] = [
   "1.김은행",
@@ -35,19 +30,13 @@ const students: string[] = [
   "26.임은행",
 ];
 
-type StudentListProps = {
-  setValue: (name: string, value: boolean) => void;
+interface StudentListProps {
+  setValue: (name: "students", value: string[]) => void;
   watchStudents: string[];
-  height: string;
-};
+  height?: string;
+}
 
 const StudentList = ({ setValue, watchStudents, height }: StudentListProps) => {
-  const [selectedStudents, setSelectedStudents] =
-    useState<string[]>(watchStudents);
-
-  console.log(watchStudents);
-  console.log(selectedStudents);
-
   const handleStudentClick = (student: string) => {
     const updatedStudents = watchStudents.includes(student)
       ? //이미 클릭되어있는 student일 경우, selectedStudents에서 삭제 및 unClick

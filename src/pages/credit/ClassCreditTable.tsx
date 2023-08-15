@@ -1,4 +1,4 @@
-import { useTable, Cell, HeaderGroup, Row } from "react-table"; // Import necessary types
+import { useTable, Cell, Column, HeaderGroup, Row } from "react-table";
 import {
   Thead,
   Table,
@@ -6,7 +6,6 @@ import {
   StyledDetailIcon,
 } from "@/style/credit/ClassCreditTableStyle";
 
-// Define type for your data
 interface ClassCreditData {
   attendanceNumber: number;
   name: string;
@@ -19,7 +18,7 @@ const classCreditData: ClassCreditData[] = [
   { attendanceNumber: 3, name: "남궁민수", score: "73점" },
 ];
 
-const columns = [
+const columns: Column<ClassCreditData>[] = [
   { Header: "번호", accessor: "attendanceNumber" },
   { Header: "이름", accessor: "name" },
   { Header: "점수", accessor: "score" },

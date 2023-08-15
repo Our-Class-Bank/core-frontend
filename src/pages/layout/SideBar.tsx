@@ -9,7 +9,6 @@ import {
 } from "@/style/layout/SideBarStyle.tsx";
 import { ReactComponent as MyBankIcon } from "@/assets/images/MyBankIcon.svg";
 import { ReactComponent as TransferIcon } from "@/assets/images/TransferIcon.svg";
-import { ReactComponent as WorkListIcon } from "@/assets/images/WorkListIcon.svg";
 
 function SideBar() {
   const userName = "김은행";

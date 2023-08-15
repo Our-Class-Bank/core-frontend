@@ -4,7 +4,7 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const Container = styled.div`
+const Container = styled.div<{ width?: string }>`
   width: ${(props) => (props.width ? props.width : "250px")};
   height: 531px;
   border: 1px solid #d9d9d9;
@@ -26,9 +26,21 @@ const TitleWrapper = styled.div`
   align-items: center;
   height: 48px;
 `;
+interface ContainerProps {
+  title?: string;
+  width?: string;
+  buttonPart?: React.ReactNode;
+  titlePart?: React.ReactNode;
+  children: React.ReactNode;
+}
 
-function TableContainer(props) {
-  const { title, width, buttonPart, titlePart } = props;
+const TableContainer: React.FC<ContainerProps> = ({
+  title,
+  width,
+  buttonPart,
+  titlePart,
+  children,
+}) => {
   return (
     <Wrapper>
       <TitleWrapper>
@@ -37,9 +49,9 @@ function TableContainer(props) {
         {buttonPart}
       </TitleWrapper>
 
-      <Container width={width}>{props.children}</Container>
+      <Container width={width}>{children}</Container>
     </Wrapper>
   );
-}
+};
 
 export default TableContainer;
