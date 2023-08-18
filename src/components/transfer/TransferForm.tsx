@@ -46,6 +46,18 @@ const MinusCategorySelection: React.FC<{
     >
       마켓
     </FormBtn>
+    <FormBtn
+      isCurrent={watchCategory === "벌금"}
+      onClick={() => setValue("category", "벌금")}
+    >
+      벌금
+    </FormBtn>
+    <FormBtn
+      isCurrent={watchCategory === "기타"}
+      onClick={() => setValue("category", "기타")}
+    >
+      기타
+    </FormBtn>
   </InputContainer>
 );
 
@@ -56,10 +68,22 @@ const PlusCategorySelection: React.FC<{
   <InputContainer>
     <h3>항목</h3>
     <FormBtn
-      isCurrent={watchCategory === "월금"}
-      onClick={() => setValue("category", "월금")}
+      isCurrent={watchCategory === "월급"}
+      onClick={() => setValue("category", "월급")}
     >
-      월금
+      월급
+    </FormBtn>
+    <FormBtn
+      isCurrent={watchCategory === "상금"}
+      onClick={() => setValue("category", "상금")}
+    >
+      상금
+    </FormBtn>
+    <FormBtn
+      isCurrent={watchCategory === "기타"}
+      onClick={() => setValue("category", "기타")}
+    >
+      기타
     </FormBtn>
   </InputContainer>
 );

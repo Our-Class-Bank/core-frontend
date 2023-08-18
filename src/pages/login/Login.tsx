@@ -4,7 +4,8 @@ import { Container } from "@/style/common/CommonStyle";
 import { Input, LoginForm, SubmitBtn } from "@/style/login/LoginStyle";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { postSignIn } from "@/apis/authApi";
+import { postSignIn, getMyInfo } from "@/apis/authApi";
+import UserContext, { UserContextType } from "@/store/UserContext";
 
 export interface IFormValues {
   id: string;
@@ -19,6 +20,8 @@ function Login() {
     handleSubmit,
     formState: { isValid },
   } = useForm<IFormValues>();
+
+  const { setUserInfo } = useContext<UserContextType>(UserContext);
 
   const submitHandler: SubmitHandler<IFormValues> = async (data) => {
     try {
