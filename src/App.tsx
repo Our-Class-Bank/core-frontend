@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import Header from "@/pages/layout/Header";
 import SideBar from "@/pages/layout/SideBar";
 import defaultTheme from "@/style/theme";
+import UserProvider from "@/store/UserProvider";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -67,14 +68,16 @@ const Container = styled.div`
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <BrowserRouter>
-        <Header />
-        <Container>
-          <SideBar />
-          <RoutePage />
-        </Container>
-        <GlobalStyle />
-      </BrowserRouter>
+      <UserProvider>
+        <BrowserRouter>
+          <Header />
+          <Container>
+            <SideBar />
+            <RoutePage />
+          </Container>
+          <GlobalStyle />
+        </BrowserRouter>
+      </UserProvider>
     </ThemeProvider>
   );
 }

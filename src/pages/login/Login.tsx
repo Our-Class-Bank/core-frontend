@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { Container } from "@/style/common/CommonStyle";
 import { Input, LoginForm, SubmitBtn } from "@/style/login/LoginStyle";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { postSignIn } from "@/apis/authApi";
+import { postSignIn, getMyInfo } from "@/apis/authApi";
+import UserContext, { UserContextType } from "@/store/UserContext";
 
 export interface IFormValues {
   id: string;
@@ -20,12 +21,17 @@ function Login() {
     formState: { isValid },
   } = useForm<IFormValues>();
 
+  const { setUserInfo } = useContext<UserContextType>(UserContext);
+
   const submitHandler: SubmitHandler<IFormValues> = async (data) => {
     try {
       setIsLoading(true);
       const response = await postSignIn(data);
       if (response.status === 200) {
         localStorage.setItem("accessToken", response.data.token);
+        //my information을 context에 전역으로 저장
+        const userInfo = await getMyInfo();
+        setUserInfo(userInfo.data);
         navigate("/");
       }
     } catch (error) {
