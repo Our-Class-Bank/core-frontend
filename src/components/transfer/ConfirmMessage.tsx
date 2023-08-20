@@ -8,29 +8,30 @@ import {
   MinusIcon,
   ConfirmBtn,
 } from "@/style/transfer/ConfirmMessageStyle";
-import { FormValues } from "./TransferModal";
+import { SubmitData } from "@/components/transfer/TransferForm";
 
 interface ConfirmMessageProps {
-  submittedData: FormValues;
+  submittedData: SubmitData;
   showForm: () => void;
-  onSubmit: (data: FormValues) => void;
+  handleTransfer: () => void;
 }
 
 function ConfirmMessage({
   submittedData,
   showForm,
-  onSubmit,
+  handleTransfer,
 }: ConfirmMessageProps) {
-  const { type, amount, students } = submittedData;
+  const { withdrawOrDeposit, amount, students } = submittedData;
   const firstStudent = students[0];
+  console.log(withdrawOrDeposit);
   const numberOfRestStudents = students.length - 1;
   const studentBlock: string =
     students.length === 1
       ? firstStudent
       : `${firstStudent}외 ${numberOfRestStudents}명의 학생`;
 
-  const typeBlock =
-    type === "수입" ? (
+  const withdrawOrDepositBlock =
+    withdrawOrDeposit === "수입" ? (
       <TypeWrapper>
         <PlusIcon />
         <TypeText>수입</TypeText>
@@ -49,12 +50,12 @@ function ConfirmMessage({
           <BigText>{studentBlock}</BigText>에게
         </Line>
         <Line>
-          {typeBlock}
+          {withdrawOrDepositBlock}
           <BigText>{amount}진스</BigText>를 입력하시겠습니까?
         </Line>
         <Line>
           <ConfirmBtn
-            onClick={onSubmit}
+            onClick={handleTransfer}
             buttonType="submit"
             form="transferForm"
           >
