@@ -1,5 +1,5 @@
 import TransferModal from "@/components/transfer/TransferModal";
-import TransactionList from "@/components/transactionLog/TransactionList";
+import TransferTransactionList from "@/components/transfer/TransferTransactionList";
 import { Container } from "@/style/common/CommonStyle";
 import { Wrapper } from "@/style/transfer/TransferStyle";
 
@@ -7,7 +7,7 @@ function Transfer() {
   return (
     <Container>
       <Wrapper>
-        <TransactionList />
+        <TransferTransactionList />
         <TransferModal />
       </Wrapper>
     </Container>
