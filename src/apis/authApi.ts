@@ -19,8 +19,3 @@ export async function postSignIn(data: IFormValues) {
   });
   return response;
 }
-
-export async function getMyInfo() {
-  const response = await privateApi.get("/api/v1/my");
-  return response;
-}

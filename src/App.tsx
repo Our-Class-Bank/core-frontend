@@ -5,6 +5,7 @@ import Header from "@/pages/layout/Header";
 import SideBar from "@/pages/layout/SideBar";
 import defaultTheme from "@/style/theme";
 import UserProvider from "@/store/UserProvider";
+import ClassStudentsProvider from "@/store/ClassStudentsProvider";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -73,7 +74,9 @@ function App() {
           <Header />
           <Container>
             <SideBar />
-            <RoutePage />
+            <ClassStudentsProvider>
+              <RoutePage />
+            </ClassStudentsProvider>
           </Container>
           <GlobalStyle />
         </BrowserRouter>

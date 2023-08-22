@@ -15,8 +15,8 @@ export interface StudentInfo {
 }
 
 export interface ClassStudentsContextType {
-  students: StudentInfo[];
-  setStudents: Dispatch<SetStateAction<StudentInfo[]>>;
+  students: Record<number, StudentInfo>;
+  setStudents: Dispatch<SetStateAction<Record<number, StudentInfo>>>;
 }
 
 const ClassStudentsContext = React.createContext<

@@ -9,6 +9,8 @@ import {
   ConfirmBtn,
 } from "@/style/transfer/ConfirmMessageStyle";
 import { SubmitData } from "@/components/transfer/TransferForm";
+import { useContext } from "react";
+import ClassStudentsContext from "@/store/ClassStudentsContext";
 
 interface ConfirmMessageProps {
   submittedData: SubmitData;
@@ -21,12 +23,13 @@ function ConfirmMessage({
   showForm,
   handleTransfer,
 }: ConfirmMessageProps) {
-  const { withdrawOrDeposit, amount, students } = submittedData;
-  const firstStudent = students[0];
+  const { students } = useContext(ClassStudentsContext);
+  const { withdrawOrDeposit, amount, studentNumbers } = submittedData;
+  const firstStudent = students && students[parseInt(studentNumbers[0])].name;
   console.log(withdrawOrDeposit);
-  const numberOfRestStudents = students.length - 1;
+  const numberOfRestStudents = studentNumbers.length - 1;
   const studentBlock: string =
-    students.length === 1
+    studentNumbers.length === 1
       ? firstStudent
       : `${firstStudent}외 ${numberOfRestStudents}명의 학생`;
 

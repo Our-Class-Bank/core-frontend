@@ -4,8 +4,12 @@ import { Container } from "@/style/common/CommonStyle";
 import { Input, LoginForm, SubmitBtn } from "@/style/login/LoginStyle";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { postSignIn, getMyInfo } from "@/apis/authApi";
+import { postSignIn } from "@/apis/authApi";
+import { getMyInfo, getClassStudentsInfo } from "@/apis/infoApi";
 import UserContext, { UserContextType } from "@/store/UserContext";
+import ClassStudentsContext, {
+  ClassStudentsContextType,
+} from "@/store/ClassStudentsContext";
 
 export interface IFormValues {
   id: string;
@@ -22,6 +26,8 @@ function Login() {
   } = useForm<IFormValues>();
 
   const { setUserInfo } = useContext<UserContextType>(UserContext);
+  const { setStudents } =
+    useContext<ClassStudentsContextType>(ClassStudentsContext);
 
   const submitHandler: SubmitHandler<IFormValues> = async (data) => {
     try {
@@ -32,6 +38,10 @@ function Login() {
         //my information을 context에 전역으로 저장
         const userInfo = await getMyInfo();
         setUserInfo(userInfo.data);
+
+        const classStudentsInfo = await getClassStudentsInfo();
+        setStudents(classStudentsInfo);
+
         navigate("/");
       }
     } catch (error) {
