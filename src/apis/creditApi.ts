@@ -8,3 +8,10 @@ export async function postCredit(data: CreditPostData, username: string) {
   );
   return response;
 }
+
+export async function getClassCredit() {
+  const response = await privateApi.post(
+    `/api/v1/credit-evaluation/same-class/credit-evaluation`
+  );
+  return response;
+}

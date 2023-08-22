@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import { useTable, Cell, Column, HeaderGroup, Row } from "react-table";
 import {
   Thead,
@@ -5,22 +6,17 @@ import {
   Tbody,
   StyledDetailIcon,
 } from "@/style/credit/ClassCreditTableStyle";
+import { getClassCredit } from "@/apis/creditApi";
 
 interface ClassCreditData {
   attendanceNumber: number;
-  name: string;
+  studentName: string;
   score: string;
 }
 
-const classCreditData: ClassCreditData[] = [
-  { attendanceNumber: 1, name: "권아현", score: "71점" },
-  { attendanceNumber: 2, name: "권아현", score: "72점" },
-  { attendanceNumber: 3, name: "남궁민수", score: "73점" },
-];
-
 const columns: Column<ClassCreditData>[] = [
   { Header: "번호", accessor: "attendanceNumber" },
-  { Header: "이름", accessor: "name" },
+  { Header: "이름", accessor: "studentName" },
   { Header: "점수", accessor: "score" },
 ];
 
@@ -30,6 +26,16 @@ interface Props {
 
 function ClassCreditTable(props: Props) {
   const { changeToStudentCredit } = props;
+  const [classCreditData, setClassCreditData] = useState<ClassCreditData[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getClassCredit();
+      setClassCreditData(response);
+    };
+    fetchData();
+  }, []);
+
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable<ClassCreditData>({ columns, data: classCreditData });
 
