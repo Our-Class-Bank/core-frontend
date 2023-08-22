@@ -34,6 +34,7 @@ function Login() {
   const submitHandler: SubmitHandler<IFormValues> = async (data) => {
     try {
       setIsLoading(true);
+      console.log(data);
       const response = await postSignIn(data);
       if (response.status === 200) {
         localStorage.setItem("accessToken", response.data.accessToken);
