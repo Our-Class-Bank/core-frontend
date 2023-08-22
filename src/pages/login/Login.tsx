@@ -12,7 +12,7 @@ import ClassStudentsContext, {
 } from "@/store/ClassStudentsContext";
 
 export interface IFormValues {
-  id: string;
+  username: string;
   password: string;
 }
 
@@ -32,6 +32,7 @@ function Login() {
   const submitHandler: SubmitHandler<IFormValues> = async (data) => {
     try {
       setIsLoading(true);
+      console.log(data);
       const response = await postSignIn(data);
       if (response.status === 200) {
         localStorage.setItem("accessToken", response.data.token);
@@ -66,7 +67,7 @@ function Login() {
         <h1>우리반 은행</h1>
         <Input
           type="text"
-          {...register("id", { required: true })}
+          {...register("username", { required: true })}
           placeholder="아이디"
         />
         <Input

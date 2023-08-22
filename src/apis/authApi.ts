@@ -14,7 +14,7 @@ export const privateApi = axios.create({
 
 export async function postSignIn(data: IFormValues) {
   const response = await publicApi.post("/api/v1/auth/signin", {
-    username: data.id,
+    username: data.username,
     password: data.password,
   });
   return response;

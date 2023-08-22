@@ -9,9 +9,13 @@ import {
 } from "@/style/layout/SideBarStyle.tsx";
 import { ReactComponent as MyBankIcon } from "@/assets/images/MyBankIcon.svg";
 import { ReactComponent as TransferIcon } from "@/assets/images/TransferIcon.svg";
+import { ReactComponent as CreditEvaluateIcon } from "@/assets/images/CreditEvaluateIcon.svg";
+import UserContext from "@/store/UserContext";
+import { useContext } from "react";
 
 function SideBar() {
-  const userName = "김은행";
+  const loginedUserName = useContext(UserContext).name;
+  console.log(loginedUserName);
 
   const visibleSideBar = () => {
     if (location.pathname === "/login") return false;
@@ -23,7 +27,7 @@ function SideBar() {
       {visibleSideBar() && (
         <Wrapper>
           <NameBlock>
-            <Name>{userName}</Name>
+            <Name>{loginedUserName}</Name>
             <Text>님</Text>
           </NameBlock>
           <NavLink to="/">
@@ -42,7 +46,7 @@ function SideBar() {
 
           <NavLink to="/credit">
             <NavContainer>
-              <TransferIcon fill="white" />
+              <CreditEvaluateIcon />
               <NavText>신용등급 관리</NavText>
             </NavContainer>
           </NavLink>
