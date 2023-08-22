@@ -12,7 +12,7 @@ import FormHandleBtn from "@/style/common/FormHandleBtn";
 import CreditFormTitle from "@/style/credit/CreditFormTitle";
 import CreditChangeAll from "./CreditChangeAll";
 import ClassStudentsContext from "@/store/ClassStudentsContext";
-import { postCredit } from "@/apis/creditApi";
+import { postCredit, getClassCredit } from "@/apis/creditApi";
 import { CreditFormData } from "@/pages/credit/CreditForm";
 import ClassStudentsContext from "@/store/ClassStudentsContext";
 import { postCredit } from "@/apis/creditApi";
