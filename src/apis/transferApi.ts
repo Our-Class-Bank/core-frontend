@@ -16,3 +16,10 @@ export async function postDeposit(data: TransferData) {
   );
   return response;
 }
+
+export async function getMyInfo() {
+  const response = await privateApi.get(
+    "/api/v1/account/pocketmoney/history/by-banker"
+  );
+  return response;
+}
