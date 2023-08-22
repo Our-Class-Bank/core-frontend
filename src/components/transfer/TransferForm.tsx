@@ -4,6 +4,8 @@ import {
   Input,
   Form,
   NextBtn,
+  PlusIcon,
+  MinusIcon,
 } from "@/style/transfer/TransferFormStyle";
 import FormBtn from "@/style/common/FormBtn";
 import StudentList from "./StudentList";
@@ -31,13 +33,15 @@ const WithdrawOrDepositSelection: React.FC<{
       isCurrent={watchWithdrawOrDeposit === "지출"}
       onClick={() => setValue("withdrawOrDeposit", "지출")}
     >
-      지출
+      <MinusIcon />
+      <span>지출</span>
     </FormBtn>
     <FormBtn
       isCurrent={watchWithdrawOrDeposit === "수입"}
       onClick={() => setValue("withdrawOrDeposit", "수입")}
     >
-      수입
+      <PlusIcon />
+      <span>수입</span>
     </FormBtn>
   </InputContainer>
 );

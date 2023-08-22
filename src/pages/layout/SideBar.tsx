@@ -25,7 +25,7 @@ function SideBar() {
       {visibleSideBar() && (
         <Wrapper>
           <NameBlock>
-            <Name>{userName}</Name>
+            <Name>{loginedUserName}</Name>
             <Text>님</Text>
           </NameBlock>
           <NavLink to="/">
@@ -43,7 +43,7 @@ function SideBar() {
 
           <NavLink to="/credit">
             <NavContainer>
-              <TransferIcon fill="white" />
+              <CreditEvaluateIcon />
               <NavText>신용등급 관리</NavText>
             </NavContainer>
           </NavLink>
