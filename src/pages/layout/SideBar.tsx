@@ -40,6 +40,13 @@ function SideBar() {
               <NavText>입출금 관리</NavText>
             </NavContainer>
           </NavLink>
+
+          <NavLink to="/credit">
+            <NavContainer>
+              <TransferIcon fill="white" />
+              <NavText>신용등급 관리</NavText>
+            </NavContainer>
+          </NavLink>
         </Wrapper>
       )}
     </>
