@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import TableContainer from "@/style/common/TableContainer";
-
+import axios from "axios";
 import { Container } from "@/style/common/CommonStyle";
 import styled from "styled-components";
 import ClassCreditTable from "./ClassCreditTable";
@@ -10,6 +10,9 @@ import { ReactComponent as BackIcon } from "@/assets/images/back.svg";
 import FormHandleBtn from "@/style/common/FormHandleBtn";
 import CreditFormTitle from "@/style/credit/CreditFormTitle";
 import CreditChangeAll from "./CreditChangeAll";
+import ClassStudentsContext from "@/store/ClassStudentsContext";
+import { postCredit } from "@/apis/creditApi";
+import { CreditFormData } from "@/pages/credit/CreditForm";
 
 const Horizontal = styled.div`
   display: flex;
@@ -31,6 +34,7 @@ const Title = styled.h1`
 `;
 
 const Credit: React.FC = () => {
+  const { students } = useContext(ClassStudentsContext);
   //"우리반 신용점수" 컴포넌트 관련
   const [studentDetailMode, setStudentDetailMode] = useState(false);
   const [creditDetailStudent, setCreditDetailStudent] = useState<string>("");
@@ -64,8 +68,32 @@ const Credit: React.FC = () => {
     setIsCreditChangeAll(boolean);
   };
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: CreditFormData) => {
+    try {
+      const { description, studentNumbers, changePoint } = data;
+      const creditData = { description, changePoint };
+
+      for (let i = 0; i < studentNumbers.length; i++) {
+        const { username } = students[studentNumbers[i]];
+        console.log(creditData, username);
+        //await postCredit(creditData, username);
+      }
+
+      setIsFormValid(false);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 422) {
+          alert("");
+        }
+        if (error.response?.status === 401) {
+          alert("");
+        } else {
+          alert("");
+        }
+      } else {
+        console.error("An error occurred:", error);
+      }
+    }
   };
 
   const SubmitBtn: React.FC<{ onClick: (data: any) => void }> = ({
