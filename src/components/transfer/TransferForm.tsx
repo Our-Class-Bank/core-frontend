@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 export type SubmitData = {
   type: "마켓" | "벌금" | "기타" | "월급" | "상금" | "기타";
   amount: number;
-  students: [];
+  studentNumbers: [];
   description: string;
   withdrawOrDeposit: "수입" | "지출";
 };
@@ -114,7 +114,7 @@ const DescriptionInput: React.FC<{ register: Function }> = ({ register }) => (
 const TransferForm: React.FC<TransferFormProps> = ({ onSubmit }) => {
   const { register, setValue, handleSubmit, watch } = useForm();
 
-  const watchStudents = watch("students", []);
+  const watchStudentNumbers = watch("studentNumbers", []);
   const watchWithdrawOrDeposit = watch("withdrawOrDeposit");
   const watchType = watch("type");
   const watchAmount = watch("amount");
@@ -123,11 +123,14 @@ const TransferForm: React.FC<TransferFormProps> = ({ onSubmit }) => {
     watchWithdrawOrDeposit &&
     watchType &&
     watchAmount &&
-    watchStudents.length > 0;
+    watchStudentNumbers.length > 0;
 
   return (
     <Form id="trasferForm" onSubmit={handleSubmit(onSubmit)}>
-      <StudentList watchStudents={watchStudents} setValue={setValue} />
+      <StudentList
+        watchStudentNumbers={watchStudentNumbers}
+        setValue={setValue}
+      />
       <WithdrawOrDepositSelection
         watchWithdrawOrDeposit={watchWithdrawOrDeposit}
         setValue={setValue}

@@ -3,10 +3,10 @@ import { Wrapper } from "@/style/transfer/TransferFormStyle";
 import TransferForm from "./TransferForm";
 import ConfirmMessage from "./ConfirmMessage";
 import { SubmitHandler } from "react-hook-form";
-import UserContext from "@/store/UserContext";
 import { postWithdraw, postDeposit } from "@/apis/transferApi";
 import axios from "axios";
 import { SubmitData } from "@/components/transfer/TransferForm";
+import ClassStudentsContext from "@/store/ClassStudentsContext";
 
 export type TransferData = {
   accountNo: string;
@@ -16,7 +16,7 @@ export type TransferData = {
 };
 
 function TransferModal() {
-  const userContext = useContext(UserContext);
+  const { students } = useContext(ClassStudentsContext);
   const [showConfirmMessage, setShowConfirmMessage] = useState<boolean>(false);
   const [submittedData, setSubmittedData] = useState<SubmitData | null>(null);
 
@@ -35,21 +35,28 @@ function TransferModal() {
     if (!submittedData) {
       return;
     }
-    const { type, amount, students, description, withdrawOrDeposit } =
+    const { type, amount, studentNumbers, description, withdrawOrDeposit } =
       submittedData;
-    const accountNo = userContext && userContext.userInfo.pocketmoneyAccountNo;
-    const transferData: TransferData = {
-      accountNo: accountNo || "",
-      type,
-      amount,
-      description,
+
+    const transfer = withdrawOrDeposit === "지출" ? postWithdraw : postDeposit;
+
+    const makeTransferData = (attendanceNumber: number) => {
+      const accountNo = students[attendanceNumber].pocketmoneyAccountNo;
+      const transferData: TransferData = {
+        accountNo,
+        type,
+        amount,
+        description,
+      };
+      return transferData;
     };
     try {
-      if (withdrawOrDeposit === "지출") {
-        await postWithdraw(transferData);
-      } else if (withdrawOrDeposit === "수입") {
-        await postDeposit(transferData);
+      for (let i = 0; i < studentNumbers.length; i++) {
+        const data = makeTransferData(i);
+        console.log(data);
+        //await transfer(data);
       }
+
       setShowConfirmMessage(false);
     } catch (error) {
       if (axios.isAxiosError(error)) {
