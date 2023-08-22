@@ -33,6 +33,11 @@ const Title = styled.h1`
   margin-left: 8px;
 `;
 
+export type CreditPostData = {
+  changePoint: string;
+  description: string;
+};
+
 const Credit: React.FC = () => {
   const { students } = useContext(ClassStudentsContext);
   //"우리반 신용점수" 컴포넌트 관련
@@ -96,7 +101,7 @@ const Credit: React.FC = () => {
     }
   };
 
-  const SubmitBtn: React.FC<{ onClick: (data: any) => void }> = ({
+  const SubmitBtn: React.FC<{ onClick: (data: CreditFormData) => void }> = ({
     onClick,
   }) => (
     <FormHandleBtn
