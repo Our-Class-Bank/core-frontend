@@ -8,9 +8,8 @@ interface UserProviderProps {
 const UserProvider: React.FC<UserProviderProps> = (props) => {
   const [userInfo, setUserInfo] = useState<UserInfo>({
     username: "",
-    name: "임은행",
-    //임시적으로 통장번호 입력해둠. 로그인 API해결 시에 고칠 것
-    pocketmoneyAccountNo: "e033690f-f486-471f-b303-9ffcdb3f5780",
+    name: "",
+    pocketmoneyAccountNo: "",
   });
 
   const contextValue: UserContextType = {

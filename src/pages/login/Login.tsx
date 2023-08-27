@@ -27,8 +27,8 @@ function Login() {
     formState: { isValid },
   } = useForm<IFormValues>();
 
-  const { setUserInfo } = useContext<UserContextType>(UserContext);
-  const { setStudents } =
+  const { userInfo, setUserInfo } = useContext<UserContextType>(UserContext);
+  const { classStudents, setClassStudents } =
     useContext<ClassStudentsContextType>(ClassStudentsContext);
 
   const submitHandler: SubmitHandler<IFormValues> = async (data) => {
