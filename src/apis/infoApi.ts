@@ -8,7 +8,6 @@ export async function getMyInfo() {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
-      withCredentials: true,
     }
   );
   return response;
@@ -35,13 +34,5 @@ export async function getClassStudentsInfo(): Promise<
     "/api/v1/same-class/user"
   );
 
-  const responseArrToObject: Record<number, StudentInfo> = response.data.reduce(
-    (acc, curr) => {
-      acc[curr.userClass.attendanceNumber] = curr;
-      return acc;
-    },
-    {} as Record<number, StudentInfo>
-  );
-
-  return responseArrToObject;
+  return response.data;
 }

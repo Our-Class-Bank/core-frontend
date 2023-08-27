@@ -54,7 +54,7 @@ function TransferModal() {
       for (let i = 0; i < studentNumbers.length; i++) {
         const data = makeTransferData(i);
         console.log(data);
-        //await transfer(data);
+        await transfer(data);
       }
 
       setShowConfirmMessage(false);
