@@ -34,11 +34,10 @@ function SideBar() {
               <NavText>내 통장</NavText>
             </NavContainer>
           </NavLink>
-
           <NavLink to="/transfer">
             <NavContainer>
               <TransferIcon fill="white" />
-              <NavText>입출금</NavText>
+              <NavText>입출금 관리</NavText>
             </NavContainer>
           </NavLink>
         </Wrapper>
