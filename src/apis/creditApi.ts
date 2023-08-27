@@ -15,3 +15,11 @@ export async function getClassCredit() {
   );
   return response;
 }
+
+//신용등급관리자 전용
+export async function getClassCreditLog() {
+  const response = await privateApi.post(
+    `/api/v1/account/pocketmoney/history/by-credit-evaluator`
+  );
+  return response;
+}

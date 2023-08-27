@@ -20,9 +20,13 @@ export const privateApi = axios.create({
 });
  */
 export async function postSignIn(data: IFormValues) {
-  const response = await publicApi.post("/api/v1/auth/signin", {
-    username: data.username,
-    password: data.password,
-  });
+  console.log(data);
+  const response = await axios.post(
+    `${import.meta.env.VITE_SERVER_IP}/api/v1/auth/signin`,
+    {
+      username: data.username,
+      password: data.password,
+    }
+  );
   return response;
 }

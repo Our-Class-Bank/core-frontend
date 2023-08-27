@@ -17,7 +17,8 @@ export async function postDeposit(data: TransferData) {
   return response;
 }
 
-export async function getMyInfo() {
+//은행원 전용
+export async function getBankerHistory() {
   const response = await privateApi.get(
     "/api/v1/account/pocketmoney/history/by-banker"
   );

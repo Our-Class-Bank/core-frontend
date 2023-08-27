@@ -43,7 +43,7 @@ function SideBar() {
 
           <NavLink to="/credit">
             <NavContainer>
-              <CreditEvaluateIcon />
+              <CreditEvaluateIcon fill="white" />
               <NavText>신용등급 관리</NavText>
             </NavContainer>
           </NavLink>
