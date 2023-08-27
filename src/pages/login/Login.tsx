@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { Container } from "@/style/common/CommonStyle";
 import { Input, LoginForm, SubmitBtn } from "@/style/login/LoginStyle";
@@ -25,24 +25,25 @@ function Login() {
       setIsLoading(true);
       const response = await postSignIn(data);
       if (response.status === 200) {
-        localStorage.setItem("accessToken", response.data.token);
+        localStorage.setItem("accessToken", response.data.accessToken);
         navigate("/");
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        if (error.response?.status === 422) {
-          alert("");
-        }
-        if (error.response?.status === 401) {
-          alert("");
+        if (error.response?.status === 400) {
+          alert("아이디와 비밀번호를 다시 확인해주세요.");
         } else {
-          alert("");
+          alert("예상치못한 에러가 발생했습니다. 잠시 후 다시 시도해주세요.");
         }
       }
     } finally {
       setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return <>loading...</>;
+  }
 
   return (
     <Container>
