@@ -32,13 +32,18 @@ function Login() {
   const submitHandler: SubmitHandler<IFormValues> = async (data) => {
     try {
       setIsLoading(true);
-      console.log(data);
       const response = await postSignIn(data);
       if (response.status === 200) {
-        localStorage.setItem("accessToken", response.data.token);
+        localStorage.setItem("accessToken", response.data.accessToken);
         //my information을 context에 전역으로 저장
+        console.log("before getMyInfo", localStorage.getItem("accessToken"));
         const userInfo = await getMyInfo();
+        console.log(userInfo);
+
         setUserInfo(userInfo.data);
+        //console.log(localStorage.getItem("accessToken"));
+
+        ///console.log("before getClassInfo", localStorage.getItem("accessToken"));
 
         const classStudentsInfo = await getClassStudentsInfo();
         setStudents(classStudentsInfo);
@@ -57,6 +62,7 @@ function Login() {
         }
       }
     } finally {
+      console.log(localStorage.getItem("accessToken"));
       setIsLoading(false);
     }
   };

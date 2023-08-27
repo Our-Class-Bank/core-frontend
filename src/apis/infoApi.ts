@@ -1,7 +1,16 @@
 import { privateApi } from "@/apis/authApi";
+import axios from "axios";
 
 export async function getMyInfo() {
-  const response = await privateApi.get("/api/v1/my");
+  const response = await axios.get(
+    `${import.meta.env.VITE_SERVER_IP}/api/v1/my`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      withCredentials: true,
+    }
+  );
   return response;
 }
 

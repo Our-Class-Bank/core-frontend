@@ -14,7 +14,7 @@ import UserContext from "@/store/UserContext";
 import { useContext } from "react";
 
 function SideBar() {
-  const loginedUserName = useContext(UserContext).name;
+  const loginedUserName = useContext(UserContext).userInfo.name;
   console.log(loginedUserName);
 
   const visibleSideBar = () => {
@@ -46,7 +46,7 @@ function SideBar() {
 
           <NavLink to="/credit">
             <NavContainer>
-              <CreditEvaluateIcon />
+              <CreditEvaluateIcon fill="white" />
               <NavText>신용등급 관리</NavText>
             </NavContainer>
           </NavLink>
