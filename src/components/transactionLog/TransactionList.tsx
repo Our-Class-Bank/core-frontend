@@ -10,7 +10,7 @@ import {
 } from "@/style/components/TransactionLogStyle";
 import { getDate } from "./utills/getDate";
 
-const dummy = [
+/* const dummy = [
   {
     id: 1,
     type1: "지출",
@@ -47,9 +47,20 @@ const dummy = [
     amount: 100,
     balance: 300,
   },
-];
+]; */
 
-function TransactionList() {
+export interface TransactionListDataType {
+  data: {
+    accountNo: string;
+    type: string;
+    amount: number;
+    description: string;
+    balance: number;
+    transactionAt: string;
+  }[];
+}
+
+function TransactionList({ data }: TransactionListDataType) {
   const dateSet = new Set();
   const displayDate = (transactionDate: string) => {
     dateSet.add(transactionDate);

@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import Header from "@/pages/layout/Header";
 import SideBar from "@/pages/layout/SideBar";
 import defaultTheme from "@/style/theme";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -75,6 +76,7 @@ function App() {
         </Container>
         <GlobalStyle />
       </BrowserRouter>
+      <ReactQueryDevtools />
     </ThemeProvider>
   );
 }

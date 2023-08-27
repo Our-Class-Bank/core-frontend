@@ -9,9 +9,11 @@ import {
 } from "@/style/layout/SideBarStyle.tsx";
 import { ReactComponent as MyBankIcon } from "@/assets/images/MyBankIcon.svg";
 import { ReactComponent as TransferIcon } from "@/assets/images/TransferIcon.svg";
+import { useLocation } from "react-router-dom";
 
 function SideBar() {
   const userName = "김은행";
+  const location = useLocation();
 
   const visibleSideBar = () => {
     if (location.pathname === "/login") return false;
@@ -32,11 +34,10 @@ function SideBar() {
               <NavText>내 통장</NavText>
             </NavContainer>
           </NavLink>
-
           <NavLink to="/transfer">
             <NavContainer>
               <TransferIcon fill="white" />
-              <NavText>입출금</NavText>
+              <NavText>입출금 관리</NavText>
             </NavContainer>
           </NavLink>
         </Wrapper>

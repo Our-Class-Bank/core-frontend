@@ -1,6 +1,10 @@
+import { getMyInfo } from "@/apis/authApi";
+import { getMyAccountLog } from "@/apis/myBankApi";
 import AssetInfo from "@/components/assetInfo/AssetInfo";
 import MyTransactionLog from "@/components/myTransactionLog/MyTransactionLog";
 import PurchaseLog from "@/components/purchaseLog/PurchaseLog";
+import { TransactionListDataType } from "@/components/transactionLog/TransactionList";
+import { useQuery } from "@tanstack/react-query";
 import { styled } from "styled-components";
 
 const Container = styled.div`
@@ -26,13 +30,50 @@ const Header = styled.h1`
   margin-bottom: 12px;
 `;
 
+interface MyInfoDataType {
+  data: {
+    user: {
+      username: string;
+      name: string;
+      pocketmoneyAccountNo: string;
+      userClass: {
+        schoolName: string;
+        grade: number;
+        classNumber: number;
+        attendanceNumber: number;
+      };
+    };
+  };
+}
+
 function Home() {
+  const { data: myInfoData, isLoading: myInfoLoading } =
+    useQuery<MyInfoDataType>(["myInfo"], getMyInfo);
+
+  const { data: myAccountLogData, isLoading: myAccountLogLoading } =
+    useQuery<TransactionListDataType>(
+      [
+        "myAccountLog",
+        myInfoData !== undefined
+          ? myInfoData.data.user.pocketmoneyAccountNo
+          : "",
+      ],
+      getMyAccountLog,
+      {
+        enabled: !!myInfoData,
+      }
+    );
+
+  if (myInfoLoading || myAccountLogLoading) {
+    return <>loading...</>;
+  }
+
   return (
     <Container>
       <LeftContainer>
         <div>
           <Header>
-            <span>{"김은행"}</span>님의 자산정보
+            <span>{myInfoData?.data.user.name}</span>님의 자산정보
           </Header>
           <AssetInfo />
         </div>
@@ -45,7 +86,9 @@ function Home() {
         <Header>
           <span>통장</span> 상세내역
         </Header>
-        <MyTransactionLog />
+        <MyTransactionLog
+          data={myAccountLogData !== undefined ? myAccountLogData.data : []}
+        />
       </div>
     </Container>
   );

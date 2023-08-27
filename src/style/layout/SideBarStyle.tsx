@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const Wrapper = styled.div`
-  width: 270px;
+  width: 210px;
   height: 100vh;
   background: #2f3fd4;
   position: fixed;
@@ -36,12 +36,13 @@ export const NavLink = styled(Link)`
 `;
 export const NavContainer = styled.span`
   width: 100%;
-  margin-left: 20px;
+  padding-left: 20px;
 `;
+
 export const NavText = styled.span`
   font-style: normal;
   font-weight: 500;
-  font-size: 28px;
+  font-size: 24px;
   line-height: 27px;
   padding: 12px;
   color: #ffffff;
