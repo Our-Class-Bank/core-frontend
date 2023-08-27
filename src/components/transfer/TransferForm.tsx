@@ -12,7 +12,13 @@ import StudentList from "./StudentList";
 import { useForm } from "react-hook-form";
 
 export type SubmitData = {
-  type: "마켓" | "벌금" | "기타" | "월급" | "상금" | "기타";
+  type:
+    | "INCOME_SALARY"
+    | "INCOME_PRIZE_MONEY"
+    | "INCOME_ETC"
+    | "EXPENSE_FINE"
+    | "EXPENSE_MARKET"
+    | "EXPENSE_ETC";
   amount: number;
   studentNumbers: [];
   description: string;
@@ -53,20 +59,20 @@ const MinusTypeSelection: React.FC<{
   <InputContainer>
     <h3>항목</h3>
     <FormBtn
-      isCurrent={watchType === "마켓"}
-      onClick={() => setValue("type", "마켓")}
+      isCurrent={watchType === "EXPENSE_MARKET"}
+      onClick={() => setValue("type", "EXPENSE_MARKET")}
     >
       마켓
     </FormBtn>
     <FormBtn
-      isCurrent={watchType === "벌금"}
-      onClick={() => setValue("type", "벌금")}
+      isCurrent={watchType === "EXPENSE_FINE"}
+      onClick={() => setValue("type", "EXPENSE_FINE")}
     >
       벌금
     </FormBtn>
     <FormBtn
-      isCurrent={watchType === "기타"}
-      onClick={() => setValue("type", "기타")}
+      isCurrent={watchType === "EXPENSE_ETC"}
+      onClick={() => setValue("type", "EXPENSE_ETC")}
     >
       기타
     </FormBtn>
@@ -80,20 +86,20 @@ const PlusTypeSelection: React.FC<{
   <InputContainer>
     <h3>항목</h3>
     <FormBtn
-      isCurrent={watchType === "월급"}
-      onClick={() => setValue("type", "월급")}
+      isCurrent={watchType === "INCOME_SALARY"}
+      onClick={() => setValue("type", "INCOME_SALARY")}
     >
       월급
     </FormBtn>
     <FormBtn
-      isCurrent={watchType === "상금"}
-      onClick={() => setValue("type", "상금")}
+      isCurrent={watchType === "INCOME_PRIZE_MONEY"}
+      onClick={() => setValue("type", "INCOME_PRIZE_MONEY")}
     >
       상금
     </FormBtn>
     <FormBtn
-      isCurrent={watchType === "기타"}
-      onClick={() => setValue("type", "기타")}
+      isCurrent={watchType === "INCOME_ETC"}
+      onClick={() => setValue("type", "INCOME_ETC")}
     >
       기타
     </FormBtn>

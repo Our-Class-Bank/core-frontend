@@ -25,8 +25,8 @@ function Login() {
     formState: { isValid },
   } = useForm<IFormValues>();
 
-  const { setUserInfo } = useContext<UserContextType>(UserContext);
-  const { setStudents } =
+  const { userInfo, setUserInfo } = useContext<UserContextType>(UserContext);
+  const { classStudents, setClassStudents } =
     useContext<ClassStudentsContextType>(ClassStudentsContext);
 
   const submitHandler: SubmitHandler<IFormValues> = async (data) => {
@@ -46,10 +46,16 @@ function Login() {
         }
       }
     } finally {
-      console.log(localStorage.getItem("accessToken"));
+      navigate("/");
       setIsLoading(false);
     }
   };
+  useEffect(() => console.log(userInfo), [userInfo]);
+  useEffect(() => console.log(classStudents), [classStudents]);
+
+  if (isLoading) {
+    return <>loading...</>;
+  }
 
   if (isLoading) {
     return <>loading...</>;

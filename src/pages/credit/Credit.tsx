@@ -81,7 +81,7 @@ const Credit: React.FC = () => {
       for (let i = 0; i < studentNumbers.length; i++) {
         const { username } = students[studentNumbers[i]];
         console.log(creditData, username);
-        //await postCredit(creditData, username);
+        await postCredit(creditData, username);
       }
 
       setIsFormValid(false);
