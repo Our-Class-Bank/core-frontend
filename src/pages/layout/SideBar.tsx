@@ -9,9 +9,11 @@ import {
 } from "@/style/layout/SideBarStyle.tsx";
 import { ReactComponent as MyBankIcon } from "@/assets/images/MyBankIcon.svg";
 import { ReactComponent as TransferIcon } from "@/assets/images/TransferIcon.svg";
+import { useLocation } from "react-router-dom";
 
 function SideBar() {
   const userName = "김은행";
+  const location = useLocation();
 
   const visibleSideBar = () => {
     if (location.pathname === "/login") return false;
