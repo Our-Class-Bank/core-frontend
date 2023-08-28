@@ -3,31 +3,32 @@ import {
   Test,
   TestTest,
 } from "@/style/components/TransactionLogStyle";
-interface ILogData {
-  logData: {
-    id: number;
-    type1: string;
-    type2: string;
-    type3: string;
-    transactionAt: string;
-    amount: number;
-    balance: number;
-  };
+import { MY_TRANSACTION_LOG_TYPE } from "./constants";
+
+export interface TransactionData {
+  accountNo: string;
+  type: keyof typeof MY_TRANSACTION_LOG_TYPE;
+  amount: number;
+  description: string;
+  balance: number;
+  transactionAt: string;
 }
 
-function TransactionLog({ logData }: ILogData) {
-  const { type1, type2, type3, amount, balance } = logData;
+function TransactionLog({ data }: { data: TransactionData }) {
+  const { amount, description, balance } = data;
+  const [type, _] = data.type.split("_");
+
   return (
     <TestContainer>
-      <Test $logType={type1}>
-        <p>{type2}</p>
+      <Test $logType={type}>
+        <p>{MY_TRANSACTION_LOG_TYPE[data.type]}</p>
         <p>
-          {type1 === "입금" ? "+" : "-"}
+          {type === "EXPENSE" ? "+" : "-"}
           {amount}진스
         </p>
       </Test>
       <TestTest>
-        <p>{type3}</p>
+        <p>{description}</p>
         <p>잔액 {balance}진스</p>
       </TestTest>
     </TestContainer>

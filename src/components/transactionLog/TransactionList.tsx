@@ -1,5 +1,7 @@
 import { Fragment } from "react";
-import TransactionLog from "@/components/transactionLog/TransactionLog";
+import TransactionLog, {
+  TransactionData,
+} from "@/components/transactionLog/TransactionLog";
 import {
   DatePoint,
   DateRow,
@@ -10,57 +12,7 @@ import {
 } from "@/style/components/TransactionLogStyle";
 import { getDate } from "./utills/getDate";
 
-/* const dummy = [
-  {
-    id: 1,
-    type1: "지출",
-    type2: "마트",
-    type3: "아침활동 면제권",
-    transactionAt: "2023-07-01T14:40:14.042Z",
-    amount: 100,
-    balance: 300,
-  },
-  {
-    id: 2,
-    type1: "입금",
-    type2: "월급",
-    type3: "은행원 월급",
-    transactionAt: "2023-06-30T14:40:14.042Z",
-    amount: 100,
-    balance: 300,
-  },
-  {
-    id: 3,
-    type1: "지출",
-    type2: "마트",
-    type3: "아침활동 면제권",
-    transactionAt: "2023-06-30T14:40:14.042Z",
-    amount: 100,
-    balance: 300,
-  },
-  {
-    id: 4,
-    type1: "입금",
-    type2: "마트",
-    type3: "아침활동 면제권",
-    transactionAt: "2023-12-30T14:40:14.042Z",
-    amount: 100,
-    balance: 300,
-  },
-]; */
-
-export interface TransactionListDataType {
-  data: {
-    accountNo: string;
-    type: string;
-    amount: number;
-    description: string;
-    balance: number;
-    transactionAt: string;
-  }[];
-}
-
-function TransactionList({ data }: TransactionListDataType) {
+function TransactionList({ data }: { data: TransactionData[] }) {
   const dateSet = new Set();
   const displayDate = (transactionDate: string) => {
     dateSet.add(transactionDate);
@@ -70,18 +22,18 @@ function TransactionList({ data }: TransactionListDataType) {
     <TransctionListWrapper>
       <LogDateStick />
       <TransctionLogWrapper>
-        {dummy.map((transaction, idx) => {
+        {data.map((transaction, idx) => {
           const transactionDate = getDate(transaction.transactionAt);
           return (
-            <Fragment key={transaction.id}>
+            <Fragment key={idx}>
               {dateSet.has(transactionDate) ? null : (
                 <DateRow>
                   <DatePoint />
                   <DateText>{displayDate(transactionDate)}</DateText>
                 </DateRow>
               )}
-              <TransactionLog logData={transaction} />
-              {dummy.length - 1 === idx && (
+              <TransactionLog data={transaction} />
+              {data.length - 1 === idx && (
                 <DateRow>
                   <DatePoint />
                   <DateText>마지막 내역입니다.</DateText>

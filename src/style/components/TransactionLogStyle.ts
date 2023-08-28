@@ -32,7 +32,7 @@ export const Test = styled.div<{ $logType: string }>`
 
   p:last-child {
     color: ${(props) =>
-      props.$logType === "입금" ? props.theme.mainBlue : "black"};
+      props.$logType === "EXPANSE" ? props.theme.mainBlue : "black"};
   }
 `;
 
