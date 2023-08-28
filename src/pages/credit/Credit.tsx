@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import React, { useState, useContext } from "react";
 import TableContainer from "@/style/common/TableContainer";
 import axios from "axios";
 import { Container } from "@/style/common/CommonStyle";
@@ -11,9 +10,6 @@ import { ReactComponent as BackIcon } from "@/assets/images/back.svg";
 import FormHandleBtn from "@/style/common/FormHandleBtn";
 import CreditFormTitle from "@/style/credit/CreditFormTitle";
 import CreditChangeAll from "./CreditChangeAll";
-import ClassStudentsContext from "@/store/ClassStudentsContext";
-import { postCredit } from "@/apis/creditApi";
-import { CreditFormData } from "@/pages/credit/CreditForm";
 import ClassStudentsContext from "@/store/ClassStudentsContext";
 import { postCredit } from "@/apis/creditApi";
 import { CreditFormData } from "@/pages/credit/CreditForm";
@@ -43,7 +39,6 @@ export type CreditPostData = {
 };
 
 const Credit: React.FC = () => {
-  const { students } = useContext(ClassStudentsContext);
   const { students } = useContext(ClassStudentsContext);
   //"우리반 신용점수" 컴포넌트 관련
   const [studentDetailMode, setStudentDetailMode] = useState(false);
