@@ -1,7 +1,8 @@
 import { Wrapper, StudentBtns } from "@/style/transfer/StudentListStyle";
 import FormBtn from "@/style/common/FormBtn";
-import { useContext } from "react";
-import ClassStudentsContext from "@/store/ClassStudentsContext";
+
+import { useQuery } from "@tanstack/react-query";
+import { getMyClassInfo } from "@/apis/infoApi";
 
 interface StudentListProps {
   setValue: (name: "students", value: number[]) => void;
@@ -14,7 +15,11 @@ const StudentList = ({
   watchStudentNumbers,
   height,
 }: StudentListProps) => {
-  const { students } = useContext(ClassStudentsContext);
+  const { data: myClassData, isLoading: myClassLoading } = useQuery({
+    queryKey: ["myClassData"],
+    queryFn: getMyClassInfo,
+  });
+  console.log(myClassData);
   const handleStudentClick = (attendanceNumber: number) => {
     const updatedAttendanceNumbers = watchStudentNumbers.includes(
       attendanceNumber
@@ -28,25 +33,28 @@ const StudentList = ({
 
     //setSelectedStudents(updatedStudents);
     setValue("studentNumbers", updatedAttendanceNumbers);
+    console.log(updatedAttendanceNumbers);
   };
+  if (myClassLoading) {
+    return <>Loading...</>;
+  }
 
   return (
     <Wrapper height={height}>
       <StudentBtns>
-        {Object.keys(students).map((attendanceNumber) => {
-          const student = students[parseInt(attendanceNumber)];
+        {myClassData.map((student) => {
+          const {
+            name,
+            userClass: { attendanceNumber },
+          } = student;
           if (!student) return null;
           return (
             <FormBtn
-              onClick={() =>
-                handleStudentClick(student.userClass.attendanceNumber)
-              }
-              isCurrent={watchStudentNumbers.includes(
-                student.userClass.attendanceNumber
-              )}
+              onClick={() => handleStudentClick(attendanceNumber)}
+              isCurrent={watchStudentNumbers.includes(attendanceNumber)}
               key={attendanceNumber}
             >
-              {student.name}
+              {attendanceNumber}.{name}
             </FormBtn>
           );
         })}

@@ -30,3 +30,22 @@ export async function postSignIn(data: IFormValues) {
   );
   return response;
 }
+
+{
+  /*export async function getMyInfo() {
+  const response = await privateApi.get("/api/v1/my");
+  return response;
+}*/
+}
+
+export async function getMyInfo() {
+  const response = await axios.get(
+    `${import.meta.env.VITE_SERVER_IP}/api/v1/my`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    }
+  );
+  return response;
+}

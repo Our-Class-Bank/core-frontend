@@ -5,11 +5,6 @@ import { Input, LoginForm, SubmitBtn } from "@/style/login/LoginStyle";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { postSignIn } from "@/apis/authApi";
-import { getMyInfo, getClassStudentsInfo } from "@/apis/infoApi";
-import UserContext, { UserContextType } from "@/store/UserContext";
-import ClassStudentsContext, {
-  ClassStudentsContextType,
-} from "@/store/ClassStudentsContext";
 
 export interface IFormValues {
   username: string;
@@ -25,14 +20,11 @@ function Login() {
     formState: { isValid },
   } = useForm<IFormValues>();
 
-  const { userInfo, setUserInfo } = useContext<UserContextType>(UserContext);
-  const { classStudents, setClassStudents } =
-    useContext<ClassStudentsContextType>(ClassStudentsContext);
-
   const submitHandler: SubmitHandler<IFormValues> = async (data) => {
     try {
       setIsLoading(true);
       const response = await postSignIn(data);
+
       if (response.status === 200) {
         localStorage.setItem("accessToken", response.data.accessToken);
         navigate("/");
@@ -50,9 +42,6 @@ function Login() {
       setIsLoading(false);
     }
   };
-  useEffect(() => console.log(userInfo), [userInfo]);
-  useEffect(() => console.log(classStudents), [classStudents]);
-
   if (isLoading) {
     return <>loading...</>;
   }

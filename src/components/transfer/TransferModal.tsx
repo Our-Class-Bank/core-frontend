@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Wrapper } from "@/style/transfer/TransferFormStyle";
 import TransferForm from "./TransferForm";
 import ConfirmMessage from "./ConfirmMessage";
@@ -6,7 +6,8 @@ import { SubmitHandler } from "react-hook-form";
 import { postWithdraw, postDeposit } from "@/apis/transferApi";
 import axios from "axios";
 import { SubmitData } from "@/components/transfer/TransferForm";
-import ClassStudentsContext from "@/store/ClassStudentsContext";
+import { useQuery } from "@tanstack/react-query";
+import { getMyClassInfo } from "@/apis/infoApi";
 
 export type TransferData = {
   accountNo: string;
@@ -16,7 +17,10 @@ export type TransferData = {
 };
 
 function TransferModal() {
-  const { students } = useContext(ClassStudentsContext);
+  const { data: myClassData, isLoading: myClassLoading } = useQuery({
+    queryKey: ["myClassData"],
+    queryFn: getMyClassInfo,
+  });
   const [showConfirmMessage, setShowConfirmMessage] = useState<boolean>(false);
   const [submittedData, setSubmittedData] = useState<SubmitData | null>(null);
 
@@ -38,10 +42,11 @@ function TransferModal() {
     const { type, amount, studentNumbers, description, withdrawOrDeposit } =
       submittedData;
 
-    const transfer = withdrawOrDeposit === "지출" ? postWithdraw : postDeposit;
+    const postTransfer =
+      withdrawOrDeposit === "지출" ? postWithdraw : postDeposit;
 
     const makeTransferData = (attendanceNumber: number) => {
-      const accountNo = students[attendanceNumber].pocketmoneyAccountNo;
+      const accountNo = myClassData[attendanceNumber].pocketmoneyAccountNo;
       const transferData: TransferData = {
         accountNo,
         type,
@@ -54,7 +59,7 @@ function TransferModal() {
       for (let i = 0; i < studentNumbers.length; i++) {
         const data = makeTransferData(i);
         console.log(data);
-        await transfer(data);
+        await postTransfer(data);
       }
 
       setShowConfirmMessage(false);
@@ -71,6 +76,10 @@ function TransferModal() {
       }
     }
   };
+
+  if (myClassLoading) {
+    return <>Loading...</>;
+  }
 
   return (
     <Wrapper>

@@ -30,18 +30,20 @@ const Header = styled.h1`
   margin-bottom: 12px;
 `;
 
+export interface UserClassType {
+  schoolName: string;
+  grade: number;
+  classNumber: number;
+  attendanceNumber: number;
+}
+
 interface MyInfoDataType {
   data: {
     user: {
       username: string;
       name: string;
       pocketmoneyAccountNo: string;
-      userClass: {
-        schoolName: string;
-        grade: number;
-        classNumber: number;
-        attendanceNumber: number;
-      };
+      userClass: UserClassType;
     };
   };
 }
@@ -53,6 +55,8 @@ interface MyAccountLog {
 function Home() {
   const { data: myInfoData, isLoading: myInfoLoading } =
     useQuery<MyInfoDataType>(["myInfo"], getMyInfo);
+
+  console.log(myInfoData);
 
   const { data: myAccountLogData, isLoading: myAccountLogLoading } =
     useQuery<MyAccountLog>(

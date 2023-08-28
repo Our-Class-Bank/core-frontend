@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import TableContainer from "@/style/common/TableContainer";
 import axios from "axios";
 import { Container } from "@/style/common/CommonStyle";
@@ -10,9 +10,10 @@ import { ReactComponent as BackIcon } from "@/assets/images/back.svg";
 import FormHandleBtn from "@/style/common/FormHandleBtn";
 import CreditFormTitle from "@/style/credit/CreditFormTitle";
 import CreditChangeAll from "./CreditChangeAll";
-import ClassStudentsContext from "@/store/ClassStudentsContext";
 import { postCredit } from "@/apis/creditApi";
 import { CreditFormData } from "@/pages/credit/CreditForm";
+import { useQuery } from "@tanstack/react-query";
+import { getEvaluatorLog } from "@/apis/creditApi";
 
 const Horizontal = styled.div`
   display: flex;
@@ -33,13 +34,21 @@ const Title = styled.h1`
   margin-left: 8px;
 `;
 
-export type CreditPostData = {
-  changePoint: string;
+interface EvaluatorLog {
+  id: number;
+  username: string;
+  changePoint: number;
   description: string;
-};
+  score: number;
+  createdAt: string;
+}
 
 const Credit: React.FC = () => {
-  const { students } = useContext(ClassStudentsContext);
+  const { data: evaluatorLogData, isLoading: evaluatorLogLoading } = useQuery<
+    EvaluatorLog[]
+  >(["evaluatorLog"], getEvaluatorLog);
+
+  console.log(evaluatorLogData);
   //"우리반 신용점수" 컴포넌트 관련
   const [studentDetailMode, setStudentDetailMode] = useState(false);
   const [creditDetailStudent, setCreditDetailStudent] = useState<string>("");
@@ -76,10 +85,11 @@ const Credit: React.FC = () => {
   const onSubmit = async (data: CreditFormData) => {
     try {
       const { description, studentNumbers, changePoint } = data;
+
       const creditData = { description, changePoint };
 
       for (let i = 0; i < studentNumbers.length; i++) {
-        const { username } = students[studentNumbers[i]];
+        const { username } = myClassData[parseInt(studentNumbers[i])];
         console.log(creditData, username);
         await postCredit(creditData, username);
       }
@@ -113,6 +123,10 @@ const Credit: React.FC = () => {
       입력
     </FormHandleBtn>
   );
+
+  if (evaluatorLogLoading) {
+    return <>loading...</>;
+  }
 
   return (
     <Container>

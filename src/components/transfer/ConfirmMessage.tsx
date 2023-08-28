@@ -9,8 +9,8 @@ import {
   ConfirmBtn,
 } from "@/style/transfer/ConfirmMessageStyle";
 import { SubmitData } from "@/components/transfer/TransferForm";
-import { useContext } from "react";
-import ClassStudentsContext from "@/store/ClassStudentsContext";
+import { useQuery } from "@tanstack/react-query";
+import { getMyClassInfo } from "@/apis/infoApi";
 
 interface ConfirmMessageProps {
   submittedData: SubmitData;
@@ -23,9 +23,14 @@ function ConfirmMessage({
   showForm,
   handleTransfer,
 }: ConfirmMessageProps) {
-  const { students } = useContext(ClassStudentsContext);
+  //여기서는 context 쓰는게 낫지 않을까 싶다.
+  const { data: myClassData, isLoading: myClassLoading } = useQuery({
+    queryKey: ["myClassData"],
+    queryFn: getMyClassInfo,
+  });
   const { withdrawOrDeposit, amount, studentNumbers } = submittedData;
-  const firstStudent = students && students[parseInt(studentNumbers[0])].name;
+  const firstStudent =
+    studentNumbers && myClassData[parseInt(studentNumbers[0])].name;
   console.log(withdrawOrDeposit);
   const numberOfRestStudents = studentNumbers.length - 1;
   const studentBlock: string =
@@ -45,6 +50,10 @@ function ConfirmMessage({
         <TypeText>지출</TypeText>
       </TypeWrapper>
     );
+
+  if (myClassLoading) {
+    return <>Loading...</>;
+  }
 
   return (
     <>

@@ -51,7 +51,7 @@ const assetInfoList = [
 function AssetInfo() {
   return (
     <div>
-      <CardWrapper>
+      {/*<CardWrapper>
         {assetInfoList.map((info) => (
           <CardItemWrapper>
             <CardItem
@@ -64,7 +64,7 @@ function AssetInfo() {
             </ToggleWrapper>
           </CardItemWrapper>
         ))}
-      </CardWrapper>
+        </CardWrapper>*/}
     </div>
   );
 }

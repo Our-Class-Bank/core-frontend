@@ -7,6 +7,7 @@ import {
   Text,
   NavContainer,
 } from "@/style/layout/SideBarStyle.tsx";
+import { ReactComponent as CreditEvaluateIcon } from "@/assets/images/CreditEvaluateIcon.svg";
 import { ReactComponent as MyBankIcon } from "@/assets/images/MyBankIcon.svg";
 import { ReactComponent as TransferIcon } from "@/assets/images/TransferIcon.svg";
 import { useLocation } from "react-router-dom";
@@ -25,7 +26,7 @@ function SideBar() {
       {visibleSideBar() && (
         <Wrapper>
           <NameBlock>
-            <Name>{loginedUserName}</Name>
+            <Name>{userName}</Name>
             <Text>님</Text>
           </NameBlock>
           <NavLink to="/">
