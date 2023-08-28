@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
-import TransactionList, {
-  TransactionListDataType,
-} from "../transactionLog/TransactionList";
+import TransactionList from "../transactionLog/TransactionList";
+import { TransactionData } from "../transactionLog/TransactionLog";
 
 const Container = styled.div``;
 
@@ -14,7 +13,7 @@ const CardWrapper = styled.ul`
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
 `;
 
-function MyTransactionLog({ data }: TransactionListDataType) {
+function MyTransactionLog({ data }: { data: TransactionData[] }) {
   return (
     <Container>
       <CardWrapper>

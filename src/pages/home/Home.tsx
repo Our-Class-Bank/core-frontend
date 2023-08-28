@@ -3,7 +3,7 @@ import { getMyAccountLog } from "@/apis/myBankApi";
 import AssetInfo from "@/components/assetInfo/AssetInfo";
 import MyTransactionLog from "@/components/myTransactionLog/MyTransactionLog";
 import PurchaseLog from "@/components/purchaseLog/PurchaseLog";
-import { TransactionListDataType } from "@/components/transactionLog/TransactionList";
+import { TransactionData } from "@/components/transactionLog/TransactionLog";
 import { useQuery } from "@tanstack/react-query";
 import { styled } from "styled-components";
 
@@ -46,12 +46,16 @@ interface MyInfoDataType {
   };
 }
 
+interface MyAccountLog {
+  data: TransactionData[];
+}
+
 function Home() {
   const { data: myInfoData, isLoading: myInfoLoading } =
     useQuery<MyInfoDataType>(["myInfo"], getMyInfo);
 
   const { data: myAccountLogData, isLoading: myAccountLogLoading } =
-    useQuery<TransactionListDataType>(
+    useQuery<MyAccountLog>(
       [
         "myAccountLog",
         myInfoData !== undefined
