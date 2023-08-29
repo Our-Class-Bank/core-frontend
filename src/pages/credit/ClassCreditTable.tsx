@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { useTable, Cell, Column, HeaderGroup, Row } from "react-table";
 import {
   Thead,
@@ -6,6 +5,7 @@ import {
   Tbody,
   StyledDetailIcon,
 } from "@/style/credit/ClassCreditTableStyle";
+import { useQuery } from "@tanstack/react-query";
 import { getClassCredit } from "@/apis/creditApi";
 
 interface ClassCreditData {
@@ -17,7 +17,7 @@ interface ClassCreditData {
 const columns: Column<ClassCreditData>[] = [
   { Header: "번호", accessor: "attendanceNumber" },
   { Header: "이름", accessor: "studentName" },
-  { Header: "점수", accessor: "score" },
+  { Header: "점수", accessor: (row: any) => <span>{row.score}점</span> },
 ];
 
 interface Props {
@@ -26,24 +26,24 @@ interface Props {
 
 function ClassCreditTable(props: Props) {
   const { changeToStudentCredit } = props;
-  const [classCreditData, setClassCreditData] = useState<ClassCreditData[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await getClassCredit();
-      setClassCreditData(response);
-    };
-    fetchData();
-  }, []);
+  const { data: classCreditData, isLoading: classCreditLoading } = useQuery({
+    queryKey: ["classCreditData"],
+    queryFn: getClassCredit,
+  });
+  const filteredCreditData = classCreditData ? classCreditData.slice(1) : [];
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable<ClassCreditData>({ columns, data: classCreditData });
+    useTable<ClassCreditData>({ columns, data: filteredCreditData });
 
   const handleClick = (row: Row<ClassCreditData>) => {
     const studentName = row.cells[1].value as string;
     changeToStudentCredit(studentName);
   };
 
+  if (classCreditLoading) {
+    return <>Loading...</>;
+  }
   return (
     <Table {...getTableProps()}>
       <Thead>

@@ -65,6 +65,10 @@ export async function getBankerLog() {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
+      params: {
+        fromAt: "2020-05-05T10:10:10",
+        toAt: "2025-05-05T10:10:10",
+      },
     }
   );
   return response;

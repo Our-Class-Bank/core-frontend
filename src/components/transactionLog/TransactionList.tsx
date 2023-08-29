@@ -23,7 +23,6 @@ function TransactionList({ data }: { data: TransactionData[] }) {
       <LogDateStick />
       <TransctionLogWrapper>
         {data.map((transaction, idx) => {
-        {data.map((transaction, idx) => {
           const transactionDate = getDate(transaction.transactionAt);
           return (
             <Fragment key={idx}>
@@ -33,8 +32,6 @@ function TransactionList({ data }: { data: TransactionData[] }) {
                   <DateText>{displayDate(transactionDate)}</DateText>
                 </DateRow>
               )}
-              <TransactionLog logData={transaction} />
-              {data.length - 1 === idx && (
               <TransactionLog data={transaction} />
               {data.length - 1 === idx && (
                 <DateRow>

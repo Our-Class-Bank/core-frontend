@@ -19,13 +19,17 @@ function Transfer() {
     BankerLog[]
   >(["bankerLog"], getBankerLog);
 
+  console.log(bankerLogData);
+
+  console.log(bankerLogData);
+
   if (bankerLogLoading) {
     return <>Loading...</>;
   }
   return (
     <Container>
       <Wrapper>
-        <TransferTransactionList data={bankerLogData} />
+        <TransferTransactionList data={bankerLogData.data} />
         <TransferModal />
       </Wrapper>
     </Container>

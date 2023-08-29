@@ -56,8 +56,6 @@ function Home() {
   const { data: myInfoData, isLoading: myInfoLoading } =
     useQuery<MyInfoDataType>(["myInfo"], getMyInfo);
 
-  console.log(myInfoData);
-
   const { data: myAccountLogData, isLoading: myAccountLogLoading } =
     useQuery<MyAccountLog>(
       [

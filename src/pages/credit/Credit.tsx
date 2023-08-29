@@ -13,7 +13,8 @@ import CreditChangeAll from "./CreditChangeAll";
 import { postCredit } from "@/apis/creditApi";
 import { CreditFormData } from "@/pages/credit/CreditForm";
 import { useQuery } from "@tanstack/react-query";
-import { getEvaluatorLog } from "@/apis/creditApi";
+import { getEvaluatorLog, getClassCredit } from "@/apis/creditApi";
+import { getMyClassInfo } from "@/apis/infoApi";
 
 const Horizontal = styled.div`
   display: flex;
@@ -48,7 +49,18 @@ const Credit: React.FC = () => {
     EvaluatorLog[]
   >(["evaluatorLog"], getEvaluatorLog);
 
-  console.log(evaluatorLogData);
+  const { data: myClassData, isLoading: myClassLoading } = useQuery({
+    queryKey: ["myClassData"],
+    queryFn: getMyClassInfo,
+  });
+
+  const { data: classCreditData, isLoading: classCreditLoading } = useQuery({
+    queryKey: ["classCreditData"],
+    queryFn: getClassCredit,
+  });
+
+  console.log(classCreditData);
+
   //"우리반 신용점수" 컴포넌트 관련
   const [studentDetailMode, setStudentDetailMode] = useState(false);
   const [creditDetailStudent, setCreditDetailStudent] = useState<string>("");
@@ -124,7 +136,7 @@ const Credit: React.FC = () => {
     </FormHandleBtn>
   );
 
-  if (evaluatorLogLoading) {
+  if (evaluatorLogLoading || classCreditLoading || myClassLoading) {
     return <>loading...</>;
   }
 
@@ -132,14 +144,13 @@ const Credit: React.FC = () => {
     <Container>
       <Horizontal>
         <TableContainer titlePart={containerTitle}>
-          {!studentDetailMode && (
-            <ClassCreditTable changeToStudentCredit={changeToStudentCredit} />
-          )}
-          {studentDetailMode && <CreditLogTable />}
+          <ClassCreditTable changeToStudentCredit={changeToStudentCredit} />
+
+          {/*{studentDetailMode && <CreditLogTable />}*/}
         </TableContainer>
 
         <TableContainer title="최신 입력내역">
-          <CreditLogTable />
+          <CreditLogTable creditLogData={evaluatorLogData} />
         </TableContainer>
 
         <TableContainer

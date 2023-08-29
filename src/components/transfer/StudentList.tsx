@@ -33,7 +33,6 @@ const StudentList = ({
 
     //setSelectedStudents(updatedStudents);
     setValue("studentNumbers", updatedAttendanceNumbers);
-    console.log(updatedAttendanceNumbers);
   };
   if (myClassLoading) {
     return <>Loading...</>;
@@ -42,7 +41,7 @@ const StudentList = ({
   return (
     <Wrapper height={height}>
       <StudentBtns>
-        {myClassData.map((student) => {
+        {myClassData.slice(1).map((student) => {
           const {
             name,
             userClass: { attendanceNumber },
