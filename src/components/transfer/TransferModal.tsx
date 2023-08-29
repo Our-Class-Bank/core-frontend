@@ -11,7 +11,13 @@ import { getMyClassInfo } from "@/apis/infoApi";
 
 export type TransferData = {
   accountNo: string;
-  type: "마켓" | "벌금" | "기타" | "월급" | "상금" | "기타";
+  type:
+    | "INCOME_SALARY"
+    | "INCOME_PRIZE_MONEY"
+    | "INCOME_ETC"
+    | "EXPENSE_MARKET"
+    | "EXPENSE_FINE"
+    | "EXPENSE_ETC";
   amount: number;
   description: string;
 };
@@ -46,7 +52,11 @@ function TransferModal() {
       withdrawOrDeposit === "지출" ? postWithdraw : postDeposit;
 
     const makeTransferData = (attendanceNumber: number) => {
-      const accountNo = myClassData[attendanceNumber].pocketmoneyAccountNo;
+      const accountNo =
+        myClassData && myClassData[attendanceNumber].pocketmoneyAccountNo;
+      if (!accountNo) {
+        return null;
+      }
       const transferData: TransferData = {
         accountNo,
         type,
@@ -58,8 +68,9 @@ function TransferModal() {
     try {
       for (let i = 0; i < studentNumbers.length; i++) {
         const data = makeTransferData(i);
-        console.log(data);
-        await postTransfer(data);
+        if (data) {
+          await postTransfer(data);
+        }
       }
 
       setShowConfirmMessage(false);
@@ -86,7 +97,6 @@ function TransferModal() {
       {!showConfirmMessage && <TransferForm onSubmit={onSubmit} />}
       {showConfirmMessage && (
         <ConfirmMessage
-          onSubmit={onSubmit}
           submittedData={submittedData as SubmitData}
           showForm={showForm}
           handleTransfer={handleTransfer}

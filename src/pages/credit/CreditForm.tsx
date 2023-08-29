@@ -10,7 +10,7 @@ import { useEffect } from "react";
 
 export type CreditFormData = {
   description: string;
-  studentNumbers: string[];
+  studentNumbers: number[];
   changePoint: string;
 };
 
@@ -28,7 +28,7 @@ const DescriptionInput: React.FC<{ register: any }> = ({ register }) => (
 
 const Buttons: React.FC<{
   watchChangePoint?: string;
-  setValue: (field: keyof CreditFormData, value: any) => void;
+  setValue: (field: keyof CreditFormData, value: string) => void;
   handleReset: () => void;
 }> = ({ watchChangePoint, setValue, handleReset }) => (
   <InputContainer>

@@ -30,34 +30,33 @@ const TitleWrapper = styled.div`
   align-items: center;
 `;
 
-interface CreditFormTitleProps {
-  isCreditChangeAll: boolean;
+{
+  /*interface CreditFormTitleProps {
+  //isCreditChangeAll: boolean;
   handleCreditChangeAll: (value: boolean) => void;
 }
-
-const CreditFormTitle: React.FC<CreditFormTitleProps> = ({
-  isCreditChangeAll,
-  handleCreditChangeAll,
-}) => {
+*/
+}
+const CreditFormTitle: React.FC = () => {
   return (
     <TitleWrapper>
       <Title
-        //isactive={!isCreditChangeAll}
-        onClick={() => handleCreditChangeAll(false)}
+      //isactive={!isCreditChangeAll}
+      //onClick={() => handleCreditChangeAll(false)}
       >
         입력
       </Title>
-      <Title
+      {/*<Title
       //isactive={isCreditChangeAll}
       >
         <span>|</span>
       </Title>
       <Title
-        //isactive={isCreditChangeAll}
-        onClick={() => handleCreditChangeAll(true)}
+      //isactive={isCreditChangeAll}
+      //onClick={() => handleCreditChangeAll(true)}
       >
         전체변경
-      </Title>
+  </Title>*/}
     </TitleWrapper>
   );
 };

@@ -1,5 +1,5 @@
 import { QueryFunctionContext, QueryKey } from "@tanstack/react-query";
-import { privateApi } from "./authApi";
+//import { privateApi } from "./authApi";
 import axios from "axios";
 
 {

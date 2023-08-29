@@ -1,13 +1,13 @@
 import TransferModal from "@/components/transfer/TransferModal";
-import TransferTransactionList from "@/components/transfer/TransferTransactionList";
+import TransactionList from "@/components/transactionLog/TransactionList";
 import { Container } from "@/style/common/CommonStyle";
 import { Wrapper } from "@/style/transfer/TransferStyle";
 import { useQuery } from "@tanstack/react-query";
 import { getBankerLog } from "@/apis/transferApi";
 
-interface BankerLog {
+export interface BankerLog {
   accountNo: string;
-  type: "INCOME_SALARY" | "EXPENSE_MARKET"; // Add more types if needed
+  type: "INCOME_SALARY" | "EXPENSE_MARKET";
   amount: number;
   description: string;
   balance: number;
@@ -21,15 +21,15 @@ function Transfer() {
 
   console.log(bankerLogData);
 
-  console.log(bankerLogData);
-
   if (bankerLogLoading) {
     return <>Loading...</>;
   }
   return (
     <Container>
       <Wrapper>
-        <TransferTransactionList data={bankerLogData.data} />
+        <TransactionList
+          data={bankerLogData !== undefined ? bankerLogData : []}
+        />
         <TransferModal />
       </Wrapper>
     </Container>

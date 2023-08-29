@@ -1,4 +1,4 @@
-import { privateApi } from "@/apis/authApi";
+//import { privateApi } from "@/apis/authApi";
 import { CreditPostData } from "@/pages/credit/Credit";
 import axios from "axios";
 

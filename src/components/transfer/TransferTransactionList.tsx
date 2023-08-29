@@ -1,11 +1,15 @@
 import TransactionList from "@/components/transactionLog/TransactionList";
+import { BankerLog } from "@/pages/transfer/Transfer";
 
-import { TransactionListDataType } from "@/components/transactionLog/TransactionList";
-
-function TransferTransactionList({ data }: TransactionListDataType) {
+interface TransferTransactionListProps {
+  bankerLogData: BankerLog[];
+}
+function TransferTransactionList({
+  bankerLogData,
+}: TransferTransactionListProps) {
   return (
     <>
-      <TransactionList data={data} />
+      <TransactionList data={bankerLogData} />
     </>
   );
 }

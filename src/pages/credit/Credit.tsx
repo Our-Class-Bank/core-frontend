@@ -9,7 +9,7 @@ import CreditForm from "./CreditForm";
 import { ReactComponent as BackIcon } from "@/assets/images/back.svg";
 import FormHandleBtn from "@/style/common/FormHandleBtn";
 import CreditFormTitle from "@/style/credit/CreditFormTitle";
-import CreditChangeAll from "./CreditChangeAll";
+//import CreditChangeAll from "./CreditChangeAll";
 import { postCredit } from "@/apis/creditApi";
 import { CreditFormData } from "@/pages/credit/CreditForm";
 import { useQuery } from "@tanstack/react-query";
@@ -87,12 +87,14 @@ const Credit: React.FC = () => {
   );
 
   //"입력 & 전체변경" 컴포넌트 관련
-  const [isCreditChangeAll, setIsCreditChangeAll] = useState(false);
+  //const [isCreditChangeAll, setIsCreditChangeAll] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const handleCreditChangeAll = (boolean: boolean) => {
+  {
+    /*const handleCreditChangeAll = (boolean: boolean) => {
     setIsCreditChangeAll(boolean);
-  };
+  };*/
+  }
 
   const onSubmit = async (data: CreditFormData) => {
     try {
@@ -101,9 +103,12 @@ const Credit: React.FC = () => {
       const creditData = { description, changePoint };
 
       for (let i = 0; i < studentNumbers.length; i++) {
-        const { username } = myClassData[parseInt(studentNumbers[i])];
-        console.log(creditData, username);
-        await postCredit(creditData, username);
+        const studentInfo = myClassData?.[studentNumbers[i]];
+        if (studentInfo && studentInfo.username) {
+          const { username } = studentInfo;
+          console.log(creditData, username);
+          await postCredit(creditData, username);
+        }
       }
 
       setIsFormValid(false);
@@ -149,24 +154,27 @@ const Credit: React.FC = () => {
           {/*{studentDetailMode && <CreditLogTable />}*/}
         </TableContainer>
 
-        <TableContainer title="최신 입력내역">
-          <CreditLogTable creditLogData={evaluatorLogData} />
-        </TableContainer>
+        {evaluatorLogData && (
+          <TableContainer title="최신 입력내역">
+            <CreditLogTable creditLogData={evaluatorLogData} />
+          </TableContainer>
+        )}
 
         <TableContainer
           titlePart={
             <CreditFormTitle
-              isCreditChangeAll={isCreditChangeAll}
-              handleCreditChangeAll={handleCreditChangeAll}
+            //isCreditChangeAll={isCreditChangeAll}
+            //handleCreditChangeAll={handleCreditChangeAll}
             />
           }
           width="527px"
           buttonPart={<SubmitBtn onClick={onSubmit} />}
         >
-          {!isCreditChangeAll && (
+          {/*{!isCreditChangeAll && (
             <CreditForm onSubmit={onSubmit} setIsFormValid={setIsFormValid} />
           )}
-          {isCreditChangeAll && <CreditChangeAll />}
+          {isCreditChangeAll && <CreditChangeAll />}*/}
+          <CreditForm onSubmit={onSubmit} setIsFormValid={setIsFormValid} />
         </TableContainer>
       </Horizontal>
     </Container>

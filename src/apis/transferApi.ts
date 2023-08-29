@@ -1,4 +1,3 @@
-import { privateApi } from "@/apis/authApi";
 import { TransferData } from "@/components/transfer/TransferModal";
 import axios from "axios";
 {
@@ -71,5 +70,5 @@ export async function getBankerLog() {
       },
     }
   );
-  return response;
+  return response.data;
 }

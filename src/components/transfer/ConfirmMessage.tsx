@@ -30,13 +30,17 @@ function ConfirmMessage({
   });
   const { withdrawOrDeposit, amount, studentNumbers } = submittedData;
   const firstStudent =
-    studentNumbers && myClassData[parseInt(studentNumbers[0])].name;
-  console.log(withdrawOrDeposit);
+    studentNumbers.length > 0
+      ? myClassData?.[studentNumbers[0]]?.name || ""
+      : "";
+
   const numberOfRestStudents = studentNumbers.length - 1;
   const studentBlock: string =
-    studentNumbers.length === 1
-      ? firstStudent
-      : `${firstStudent}외 ${numberOfRestStudents}명의 학생`;
+    studentNumbers.length > 0
+      ? studentNumbers.length === 1
+        ? firstStudent
+        : `${firstStudent}외 ${numberOfRestStudents}명의 학생`
+      : "";
 
   const withdrawOrDepositBlock =
     withdrawOrDeposit === "수입" ? (

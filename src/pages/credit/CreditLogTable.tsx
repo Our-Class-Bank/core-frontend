@@ -2,7 +2,16 @@ import { useTable } from "react-table";
 import { Thead, Table, Tbody } from "@/style/credit/ClassCreditTableStyle";
 import { BlackTxt, GrayTxt, BlueTxt } from "@/style/credit/CreditLogTableStyle";
 
-export const formatDateToCustomString = (createdAt) => {
+export interface CreditLogData {
+  id: number;
+  username: string;
+  changePoint: number;
+  description: string;
+  score: number;
+  createdAt: string;
+}
+
+export const formatDateToCustomString = (createdAt: string) => {
   const date = new Date(createdAt);
   const month = date.getMonth() + 1;
   const day = date.getDate();
@@ -18,7 +27,7 @@ export const formatDateToCustomString = (createdAt) => {
 const columns = [
   {
     Header: "내용",
-    accessor: (row: any) => (
+    accessor: (row: CreditLogData) => (
       <div>
         <BlackTxt>{row.description}</BlackTxt>
         <GrayTxt>{formatDateToCustomString(row.createdAt)}</GrayTxt>
@@ -27,7 +36,7 @@ const columns = [
   },
   {
     Header: "점수",
-    accessor: (row: any) => (
+    accessor: (row: CreditLogData) => (
       <div>
         <BlueTxt>{row.changePoint}점</BlueTxt>
         <GrayTxt>{row.score}점</GrayTxt>
@@ -36,27 +45,31 @@ const columns = [
   },
 ];
 
-function CreditLogTable({ creditLogData }) {
+interface CreditLogTableProps {
+  creditLogData: CreditLogData[];
+}
+
+const CreditLogTable: React.FC<CreditLogTableProps> = ({ creditLogData }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data: creditLogData });
 
   return (
     <Table {...getTableProps()}>
       <Thead>
-        {headerGroups.map((headerGroup: any) => (
+        {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column: any) => (
+            {headerGroup.headers.map((column) => (
               <th {...column.getHeaderProps()}>{column.render("Header")}</th>
             ))}
           </tr>
         ))}
       </Thead>
       <Tbody {...getTableBodyProps()}>
-        {rows.map((row: any) => {
+        {rows.map((row) => {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map((cell: any) => (
+              {row.cells.map((cell) => (
                 <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
               ))}
             </tr>
@@ -65,6 +78,6 @@ function CreditLogTable({ creditLogData }) {
       </Tbody>
     </Table>
   );
-}
+};
 
 export default CreditLogTable;
