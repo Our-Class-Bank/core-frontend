@@ -17,6 +17,7 @@ function SideBar() {
 
   const visibleSideBar = () => {
     if (location.pathname === "/login") return false;
+    if (location.pathname === "/reset-password") return false;
     return true;
   };
 

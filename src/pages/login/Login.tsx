@@ -6,8 +6,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { postSignIn } from "@/apis/authApi";
 
-export interface IFormValues {
-  id: string;
+export interface LoginFormValues {
+  username: string;
   password: string;
 }
 
@@ -18,9 +18,9 @@ function Login() {
     register,
     handleSubmit,
     formState: { isValid },
-  } = useForm<IFormValues>();
+  } = useForm<LoginFormValues>();
 
-  const submitHandler: SubmitHandler<IFormValues> = async (data) => {
+  const submitHandler: SubmitHandler<LoginFormValues> = async (data) => {
     try {
       setIsLoading(true);
       const response = await postSignIn(data);
@@ -51,7 +51,7 @@ function Login() {
         <h1>우리반 은행</h1>
         <Input
           type="text"
-          {...register("id", { required: true })}
+          {...register("username", { required: true })}
           placeholder="아이디"
         />
         <Input

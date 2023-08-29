@@ -8,6 +8,7 @@ function Header() {
 
   const visibleHeader = () => {
     if (location.pathname === "/login") return false;
+    if (location.pathname === "/reset-password") return false;
     return true;
   };
 
