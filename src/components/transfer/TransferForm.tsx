@@ -9,7 +9,12 @@ import {
 } from "@/style/transfer/TransferFormStyle";
 import FormBtn from "@/style/common/FormBtn";
 import StudentList from "./StudentList";
-import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
+import {
+  useForm,
+  UseFormRegister,
+  SubmitHandler,
+  FieldValues,
+} from "react-hook-form";
 
 export type SubmitData = {
   type:
@@ -31,7 +36,7 @@ interface TransferFormProps {
 
 const WithdrawOrDepositSelection: React.FC<{
   watchWithdrawOrDeposit: string;
-  setValue: Function;
+  setValue: (name: string, value: string) => void;
 }> = ({ watchWithdrawOrDeposit, setValue }) => (
   <InputContainer>
     <h3>분류</h3>
@@ -54,7 +59,7 @@ const WithdrawOrDepositSelection: React.FC<{
 
 const MinusTypeSelection: React.FC<{
   watchType: string;
-  setValue: Function;
+  setValue: (name: string, value: string) => void;
 }> = ({ watchType, setValue }) => (
   <InputContainer>
     <h3>항목</h3>
@@ -81,7 +86,7 @@ const MinusTypeSelection: React.FC<{
 
 const PlusTypeSelection: React.FC<{
   watchType: string;
-  setValue: Function;
+  setValue: (name: string, value: string) => void;
 }> = ({ watchType, setValue }) => (
   <InputContainer>
     <h3>항목</h3>
@@ -106,7 +111,9 @@ const PlusTypeSelection: React.FC<{
   </InputContainer>
 );
 
-const AmountInput: React.FC<{ register: Function }> = ({ register }) => (
+const AmountInput: React.FC<{
+  register: UseFormRegister<FieldValues>;
+}> = ({ register }) => (
   <InputContainer>
     <h3>금액</h3>
     <Input type="number" width="114px" {...register("amount")} />
@@ -114,7 +121,9 @@ const AmountInput: React.FC<{ register: Function }> = ({ register }) => (
   </InputContainer>
 );
 
-const DescriptionInput: React.FC<{ register: Function }> = ({ register }) => (
+const DescriptionInput: React.FC<{
+  register: UseFormRegister<FieldValues>;
+}> = ({ register }) => (
   <InputContainer>
     <h3>내용</h3>
     <Input type="text" width="424px" {...register("description")} />
@@ -124,16 +133,8 @@ const DescriptionInput: React.FC<{ register: Function }> = ({ register }) => (
 const TransferForm: React.FC<TransferFormProps> = ({ onSubmit }) => {
   const { register, setValue, handleSubmit, watch } = useForm();
 
-  const handleSubmitForm: SubmitHandler<FieldValues> = (data: any) => {
-    const submitData: SubmitData = {
-      type: data.type,
-      amount: parseInt(data.amount),
-      studentNumbers: data.studentNumbers,
-      description: data.description,
-      withdrawOrDeposit: data.withdrawOrDeposit,
-    };
-
-    onSubmit(submitData);
+  const submitHandler: SubmitHandler<FieldValues> = (data: FieldValues) => {
+    onSubmit(data as SubmitData);
   };
 
   const watchStudentNumbers = watch("studentNumbers", []);
@@ -148,7 +149,7 @@ const TransferForm: React.FC<TransferFormProps> = ({ onSubmit }) => {
     watchStudentNumbers.length > 0;
 
   return (
-    <Form id="trasferForm" onSubmit={handleSubmit(handleSubmitForm)}>
+    <Form id="trasferForm" onSubmit={handleSubmit(submitHandler)}>
       <StudentList
         watchStudentNumbers={watchStudentNumbers}
         setValue={setValue}
@@ -164,7 +165,7 @@ const TransferForm: React.FC<TransferFormProps> = ({ onSubmit }) => {
       )}
       <AmountInput register={register} />
       <DescriptionInput register={register} />
-      <NextBtn disabled={!isValid} onClick={handleSubmit(handleSubmitForm)}>
+      <NextBtn disabled={!isValid} onClick={handleSubmit(submitHandler)}>
         다음
       </NextBtn>
     </Form>

@@ -64,7 +64,16 @@ export async function getEvaluatorLog() {
   return response.data;
 }
 
-export async function getStudentCreditLog() {
+export type StudentCreditLog = {
+  id: number;
+  username: string;
+  changePoint: number;
+  description: string;
+  score: number;
+  createdAt: string;
+};
+
+export async function getStudentCreditLog(username: string) {
   const response = await axios.get(
     `${import.meta.env.VITE_SERVER_IP}/api/v1/credit-evaluation/history`,
     {
@@ -72,6 +81,7 @@ export async function getStudentCreditLog() {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
       params: {
+        username,
         fromAt: "2020-05-05T10:10:10",
         toAt: "2025-05-05T10:10:10",
       },

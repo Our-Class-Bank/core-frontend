@@ -4,7 +4,7 @@ import FormBtn from "@/style/common/FormBtn";
 
 import { useQuery } from "@tanstack/react-query";
 import { getMyClassInfo } from "@/apis/infoApi";
-
+import { StudentInfo } from "@/apis/infoApi";
 interface StudentListProps {
   setValue: (name: "studentNumbers", value: number[]) => void;
   watchStudentNumbers: number[];
@@ -16,7 +16,9 @@ const StudentList: React.FC<StudentListProps> = ({
   watchStudentNumbers,
   height,
 }: StudentListProps) => {
-  const { data: myClassData, isLoading: myClassLoading } = useQuery({
+  const { data: myClassData, isLoading: myClassLoading } = useQuery<
+    StudentInfo[]
+  >({
     queryKey: ["myClassData"],
     queryFn: getMyClassInfo,
   });

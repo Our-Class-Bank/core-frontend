@@ -26,7 +26,7 @@ const StyledBtn = styled.button<StyledBtnProps>`
 `;
 
 interface ButtonProps extends StyledBtnProps {
-  onClick: (data: any) => void;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
   children?: React.ReactNode;
   form?: string;
   buttonType: "submit" | "reset" | "button";

@@ -4,7 +4,7 @@ import {
   Input,
   Form,
 } from "@/style/transfer/TransferFormStyle";
-import { useForm } from "react-hook-form";
+import { useForm, UseFormRegister } from "react-hook-form";
 import FormBtn from "@/style/common/FormBtn";
 import { useEffect } from "react";
 
@@ -19,7 +19,9 @@ interface CreditFormProps {
   setIsFormValid: (isValid: boolean) => void;
 }
 
-const DescriptionInput: React.FC<{ register: any }> = ({ register }) => (
+const DescriptionInput: React.FC<{
+  register: UseFormRegister<CreditFormData>;
+}> = ({ register }) => (
   <InputContainer>
     <h3>내용</h3>
     <Input type="text" width="437px" {...register("description")} />
@@ -68,7 +70,7 @@ const CreditForm: React.FC<CreditFormProps> = (props) => {
   useEffect(() => {
     console.log(isValid);
     setIsFormValid(isValid);
-  }, [isValid]);
+  }, [isValid, setIsFormValid]);
 
   const handleReset = () => {
     reset({

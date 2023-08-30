@@ -11,6 +11,7 @@ import {
 import { SubmitData } from "@/components/transfer/TransferForm";
 import { useQuery } from "@tanstack/react-query";
 import { getMyClassInfo } from "@/apis/infoApi";
+import { StudentInfo } from "@/apis/infoApi";
 
 interface ConfirmMessageProps {
   submittedData: SubmitData;
@@ -24,20 +25,25 @@ function ConfirmMessage({
   handleTransfer,
 }: ConfirmMessageProps) {
   //여기서는 context 쓰는게 낫지 않을까 싶다.
-  const { data: myClassData, isLoading: myClassLoading } = useQuery({
+  const { data: myClassData, isLoading: myClassLoading } = useQuery<
+    StudentInfo[]
+  >({
     queryKey: ["myClassData"],
     queryFn: getMyClassInfo,
   });
+  console.log(submittedData);
   const { withdrawOrDeposit, amount, studentNumbers } = submittedData;
   const firstStudent =
     studentNumbers.length > 0
-      ? myClassData?.[studentNumbers[0]]?.name || ""
+      ? // ????
+        myClassData?.[studentNumbers[0]]?.name || ""
       : "";
 
   const numberOfRestStudents = studentNumbers.length - 1;
   const studentBlock: string =
     studentNumbers.length > 0
-      ? studentNumbers.length === 1
+      ? //????
+        studentNumbers.length === 1
         ? firstStudent
         : `${firstStudent}외 ${numberOfRestStudents}명의 학생`
       : "";

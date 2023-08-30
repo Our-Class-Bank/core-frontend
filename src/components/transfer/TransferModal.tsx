@@ -1,13 +1,15 @@
+import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { SubmitHandler } from "react-hook-form";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Wrapper } from "@/style/transfer/TransferFormStyle";
 import TransferForm from "./TransferForm";
 import ConfirmMessage from "./ConfirmMessage";
-import { SubmitHandler } from "react-hook-form";
-import { postWithdraw, postDeposit } from "@/apis/transferApi";
-import axios from "axios";
-import { SubmitData } from "@/components/transfer/TransferForm";
-import { useQuery } from "@tanstack/react-query";
 import { getMyClassInfo } from "@/apis/infoApi";
+import { StudentInfo } from "@/apis/infoApi";
+import { postWithdraw, postDeposit } from "@/apis/transferApi";
+import { SubmitData } from "@/components/transfer/TransferForm";
 
 export type TransferData = {
   accountNo: string;
@@ -23,7 +25,11 @@ export type TransferData = {
 };
 
 function TransferModal() {
-  const { data: myClassData, isLoading: myClassLoading } = useQuery({
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { data: myClassData, isLoading: myClassLoading } = useQuery<
+    StudentInfo[]
+  >({
     queryKey: ["myClassData"],
     queryFn: getMyClassInfo,
   });
@@ -31,7 +37,6 @@ function TransferModal() {
   const [submittedData, setSubmittedData] = useState<SubmitData | null>(null);
 
   const onSubmit: SubmitHandler<SubmitData> = (data) => {
-    console.log(data);
     setSubmittedData(data);
     setShowConfirmMessage(true);
   };
@@ -51,6 +56,7 @@ function TransferModal() {
     const postTransfer =
       withdrawOrDeposit === "지출" ? postWithdraw : postDeposit;
 
+    //submittedData를 api에 보내기 적합한 transferData로 변경
     const makeTransferData = (attendanceNumber: number) => {
       const accountNo =
         myClassData && myClassData[attendanceNumber].pocketmoneyAccountNo;
@@ -65,6 +71,7 @@ function TransferModal() {
       };
       return transferData;
     };
+
     try {
       for (let i = 0; i < studentNumbers.length; i++) {
         const data = makeTransferData(i);
@@ -77,7 +84,7 @@ function TransferModal() {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 422) {
-          alert("");
+          alert("Error");
         }
         if (error.response?.status === 401) {
           alert("");
@@ -85,6 +92,10 @@ function TransferModal() {
           alert("");
         }
       }
+    } finally {
+      setSubmittedData(null);
+      queryClient.invalidateQueries({ queryKey: ["bankerLog"] });
+      navigate("/transfer");
     }
   };
 

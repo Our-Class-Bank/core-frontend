@@ -12,9 +12,11 @@ import CreditFormTitle from "@/style/credit/CreditFormTitle";
 //import CreditChangeAll from "./CreditChangeAll";
 import { postCredit } from "@/apis/creditApi";
 import { CreditFormData } from "@/pages/credit/CreditForm";
-import { useQuery } from "@tanstack/react-query";
-import { getEvaluatorLog, getClassCredit } from "@/apis/creditApi";
-import { getMyClassInfo } from "@/apis/infoApi";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getEvaluatorLog } from "@/apis/creditApi";
+import { getMyClassInfo, StudentInfo } from "@/apis/infoApi";
+import EvaluatorLogTable from "./EvaluatorLogTable";
+import { useNavigate } from "react-router-dom";
 
 const Horizontal = styled.div`
   display: flex;
@@ -35,7 +37,7 @@ const Title = styled.h1`
   margin-left: 8px;
 `;
 
-interface EvaluatorLog {
+export interface CreditLog {
   id: number;
   username: string;
   changePoint: number;
@@ -44,66 +46,99 @@ interface EvaluatorLog {
   createdAt: string;
 }
 
-const Credit: React.FC = () => {
-  const { data: evaluatorLogData, isLoading: evaluatorLogLoading } = useQuery<
-    EvaluatorLog[]
-  >(["evaluatorLog"], getEvaluatorLog);
+export type CreditPostData = {
+  description: string;
+  changePoint: string;
+};
 
-  const { data: myClassData, isLoading: myClassLoading } = useQuery({
+const defaultCreditDetailStudent = {
+  username: "",
+  name: "",
+  pocketmoneyAccountNo: "",
+  userClass: {
+    schoolName: "",
+    grade: 0,
+    classNumber: 0,
+    attendanceNumber: 0,
+  },
+};
+
+const Credit: React.FC = () => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  //"우리반 신용점수" 컴포넌트 관련
+  const [studentDetailMode, setStudentDetailMode] = useState(false);
+  const [creditDetailStudent, setCreditDetailStudent] = useState<StudentInfo>(
+    defaultCreditDetailStudent
+  );
+
+  const { data: myClassData, isLoading: myClassLoading } = useQuery<
+    StudentInfo[]
+  >({
     queryKey: ["myClassData"],
     queryFn: getMyClassInfo,
   });
 
-  const { data: classCreditData, isLoading: classCreditLoading } = useQuery({
-    queryKey: ["classCreditData"],
-    queryFn: getClassCredit,
-  });
+  const { data: evaluatorLogData, isLoading: evaluatorLogLoading } = useQuery<
+    CreditLog[]
+  >(["evaluatorLog"], getEvaluatorLog);
 
-  console.log(classCreditData);
-
-  //"우리반 신용점수" 컴포넌트 관련
-  const [studentDetailMode, setStudentDetailMode] = useState(false);
-  const [creditDetailStudent, setCreditDetailStudent] = useState<string>("");
+  console.log(evaluatorLogData);
 
   const changeToStudentCredit = (studentName: string) => {
-    setStudentDetailMode(true);
-    setCreditDetailStudent(studentName);
+    if (myClassData) {
+      const studentDetail = myClassData.find(
+        (student) => student.name === studentName
+      );
+      if (studentDetail) {
+        setStudentDetailMode(true);
+        setCreditDetailStudent(studentDetail);
+      }
+    }
   };
 
   const backToClassCredit = () => {
     setStudentDetailMode(false);
-    setCreditDetailStudent("");
+    setCreditDetailStudent(defaultCreditDetailStudent);
   };
 
   const containerTitle = studentDetailMode ? (
     <TitleContainer>
       <BackIcon onClick={backToClassCredit} />
       <Title>
-        <Blue>{creditDetailStudent}</Blue>의 신용점수 내역
+        <Blue>{creditDetailStudent.name}</Blue>의 신용점수 내역
       </Title>
     </TitleContainer>
   ) : (
     <Title>우리반 신용점수</Title>
   );
-
+  {
+    /*
   //"입력 & 전체변경" 컴포넌트 관련
-  //const [isCreditChangeAll, setIsCreditChangeAll] = useState(false);
+  const [isCreditChangeAll, setIsCreditChangeAll] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
 
-  {
-    /*const handleCreditChangeAll = (boolean: boolean) => {
+  const handleCreditChangeAll = (boolean: boolean) => {
     setIsCreditChangeAll(boolean);
   };*/
   }
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const onSubmit = async (data: CreditFormData) => {
+    console.log(data);
     try {
       const { description, studentNumbers, changePoint } = data;
+      console.log(studentNumbers);
+
+      if (!Array.isArray(studentNumbers)) {
+        console.error("studentNumbers is not an array");
+        return;
+      }
 
       const creditData = { description, changePoint };
 
       for (let i = 0; i < studentNumbers.length; i++) {
-        const studentInfo = myClassData?.[studentNumbers[i]];
+        const studentInfo = myClassData && myClassData[studentNumbers[i]];
         if (studentInfo && studentInfo.username) {
           const { username } = studentInfo;
           console.log(creditData, username);
@@ -125,6 +160,11 @@ const Credit: React.FC = () => {
       } else {
         console.error("An error occurred:", error);
       }
+    } finally {
+      console.log("finally");
+      queryClient.invalidateQueries({ queryKey: ["myClassData"] });
+      queryClient.invalidateQueries({ queryKey: ["evaluatorLog"] });
+      navigate("/credit");
     }
   };
 
@@ -141,7 +181,7 @@ const Credit: React.FC = () => {
     </FormHandleBtn>
   );
 
-  if (evaluatorLogLoading || classCreditLoading || myClassLoading) {
+  if (evaluatorLogLoading || myClassLoading) {
     return <>loading...</>;
   }
 
@@ -149,14 +189,18 @@ const Credit: React.FC = () => {
     <Container>
       <Horizontal>
         <TableContainer titlePart={containerTitle}>
-          <ClassCreditTable changeToStudentCredit={changeToStudentCredit} />
+          {!studentDetailMode && (
+            <ClassCreditTable changeToStudentCredit={changeToStudentCredit} />
+          )}
 
-          {/*{studentDetailMode && <CreditLogTable />}*/}
+          {studentDetailMode && (
+            <CreditLogTable username={creditDetailStudent.username} />
+          )}
         </TableContainer>
 
         {evaluatorLogData && (
           <TableContainer title="최신 입력내역">
-            <CreditLogTable creditLogData={evaluatorLogData} />
+            <EvaluatorLogTable />
           </TableContainer>
         )}
 
@@ -168,6 +212,7 @@ const Credit: React.FC = () => {
             />
           }
           width="527px"
+          //????
           buttonPart={<SubmitBtn onClick={onSubmit} />}
         >
           {/*{!isCreditChangeAll && (

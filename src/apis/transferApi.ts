@@ -70,5 +70,5 @@ export async function getBankerLog() {
       },
     }
   );
-  return response.data;
+  return response;
 }

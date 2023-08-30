@@ -56,7 +56,7 @@ const purchaseLogList = [
 function PurchaseLog() {
   return (
     <div>
-      {/*<CardWrapper>
+      <CardWrapper>
         {purchaseLogList.map((info) => (
           <CardItemWrapper>
             <CardItem
@@ -67,7 +67,7 @@ function PurchaseLog() {
             <CostText>{info.cost}진스</CostText>
           </CardItemWrapper>
         ))}
-        </CardWrapper>*/}
+      </CardWrapper>
     </div>
   );
 }

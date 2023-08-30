@@ -1,7 +1,7 @@
 //import { privateApi } from "@/apis/authApi";
 import axios from "axios";
 
-interface UserClassInfo {
+export interface UserClassInfo {
   schoolName: string;
   grade: number;
   classNumber: number;

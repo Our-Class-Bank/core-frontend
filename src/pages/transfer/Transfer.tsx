@@ -1,25 +1,18 @@
 import TransferModal from "@/components/transfer/TransferModal";
-import TransactionList from "@/components/transactionLog/TransactionList";
+import BankerTransactionLog from "@/components/transfer/BankerTransactionLog";
 import { Container } from "@/style/common/CommonStyle";
 import { Wrapper } from "@/style/transfer/TransferStyle";
 import { useQuery } from "@tanstack/react-query";
 import { getBankerLog } from "@/apis/transferApi";
+import { TransactionData } from "@/components/transactionLog/TransactionLog";
 
-export interface BankerLog {
-  accountNo: string;
-  type: "INCOME_SALARY" | "EXPENSE_MARKET";
-  amount: number;
-  description: string;
-  balance: number;
-  transactionAt: string;
+interface BankerLog {
+  data: TransactionData[];
 }
 
 function Transfer() {
-  const { data: bankerLogData, isLoading: bankerLogLoading } = useQuery<
-    BankerLog[]
-  >(["bankerLog"], getBankerLog);
-
-  console.log(bankerLogData);
+  const { data: bankerLogData, isLoading: bankerLogLoading } =
+    useQuery<BankerLog>(["bankerLog"], getBankerLog);
 
   if (bankerLogLoading) {
     return <>Loading...</>;
@@ -27,8 +20,8 @@ function Transfer() {
   return (
     <Container>
       <Wrapper>
-        <TransactionList
-          data={bankerLogData !== undefined ? bankerLogData : []}
+        <BankerTransactionLog
+          data={bankerLogData !== undefined ? bankerLogData.data : []}
         />
         <TransferModal />
       </Wrapper>
