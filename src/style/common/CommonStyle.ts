@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 
 export const Container = styled.div`
-  width: 100dvw;
-  height: 100dvh;
+  width: 100vw;
+  height: 100vh;
   background: white;
   display: flex;
   flex-direction: column;
@@ -13,8 +13,8 @@ export const Container = styled.div`
 `;
 
 export const FullContainer = styled.div`
-  width: 100dvw;
-  height: 100dvh;
+  width: 100vw;
+  height: 100vh;
   background: white;
   display: flex;
   flex-direction: column;

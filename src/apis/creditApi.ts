@@ -36,6 +36,22 @@ export async function getClassCredit() {
   return response.data;
 }
 
+export async function getMyCredit() {
+  const response = await axios.get(
+    `${import.meta.env.VITE_SERVER_IP}/api/v1/my/credit-evaluation/history`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      params: {
+        fromAt: "2020-05-05T10:10:10",
+        toAt: "2025-05-05T10:10:10",
+      },
+    }
+  );
+  return response;
+}
+
 //신용등급관리자 전용
 {
   /*export async function getEvaluatorLog() {

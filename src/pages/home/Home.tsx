@@ -10,6 +10,7 @@ import { useState } from "react";
 import ClassCreditTable from "../credit/ClassCreditTable";
 import TableContainer from "@/style/common/TableContainer";
 import CreditLogTable from "../credit/CreditLogTable";
+import { getMyCredit } from "@/apis/creditApi";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -42,7 +43,6 @@ const CreditPointCardWrapper = styled.div`
   justify-content: space-between;
   padding: 20px;
   span {
-    width: 200px;
     color: ${(props) => props.theme.mainBlue};
   }
 `;
@@ -76,6 +76,11 @@ function Home() {
   const { data: myInfoData, isLoading: myInfoLoading } =
     useQuery<MyInfoDataType>(["myInfo"], getMyInfo);
 
+  const { data: myCreditData, isLoading: myCreditLoading } = useQuery(
+    ["myCredit"],
+    getMyCredit
+  );
+
   const { data: myAccountLogData, isLoading: myAccountLogLoading } =
     useQuery<MyAccountLog>(
       [
@@ -90,7 +95,7 @@ function Home() {
       }
     );
 
-  if (myInfoLoading || myAccountLogLoading) {
+  if (myInfoLoading || myAccountLogLoading || myCreditLoading) {
     return <>loading...</>;
   }
 
@@ -137,7 +142,7 @@ function Home() {
             >
               <CreditPointCardWrapper>
                 <span>내 신용점수</span>
-                {}점
+                {myCreditData?.data.at(-1).changePoint}점
               </CreditPointCardWrapper>
             </TableContainer>
             <TableContainer width="240px" height="100%" minHeight="416px">
