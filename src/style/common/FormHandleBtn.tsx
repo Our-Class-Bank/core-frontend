@@ -1,34 +1,8 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
-
-import { CreditFormData } from "@/pages/credit/CreditForm";
-
-interface StyledBtnProps {
-  border: string;
-  color: string;
-  backgroundcolor: string;
-  height: string;
-  width: string;
-  fontWeight: string;
-  margin: string;
-}
-
-const StyledBtn = styled.button<StyledBtnProps>`
-  border-radius: 10px;
-  border: ${({ border }) => border};
-  color: ${({ color }) => color};
-  background-color: ${({ backgroundcolor }) => backgroundcolor};
-  height: ${({ height }) => height};
-  width: ${({ width }) => width};
-  font-weight: ${({ fontWeight }) => fontWeight};
-  margin: ${({ margin }) => margin};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+import Button from "./Button";
 
 interface FormHandleBtnProps {
-  onClick: (data: CreditFormData) => void;
+  onClick: (data: any) => void;
   children: React.ReactNode;
   buttonType?: "button" | "reset" | "submit";
   form?: string;
@@ -49,6 +23,8 @@ const btnDefault = {
 const FormHandleBtn: React.FC<FormHandleBtnProps> = ({
   onClick,
   children,
+  buttonType,
+  form,
   isFormValid,
 }) => {
   useEffect(() => console.log(isFormValid), [isFormValid]);
@@ -63,14 +39,14 @@ const FormHandleBtn: React.FC<FormHandleBtnProps> = ({
   };
 
   return (
-    <StyledBtn
-      form="creditForm"
+    <Button
+      form={form}
       onClick={onClick}
-      buttonType="submit"
+      buttonType={buttonType ? buttonType : "button"}
       {...buttonStyle}
     >
       {children}
-    </StyledBtn>
+    </Button>
   );
 };
 

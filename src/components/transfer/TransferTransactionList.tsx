@@ -1,8 +1,8 @@
 import TransactionList from "@/components/transactionLog/TransactionList";
-import { BankerLog } from "@/pages/transfer/Transfer";
+import { TransactionData } from "../transactionLog/TransactionLog";
 
 interface TransferTransactionListProps {
-  bankerLogData: BankerLog[];
+  bankerLogData: TransactionData[];
 }
 function TransferTransactionList({
   bankerLogData,

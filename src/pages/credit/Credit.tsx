@@ -11,13 +11,11 @@ import FormHandleBtn from "@/style/common/FormHandleBtn";
 import CreditFormTitle from "@/style/credit/CreditFormTitle";
 //import CreditChangeAll from "./CreditChangeAll";
 import { postCredit } from "@/apis/creditApi";
-import { CreditFormData } from "@/pages/credit/CreditForm";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getEvaluatorLog } from "@/apis/creditApi";
 import { getMyClassInfo, StudentInfo } from "@/apis/infoApi";
 import EvaluatorLogTable from "./EvaluatorLogTable";
 import { useNavigate } from "react-router-dom";
-import { SubmitHandler } from "react-hook-form";
 
 const Horizontal = styled.div`
   display: flex;
@@ -127,7 +125,7 @@ const Credit: React.FC = () => {
   //"입력 & 전체변경" 컴포넌트 관련
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const onSubmit: SubmitHandler<CreditFormData> = async (data) => {
+  const onSubmit = async (data: any) => {
     try {
       const { description, studentNumbers, changePoint } = data;
       console.log(studentNumbers);
@@ -171,7 +169,7 @@ const Credit: React.FC = () => {
     }
   };
 
-  const SubmitBtn: React.FC<{ onSubmit: (data: CreditFormData) => void }> = ({
+  const SubmitBtn: React.FC<{ onSubmit: (data: any) => void }> = ({
     onSubmit,
   }) => (
     <FormHandleBtn onClick={onSubmit} isFormValid={isFormValid}>

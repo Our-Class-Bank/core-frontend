@@ -2,7 +2,7 @@ import React from "react";
 import Button from "./Button";
 
 interface FormBtnProps {
-  onClick: () => void;
+  onClick: (data: any) => void;
   children: React.ReactNode;
   isCurrent: boolean;
   buttonType?: "button" | "reset" | "submit";

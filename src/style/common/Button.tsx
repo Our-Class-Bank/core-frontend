@@ -1,4 +1,4 @@
-import React, { MouseEvent } from "react";
+import React from "react";
 import styled from "styled-components";
 
 interface StyledBtnProps {
@@ -26,7 +26,7 @@ const StyledBtn = styled.button<StyledBtnProps>`
 `;
 
 interface ButtonProps extends StyledBtnProps {
-  onClick: () => void;
+  onClick: (data: any) => void;
   children?: React.ReactNode;
   form?: string;
   buttonType: "submit" | "reset" | "button";
