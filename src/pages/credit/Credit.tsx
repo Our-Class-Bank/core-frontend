@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TableContainer from "@/style/common/TableContainer";
-
+import axios from "axios";
 import { Container } from "@/style/common/CommonStyle";
 import styled from "styled-components";
 import ClassCreditTable from "./ClassCreditTable";
@@ -9,7 +9,14 @@ import CreditForm from "./CreditForm";
 import { ReactComponent as BackIcon } from "@/assets/images/back.svg";
 import FormHandleBtn from "@/style/common/FormHandleBtn";
 import CreditFormTitle from "@/style/credit/CreditFormTitle";
-import CreditChangeAll from "./CreditChangeAll";
+//import CreditChangeAll from "./CreditChangeAll";
+import { postCredit } from "@/apis/creditApi";
+import { CreditFormData } from "@/pages/credit/CreditForm";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getEvaluatorLog } from "@/apis/creditApi";
+import { getMyClassInfo, StudentInfo } from "@/apis/infoApi";
+import EvaluatorLogTable from "./EvaluatorLogTable";
+import { useNavigate } from "react-router-dom";
 
 const Horizontal = styled.div`
   display: flex;
@@ -30,45 +37,138 @@ const Title = styled.h1`
   margin-left: 8px;
 `;
 
+export interface CreditLog {
+  id: number;
+  username: string;
+  changePoint: number;
+  description: string;
+  score: number;
+  createdAt: string;
+}
+
+export type CreditPostData = {
+  description: string;
+  changePoint: string;
+};
+
+const defaultCreditDetailStudent = {
+  username: "",
+  name: "",
+  pocketmoneyAccountNo: "",
+  userClass: {
+    schoolName: "",
+    grade: 0,
+    classNumber: 0,
+    attendanceNumber: 0,
+  },
+};
+
 const Credit: React.FC = () => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   //"우리반 신용점수" 컴포넌트 관련
   const [studentDetailMode, setStudentDetailMode] = useState(false);
-  const [creditDetailStudent, setCreditDetailStudent] = useState<string>("");
+  const [creditDetailStudent, setCreditDetailStudent] = useState<StudentInfo>(
+    defaultCreditDetailStudent
+  );
+
+  const { data: myClassData, isLoading: myClassLoading } = useQuery<
+    StudentInfo[]
+  >({
+    queryKey: ["myClassData"],
+    queryFn: getMyClassInfo,
+  });
+
+  const { data: evaluatorLogData, isLoading: evaluatorLogLoading } = useQuery<
+    CreditLog[]
+  >(["evaluatorLog"], getEvaluatorLog);
+
+  console.log(evaluatorLogData);
 
   const changeToStudentCredit = (studentName: string) => {
-    setStudentDetailMode(true);
-    setCreditDetailStudent(studentName);
+    if (myClassData) {
+      const studentDetail = myClassData.find(
+        (student) => student.name === studentName
+      );
+      if (studentDetail) {
+        setStudentDetailMode(true);
+        setCreditDetailStudent(studentDetail);
+      }
+    }
   };
 
   const backToClassCredit = () => {
     setStudentDetailMode(false);
-    setCreditDetailStudent("");
+    setCreditDetailStudent(defaultCreditDetailStudent);
   };
 
   const containerTitle = studentDetailMode ? (
     <TitleContainer>
       <BackIcon onClick={backToClassCredit} />
       <Title>
-        <Blue>{creditDetailStudent}</Blue>의 신용점수 내역
+        <Blue>{creditDetailStudent.name}</Blue>의 신용점수 내역
       </Title>
     </TitleContainer>
   ) : (
     <Title>우리반 신용점수</Title>
   );
-
+  {
+    /*
   //"입력 & 전체변경" 컴포넌트 관련
   const [isCreditChangeAll, setIsCreditChangeAll] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
 
   const handleCreditChangeAll = (boolean: boolean) => {
     setIsCreditChangeAll(boolean);
-  };
+  };*/
+  }
+  const [isFormValid, setIsFormValid] = useState(false);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: CreditFormData) => {
     console.log(data);
+    try {
+      const { description, studentNumbers, changePoint } = data;
+      console.log(studentNumbers);
+
+      if (!Array.isArray(studentNumbers)) {
+        console.error("studentNumbers is not an array");
+        return;
+      }
+
+      const creditData = { description, changePoint };
+
+      for (let i = 0; i < studentNumbers.length; i++) {
+        const studentInfo = myClassData && myClassData[studentNumbers[i]];
+        if (studentInfo && studentInfo.username) {
+          const { username } = studentInfo;
+          console.log(creditData, username);
+          await postCredit(creditData, username);
+        }
+      }
+
+      setIsFormValid(false);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 422) {
+          alert("");
+        }
+        if (error.response?.status === 401) {
+          alert("");
+        } else {
+          alert("");
+        }
+      } else {
+        console.error("An error occurred:", error);
+      }
+    } finally {
+      console.log("finally");
+      queryClient.invalidateQueries({ queryKey: ["myClassData"] });
+      queryClient.invalidateQueries({ queryKey: ["evaluatorLog"] });
+      navigate("/credit");
+    }
   };
 
-  const SubmitBtn: React.FC<{ onClick: (data: any) => void }> = ({
+  const SubmitBtn: React.FC<{ onClick: (data: CreditFormData) => void }> = ({
     onClick,
   }) => (
     <FormHandleBtn
@@ -81,6 +181,10 @@ const Credit: React.FC = () => {
     </FormHandleBtn>
   );
 
+  if (evaluatorLogLoading || myClassLoading) {
+    return <>loading...</>;
+  }
+
   return (
     <Container>
       <Horizontal>
@@ -88,27 +192,34 @@ const Credit: React.FC = () => {
           {!studentDetailMode && (
             <ClassCreditTable changeToStudentCredit={changeToStudentCredit} />
           )}
-          {studentDetailMode && <CreditLogTable />}
+
+          {studentDetailMode && (
+            <CreditLogTable username={creditDetailStudent.username} />
+          )}
         </TableContainer>
 
-        <TableContainer title="최신 입력내역">
-          <CreditLogTable />
-        </TableContainer>
+        {evaluatorLogData && (
+          <TableContainer title="최신 입력내역">
+            <EvaluatorLogTable />
+          </TableContainer>
+        )}
 
         <TableContainer
           titlePart={
             <CreditFormTitle
-              isCreditChangeAll={isCreditChangeAll}
-              handleCreditChangeAll={handleCreditChangeAll}
+            //isCreditChangeAll={isCreditChangeAll}
+            //handleCreditChangeAll={handleCreditChangeAll}
             />
           }
           width="527px"
+          //????
           buttonPart={<SubmitBtn onClick={onSubmit} />}
         >
-          {!isCreditChangeAll && (
+          {/*{!isCreditChangeAll && (
             <CreditForm onSubmit={onSubmit} setIsFormValid={setIsFormValid} />
           )}
-          {isCreditChangeAll && <CreditChangeAll />}
+          {isCreditChangeAll && <CreditChangeAll />}*/}
+          <CreditForm onSubmit={onSubmit} setIsFormValid={setIsFormValid} />
         </TableContainer>
       </Horizontal>
     </Container>

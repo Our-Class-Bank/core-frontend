@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { postSignIn } from "@/apis/authApi";
 import { styled } from "styled-components";
 
+
 export interface LoginFormValues {
   username: string;
   password: string;
@@ -32,6 +33,7 @@ function Login() {
     try {
       setIsLoading(true);
       const response = await postSignIn(data);
+
       if (response.status === 200) {
         localStorage.setItem("accessToken", response.data.accessToken);
         navigate("/");
@@ -45,9 +47,13 @@ function Login() {
         }
       }
     } finally {
+      navigate("/");
       setIsLoading(false);
     }
   };
+  if (isLoading) {
+    return <>loading...</>;
+  }
 
   if (isLoading) {
     return <>loading...</>;

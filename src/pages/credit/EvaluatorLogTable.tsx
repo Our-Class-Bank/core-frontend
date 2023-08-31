@@ -2,7 +2,7 @@ import { useTable, Column } from "react-table";
 import { Thead, Table, Tbody } from "@/style/credit/ClassCreditTableStyle";
 import { BlackTxt, GrayTxt, BlueTxt } from "@/style/credit/CreditLogTableStyle";
 import { CreditLog } from "./Credit";
-import { getStudentCreditLog } from "@/apis/creditApi";
+import { getEvaluatorLog } from "@/apis/creditApi";
 import { useQuery } from "@tanstack/react-query";
 
 const formatDateToCustomString = (createdAt: string) => {
@@ -46,20 +46,18 @@ const columns: Column<CreditLog>[] = [
   },
 ];
 
-const CreditLogTable: React.FC<{ username: string }> = (props) => {
-  const { username } = props;
-  const { data: studentCreditLogData, isLoading: studentCreditLogLoading } =
-    useQuery<CreditLog[]>(["studentCreditLog", username], () =>
-      getStudentCreditLog(username)
-    );
+const EvaluatorLogTable: React.FC = () => {
+  const { data: evaluatorLogData, isLoading: evaluatorLogLoading } = useQuery<
+    CreditLog[]
+  >(["evaluatorLog"], getEvaluatorLog);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable<CreditLog>({ columns, data: studentCreditLogData || [] });
+    useTable<CreditLog>({ columns, data: evaluatorLogData || [] });
 
-  if (studentCreditLogLoading) {
+  if (evaluatorLogLoading) {
     return <>Loading...</>;
   }
-  if (!studentCreditLogData || studentCreditLogData.length === 0) {
+  if (!evaluatorLogData || evaluatorLogData.length === 0) {
     return <>내역이 없습니다.</>;
   }
 
@@ -90,4 +88,4 @@ const CreditLogTable: React.FC<{ username: string }> = (props) => {
   );
 };
 
-export default CreditLogTable;
+export default EvaluatorLogTable;

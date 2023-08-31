@@ -7,6 +7,7 @@ import {
   Text,
   NavContainer,
 } from "@/style/layout/SideBarStyle.tsx";
+import { ReactComponent as CreditEvaluateIcon } from "@/assets/images/CreditEvaluateIcon.svg";
 import { ReactComponent as MyBankIcon } from "@/assets/images/MyBankIcon.svg";
 import { ReactComponent as TransferIcon } from "@/assets/images/TransferIcon.svg";
 import { useLocation } from "react-router-dom";
@@ -42,6 +43,13 @@ function SideBar() {
             <NavContainer>
               <TransferIcon fill="white" />
               <NavText>입출금 관리</NavText>
+            </NavContainer>
+          </NavLink>
+
+          <NavLink to="/credit">
+            <NavContainer>
+              <CreditEvaluateIcon fill="white" />
+              <NavText>신용등급 관리</NavText>
             </NavContainer>
           </NavLink>
         </Wrapper>

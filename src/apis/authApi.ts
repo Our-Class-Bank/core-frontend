@@ -13,24 +13,33 @@ export const privateApi = axios.create({
   },
 });
 
-/* window.addEventListener("storage", (e) => {
-  if (e.key === "accessToken") {
-    const newAccessToken = e.newValue;
-    privateApi.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
-  }
-});
- */
-
-export async function postSignIn(data: LoginFormValues) {
-  const response = await publicApi.post("/api/v1/auth/signin", {
-    username: data.username,
-    password: data.password,
-  });
+export async function postSignIn(data: IFormValues) {
+  const response = await axios.post(
+    `${import.meta.env.VITE_SERVER_IP}/api/v1/auth/signin`,
+    {
+      username: data.username,
+      password: data.password,
+    }
+  );
   return response;
 }
 
-export async function getMyInfo() {
+{
+  /*export async function getMyInfo() {
   const response = await privateApi.get("/api/v1/my");
+  return response;
+}*/
+}
+
+export async function getMyInfo() {
+  const response = await axios.get(
+    `${import.meta.env.VITE_SERVER_IP}/api/v1/my`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    }
+  );
   return response;
 }
 

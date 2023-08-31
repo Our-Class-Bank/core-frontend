@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Button from "./Button";
 
 interface FormHandleBtnProps {
-  onClick: (data: any) => void;
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children: React.ReactNode;
   buttonType?: "button" | "reset" | "submit";
   form?: string;

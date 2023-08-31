@@ -20,10 +20,13 @@ const StyledBtn = styled.button<StyledBtnProps>`
   width: ${({ width }) => width};
   font-weight: ${({ fontWeight }) => fontWeight};
   margin: ${({ margin }) => margin};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 interface ButtonProps extends StyledBtnProps {
-  onClick: (data: any) => void;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
   children?: React.ReactNode;
   form?: string;
   buttonType: "submit" | "reset" | "button";

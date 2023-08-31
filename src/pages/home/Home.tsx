@@ -38,12 +38,7 @@ export interface MyInfoDataType {
       username: string;
       name: string;
       pocketmoneyAccountNo: string;
-      userClass: {
-        schoolName: string;
-        grade: number;
-        classNumber: number;
-        attendanceNumber: number;
-      };
+      userClass: UserClassType;
     };
   };
 }
