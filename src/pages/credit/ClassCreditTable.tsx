@@ -21,7 +21,7 @@ const columns: Column<ClassCreditData>[] = [
 ];
 
 interface Props {
-  changeToStudentCredit: (studentName: string) => void;
+  changeToStudentCredit?: (studentName: string) => void;
 }
 
 function ClassCreditTable(props: Props) {

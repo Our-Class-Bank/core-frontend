@@ -8,6 +8,7 @@ import { Container } from "@/style/common/CommonStyle";
 import { useQuery } from "@tanstack/react-query";
 import { styled } from "styled-components";
 import { useState } from "react";
+import ClassCreditTable from "../credit/ClassCreditTable";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -23,6 +24,12 @@ const LeftContainer = styled.div`
   gap: 50px;
 `;
 
+const RightContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+`;
+
 const Header = styled.h1`
   font-size: 20px;
   font-weight: 600;
@@ -33,6 +40,23 @@ const Header = styled.h1`
   margin-bottom: 12px;
 `;
 
+const CardWrapper = styled.div`
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border-radius: 10px;
+  border: 1px solid ${(props) => props.theme.borderGray};
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  padding: 26px;
+  span {
+    width: 200px;
+    color: ${(props) => props.theme.mainBlue};
+  }
+`;
 interface UserClassType {
   schoolName: string;
   grade: number;
@@ -107,14 +131,19 @@ function Home() {
           </div>
         )}
         {categoryView === "credit" && (
-          <div>
+          <RightContainer>
             <div>
               <Header>내 신용점수 내역</Header>
+              <CardWrapper>
+                <span>내 신용점수</span>
+                {}점
+              </CardWrapper>
             </div>
             <div>
               <Header>우리반 신용점수</Header>
+              <ClassCreditTable />
             </div>
-          </div>
+          </RightContainer>
         )}
       </HomeContainer>
     </Container>

@@ -55,20 +55,18 @@ const purchaseLogList = [
 
 function PurchaseLog() {
   return (
-    <div>
-      <CardWrapper>
-        {purchaseLogList.map((info, idx) => (
-          <CardItemWrapper key={idx}>
-            <CardItem
-              icon={info.icon}
-              category={info.category}
-              content={info.content}
-            />
-            <CostText>{info.cost}진스</CostText>
-          </CardItemWrapper>
-        ))}
-      </CardWrapper>
-    </div>
+    <CardWrapper>
+      {purchaseLogList.map((info, idx) => (
+        <CardItemWrapper key={idx}>
+          <CardItem
+            icon={info.icon}
+            category={info.category}
+            content={info.content}
+          />
+          <CostText>{info.cost}진스</CostText>
+        </CardItemWrapper>
+      ))}
+    </CardWrapper>
   );
 }
 

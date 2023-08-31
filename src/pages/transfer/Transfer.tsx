@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getBankerLog } from "@/apis/transferApi";
 import { TransactionData } from "@/components/transactionLog/TransactionLog";
 
-interface BankerLog {
+export interface BankerLog {
   data: TransactionData[];
 }
 
