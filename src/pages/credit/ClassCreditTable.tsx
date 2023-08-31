@@ -44,7 +44,7 @@ function ClassCreditTable(props: Props) {
 
   const handleClick = (row: Row<ClassCreditData>) => {
     const studentName = row.cells[1].value as string;
-    changeToStudentCredit(studentName);
+    changeToStudentCredit && changeToStudentCredit(studentName);
   };
 
   if (classCreditLoading) {

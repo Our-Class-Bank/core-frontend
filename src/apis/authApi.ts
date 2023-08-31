@@ -1,6 +1,6 @@
 import axios from "axios";
-import { LoginFormValues } from "@/pages/login/Login";
 import { ResetPasswordFormValues } from "@/pages/reset-password/ResetPassword";
+import { LoginFormValues } from "@/pages/login/Login";
 
 export const publicApi = axios.create({
   baseURL: `${import.meta.env.VITE_SERVER_IP}`,
@@ -13,7 +13,7 @@ export const privateApi = axios.create({
   },
 });
 
-export async function postSignIn(data: IFormValues) {
+export async function postSignIn(data: LoginFormValues) {
   const response = await axios.post(
     `${import.meta.env.VITE_SERVER_IP}/api/v1/auth/signin`,
     {
