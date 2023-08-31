@@ -15,6 +15,9 @@ export interface ResetPasswordFormValues {
 }
 
 const ResetPasswordForm = styled(LoginForm)``;
+const ErrorMessage = styled.span`
+  color: red;
+`;
 
 function ResetPassword() {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +29,7 @@ function ResetPassword() {
     formState: { errors, isValid },
     watch,
     clearErrors,
-  } = useForm<ResetPasswordFormValues>();
+  } = useForm<ResetPasswordFormValues>({ mode: "all" });
 
   const submitHandler: SubmitHandler<ResetPasswordFormValues> = async (
     data
@@ -80,7 +83,7 @@ function ResetPassword() {
           {...register("newPasswordConfirm", {
             required: true,
             validate: (val: string) => {
-              if (watch("newPassword") != val) {
+              if (watch("newPassword") !== val) {
                 return "비밀번호 확인이 일치하지 않습니다.";
               } else {
                 clearErrors("newPasswordConfirm");
@@ -89,7 +92,7 @@ function ResetPassword() {
           })}
           placeholder="새 비밀번호 확인"
         />
-        <span>{errors?.newPasswordConfirm?.message}</span>
+        <ErrorMessage>{errors?.newPasswordConfirm?.message}</ErrorMessage>
         <SubmitBtn type="submit" disabled={!isValid}>
           비밀번호 찾기
         </SubmitBtn>

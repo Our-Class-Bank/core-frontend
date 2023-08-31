@@ -7,7 +7,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { postSignIn } from "@/apis/authApi";
 import { styled } from "styled-components";
 
-
 export interface LoginFormValues {
   username: string;
   password: string;
@@ -17,6 +16,7 @@ const ResetPasswordBtn = styled.button`
   background-color: transparent;
   font-weight: 400;
   color: ${(props) => props.theme.fontGray};
+  width: 100%;
   margin-top: 10px;
 `;
 
