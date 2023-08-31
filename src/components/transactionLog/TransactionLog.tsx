@@ -23,7 +23,7 @@ function TransactionLog({ data }: { data: TransactionData }) {
       <Test $logType={type}>
         <p>{MY_TRANSACTION_LOG_TYPE[data.type]}</p>
         <p>
-          {type === "EXPENSE" ? "+" : "-"}
+          {type === "EXPENSE" ? "-" : "+"}
           {amount}진스
         </p>
       </Test>

@@ -1,15 +1,24 @@
 import { useState } from "react";
 import axios from "axios";
-import { Container } from "@/style/common/CommonStyle";
+import { FullContainer } from "@/style/common/CommonStyle";
 import { Input, LoginForm, SubmitBtn } from "@/style/login/LoginStyle";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { postSignIn } from "@/apis/authApi";
+import { styled } from "styled-components";
 
-export interface IFormValues {
+
+export interface LoginFormValues {
   username: string;
   password: string;
 }
+
+const ResetPasswordBtn = styled.button`
+  background-color: transparent;
+  font-weight: 400;
+  color: ${(props) => props.theme.fontGray};
+  margin-top: 10px;
+`;
 
 function Login() {
   const navigate = useNavigate();
@@ -18,9 +27,9 @@ function Login() {
     register,
     handleSubmit,
     formState: { isValid },
-  } = useForm<IFormValues>();
+  } = useForm<LoginFormValues>();
 
-  const submitHandler: SubmitHandler<IFormValues> = async (data) => {
+  const submitHandler: SubmitHandler<LoginFormValues> = async (data) => {
     try {
       setIsLoading(true);
       const response = await postSignIn(data);
@@ -51,7 +60,7 @@ function Login() {
   }
 
   return (
-    <Container>
+    <FullContainer>
       <LoginForm onSubmit={handleSubmit(submitHandler)}>
         <h1>우리반 은행</h1>
         <Input
@@ -67,8 +76,11 @@ function Login() {
         <SubmitBtn type="submit" disabled={!isValid}>
           로그인
         </SubmitBtn>
+        <Link to="/reset-password">
+          <ResetPasswordBtn>비밀번호 초기화</ResetPasswordBtn>
+        </Link>
       </LoginForm>
-    </Container>
+    </FullContainer>
   );
 }
 

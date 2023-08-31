@@ -15,9 +15,11 @@ const CardWrapper = styled.ul`
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
 `;
 
-const CardItemWrapper = styled.li`
+const CardItemWrapper = styled.li<{ disabled: boolean }>`
   display: flex;
   align-items: center;
+  opacity: ${(props) => (props.disabled ? "0.4" : "none")};
+  cursor: pointer;
 `;
 
 const ToggleWrapper = styled.div`
@@ -49,11 +51,15 @@ const assetInfoList = [
 ];
 
 function AssetInfo() {
+  const handleCategoryView = () => {};
   return (
     <div>
       <CardWrapper>
         {assetInfoList.map((info) => (
-          <CardItemWrapper>
+          <CardItemWrapper
+            onClick={handleCategoryView}
+            disabled={info.category === "적금" || info.category === "주식"}
+          >
             <CardItem
               icon={info.icon}
               category={info.category}

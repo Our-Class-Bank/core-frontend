@@ -2,10 +2,10 @@ import { styled } from "styled-components";
 import TransactionList from "../transactionLog/TransactionList";
 import { TransactionData } from "../transactionLog/TransactionLog";
 
-const Container = styled.div``;
-
 const CardWrapper = styled.ul`
-  width: 100%;
+  flex-grow: 1;
+  height: 528px;
+  overflow-y: scroll;
   padding: 10px;
   border-radius: 10px;
   border-radius: 10px;
@@ -15,11 +15,9 @@ const CardWrapper = styled.ul`
 
 function MyTransactionLog({ data }: { data: TransactionData[] }) {
   return (
-    <Container>
-      <CardWrapper>
-        <TransactionList data={data} />
-      </CardWrapper>
-    </Container>
+    <CardWrapper>
+      <TransactionList data={data} />
+    </CardWrapper>
   );
 }
 

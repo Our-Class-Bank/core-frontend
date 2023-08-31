@@ -4,6 +4,7 @@ import Transfer from "@/pages/transfer/Transfer";
 import Home from "@/pages/home/Home";
 import Credit from "@/pages/credit/Credit";
 import PrivateRoutePage from "./privateRoutePage";
+import ResetPassword from "@/pages/reset-password/ResetPassword";
 
 function RoutePage() {
   return (
@@ -15,6 +16,7 @@ function RoutePage() {
       </Route>
       <Route element={<PrivateRoutePage authentication={false} />}>
         <Route path="/login" element={<Login />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Route>
     </Routes>
   );

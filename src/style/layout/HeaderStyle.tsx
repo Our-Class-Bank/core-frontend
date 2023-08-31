@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   background: white;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  height: 70px;
+  height: 60px;
   display: flex;
   position: fixed;
   width: 100vw;
@@ -22,7 +22,8 @@ export const LogoWrapper = styled.span`
 export const LogoText = styled.span`
   font-style: normal;
   font-weight: 600;
-  font-size: 35px;
+  font-size: 32px;
   padding: 0px 12px;
+  line-height: 60px;
   color: #2f3fd4;
 `;

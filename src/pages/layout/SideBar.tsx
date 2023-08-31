@@ -11,13 +11,17 @@ import { ReactComponent as CreditEvaluateIcon } from "@/assets/images/CreditEval
 import { ReactComponent as MyBankIcon } from "@/assets/images/MyBankIcon.svg";
 import { ReactComponent as TransferIcon } from "@/assets/images/TransferIcon.svg";
 import { useLocation } from "react-router-dom";
+import { MyInfoDataType } from "../home/Home";
+import { useQuery } from "@tanstack/react-query";
+import { getMyInfo } from "@/apis/authApi";
 
 function SideBar() {
-  const userName = "김은행";
   const location = useLocation();
+  const { data: myInfoData } = useQuery<MyInfoDataType>(["myInfo"], getMyInfo);
 
   const visibleSideBar = () => {
     if (location.pathname === "/login") return false;
+    if (location.pathname === "/reset-password") return false;
     return true;
   };
 
@@ -26,7 +30,7 @@ function SideBar() {
       {visibleSideBar() && (
         <Wrapper>
           <NameBlock>
-            <Name>{userName}</Name>
+            <Name>{myInfoData?.data.user.name}</Name>
             <Text>님</Text>
           </NameBlock>
           <NavLink to="/">
