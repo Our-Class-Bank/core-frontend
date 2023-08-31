@@ -6,15 +6,16 @@ import { useQuery } from "@tanstack/react-query";
 import { getMyClassInfo } from "@/apis/infoApi";
 import { StudentInfo } from "@/apis/infoApi";
 import { UseFormSetValue } from "react-hook-form";
-import { SubmitData } from "./TransferForm";
+import { CreditFormData } from "@/pages/credit/CreditForm";
 
+//setValue의 interface를 CreditFormData로 하지 않으면 에러가 떠서 결국 StudentList를 복사한 컴포넌트를 만듦
 interface StudentListProps {
-  setValue: UseFormSetValue<SubmitData>;
+  setValue: UseFormSetValue<CreditFormData>;
   watchStudentNumbers: number[];
   height?: string;
 }
 
-const StudentList: React.FC<StudentListProps> = ({
+const CreditStudentList: React.FC<StudentListProps> = ({
   setValue,
   watchStudentNumbers,
   height,
@@ -33,8 +34,6 @@ const StudentList: React.FC<StudentListProps> = ({
           (watchStudent) => watchStudent !== attendanceNumber
         )
       : [...watchStudentNumbers, attendanceNumber];
-    console.log(updatedAttendanceNumbers);
-    console.log("hi");
 
     setValue("studentNumbers", updatedAttendanceNumbers);
   };
@@ -67,4 +66,4 @@ const StudentList: React.FC<StudentListProps> = ({
   );
 };
 
-export default StudentList;
+export default CreditStudentList;
