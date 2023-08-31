@@ -4,9 +4,16 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const Container = styled.div<{ width?: string }>`
+const Container = styled.div<{
+  width?: string;
+  height?: string;
+  minHeight?: string;
+  maxHeight?: string;
+}>`
   width: ${(props) => (props.width ? props.width : "250px")};
-  height: 531px;
+  height: ${(props) => (props.height ? props.height : "531px")};
+  min-height: ${(props) => (props.minHeight ? props.minHeight : "none")};
+  max-height: ${(props) => (props.maxHeight ? props.maxHeight : "none")};
   border: 1px solid #d9d9d9;
   border-radius: 10px;
   margin: 0px 4px;
@@ -30,6 +37,9 @@ const TitleWrapper = styled.div`
 interface ContainerProps {
   title?: string;
   width?: string;
+  height?: string;
+  minHeight?: string;
+  maxHeight?: string;
   buttonPart?: React.ReactNode;
   titlePart?: React.ReactNode;
   children: React.ReactNode;
@@ -38,6 +48,9 @@ interface ContainerProps {
 const TableContainer: React.FC<ContainerProps> = ({
   title,
   width,
+  height,
+  minHeight,
+  maxHeight,
   buttonPart,
   titlePart,
   children,
@@ -50,7 +63,14 @@ const TableContainer: React.FC<ContainerProps> = ({
         {buttonPart}
       </TitleWrapper>
 
-      <Container width={width}>{children}</Container>
+      <Container
+        width={width}
+        height={height}
+        minHeight={minHeight}
+        maxHeight={maxHeight}
+      >
+        {children}
+      </Container>
     </Wrapper>
   );
 };

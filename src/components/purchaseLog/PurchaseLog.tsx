@@ -4,13 +4,6 @@ import CandyIcon from "@/assets/images/Candy.svg";
 import CardItem from "@/components/infoCard/CardItem";
 
 const CardWrapper = styled.ul`
-  width: 364px;
-  padding: 10px;
-  border-radius: 10px;
-  border-radius: 10px;
-  border: 1px solid ${(props) => props.theme.borderGray};
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
-  height: 100%;
   opacity: 0.4;
 `;
 
