@@ -1,11 +1,11 @@
-import { Container } from "@/style/common/CommonStyle";
-import { ReactComponent as PigIcon } from "@/assets/images/Logo.svg";
+import { FullContainer } from "@/style/common/CommonStyle";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Input, SubmitBtn } from "@/style/login/LoginStyle";
+import { Input, LoginForm, SubmitBtn } from "@/style/login/LoginStyle";
 import { useState } from "react";
 import axios from "axios";
 import { postResetPassword } from "@/apis/authApi";
 import { useNavigate } from "react-router-dom";
+import { styled } from "styled-components";
 
 export interface ResetPasswordFormValues {
   username: "string";
@@ -13,6 +13,8 @@ export interface ResetPasswordFormValues {
   newPassword: "string";
   newPasswordConfirm: "string";
 }
+
+const ResetPasswordForm = styled(LoginForm)``;
 
 function ResetPassword() {
   const [isLoading, setIsLoading] = useState(false);
@@ -52,13 +54,12 @@ function ResetPassword() {
   };
 
   if (isLoading) {
-    return <>loading...</>;
+    return <FullContainer>loading...</FullContainer>;
   }
 
   return (
-    <Container>
-      <PigIcon />
-      <form onSubmit={handleSubmit(submitHandler)}>
+    <FullContainer>
+      <ResetPasswordForm onSubmit={handleSubmit(submitHandler)}>
         <Input
           type="text"
           {...register("name", { required: true })}
@@ -80,7 +81,7 @@ function ResetPassword() {
             required: true,
             validate: (val: string) => {
               if (watch("newPassword") != val) {
-                return "비밀번호 확인이 일치하지 않습니다. ";
+                return "비밀번호 확인이 일치하지 않습니다.";
               } else {
                 clearErrors("newPasswordConfirm");
               }
@@ -89,9 +90,11 @@ function ResetPassword() {
           placeholder="새 비밀번호 확인"
         />
         <span>{errors?.newPasswordConfirm?.message}</span>
-        <SubmitBtn type="submit" disabled={!isValid}></SubmitBtn>
-      </form>
-    </Container>
+        <SubmitBtn type="submit" disabled={!isValid}>
+          비밀번호 찾기
+        </SubmitBtn>
+      </ResetPasswordForm>
+    </FullContainer>
   );
 }
 

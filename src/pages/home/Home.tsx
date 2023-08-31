@@ -4,20 +4,22 @@ import AssetInfo from "@/components/assetInfo/AssetInfo";
 import MyTransactionLog from "@/components/myTransactionLog/MyTransactionLog";
 import PurchaseLog from "@/components/purchaseLog/PurchaseLog";
 import { TransactionData } from "@/components/transactionLog/TransactionLog";
+import { Container } from "@/style/common/CommonStyle";
 import { useQuery } from "@tanstack/react-query";
 import { styled } from "styled-components";
 
-const Container = styled.div`
+const HomeContainer = styled.div`
   display: flex;
-  gap: 50px;
-  width: 100%;
-  padding: 40px 60px;
+  height: 100vh;
+  padding: 60px auto;
+  gap: 30px;
+  margin: 30px;
 `;
 
 const LeftContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 50px;
 `;
 
 const Header = styled.h1`
@@ -30,7 +32,7 @@ const Header = styled.h1`
   margin-bottom: 12px;
 `;
 
-interface MyInfoDataType {
+export interface MyInfoDataType {
   data: {
     user: {
       username: string;
@@ -74,26 +76,32 @@ function Home() {
 
   return (
     <Container>
-      <LeftContainer>
+      <HomeContainer>
+        <LeftContainer>
+          <div>
+            <Header>
+              <span>{myInfoData?.data.user.name}</span>님의 자산정보
+            </Header>
+            <AssetInfo />
+          </div>
+          <div>
+            <Header>내 구매상품</Header>
+            <PurchaseLog />
+          </div>
+        </LeftContainer>
         <div>
           <Header>
-            <span>{myInfoData?.data.user.name}</span>님의 자산정보
+            <span>통장</span> 상세내역
           </Header>
-          <AssetInfo />
+          <MyTransactionLog
+            data={myAccountLogData !== undefined ? myAccountLogData.data : []}
+          />
         </div>
         <div>
-          <Header>내 구매상품</Header>
-          <PurchaseLog />
+          <Header>내 신용점수 내역</Header>
+          <Header>우리반 신용점수</Header>
         </div>
-      </LeftContainer>
-      <div>
-        <Header>
-          <span>통장</span> 상세내역
-        </Header>
-        <MyTransactionLog
-          data={myAccountLogData !== undefined ? myAccountLogData.data : []}
-        />
-      </div>
+      </HomeContainer>
     </Container>
   );
 }

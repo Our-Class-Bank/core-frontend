@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  padding-top: 60px;
 `;
 
 export const NavLink = styled(Link)`
@@ -61,8 +62,8 @@ export const NameBlock = styled.div`
 export const Name = styled.span`
   font-style: normal;
   font-weight: 600;
-  font-size: 28px;
-  line-height: 27px;
+  font-size: 26px;
+  line-height: 26px;
 
   color: #ffffff;
 `;
@@ -70,8 +71,8 @@ export const Name = styled.span`
 export const Text = styled.span`
   font-style: normal;
   font-weight: 200;
-  font-size: 28px;
-  line-height: 27px;
+  font-size: 26px;
+  line-height: 26px;
 
   color: #ffffff;
 `;

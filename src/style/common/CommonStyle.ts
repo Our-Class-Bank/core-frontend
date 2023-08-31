@@ -8,6 +8,16 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 70px;
-  margin-left: 270px;
+  padding-top: 60px;
+  padding-left: 210px;
+`;
+
+export const FullContainer = styled.div`
+  width: 100dvw;
+  height: 100dvh;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
