@@ -13,7 +13,7 @@ import {
   useForm,
   UseFormRegister,
   SubmitHandler,
-  FieldValues,
+  UseFormSetValue,
 } from "react-hook-form";
 
 export type SubmitData = {
@@ -25,7 +25,7 @@ export type SubmitData = {
     | "EXPENSE_MARKET"
     | "EXPENSE_ETC";
   amount: number;
-  studentNumbers: [];
+  studentNumbers: number[];
   description: string;
   withdrawOrDeposit: "수입" | "지출";
 };
@@ -36,7 +36,7 @@ interface TransferFormProps {
 
 const WithdrawOrDepositSelection: React.FC<{
   watchWithdrawOrDeposit: string;
-  setValue: (name: string, value: string) => void;
+  setValue: UseFormSetValue<SubmitData>;
 }> = ({ watchWithdrawOrDeposit, setValue }) => (
   <InputContainer>
     <h3>분류</h3>
@@ -59,7 +59,7 @@ const WithdrawOrDepositSelection: React.FC<{
 
 const MinusTypeSelection: React.FC<{
   watchType: string;
-  setValue: (name: string, value: string) => void;
+  setValue: UseFormSetValue<SubmitData>;
 }> = ({ watchType, setValue }) => (
   <InputContainer>
     <h3>항목</h3>
@@ -86,7 +86,7 @@ const MinusTypeSelection: React.FC<{
 
 const PlusTypeSelection: React.FC<{
   watchType: string;
-  setValue: (name: string, value: string) => void;
+  setValue: UseFormSetValue<SubmitData>;
 }> = ({ watchType, setValue }) => (
   <InputContainer>
     <h3>항목</h3>
@@ -112,7 +112,7 @@ const PlusTypeSelection: React.FC<{
 );
 
 const AmountInput: React.FC<{
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<SubmitData>;
 }> = ({ register }) => (
   <InputContainer>
     <h3>금액</h3>
@@ -122,7 +122,7 @@ const AmountInput: React.FC<{
 );
 
 const DescriptionInput: React.FC<{
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<SubmitData>;
 }> = ({ register }) => (
   <InputContainer>
     <h3>내용</h3>
@@ -131,10 +131,10 @@ const DescriptionInput: React.FC<{
 );
 
 const TransferForm: React.FC<TransferFormProps> = ({ onSubmit }) => {
-  const { register, setValue, handleSubmit, watch } = useForm();
+  const { register, setValue, handleSubmit, watch } = useForm<SubmitData>();
 
-  const submitHandler: SubmitHandler<FieldValues> = (data: FieldValues) => {
-    onSubmit(data as SubmitData);
+  const submitHandler: SubmitHandler<SubmitData> = (SubmitData) => {
+    onSubmit(SubmitData);
   };
 
   const watchStudentNumbers = watch("studentNumbers", []);

@@ -1,10 +1,15 @@
-import StudentList from "@/components/transfer/StudentList";
+import CreditStudentList from "./CreditStudentList";
 import {
   InputContainer,
   Input,
   Form,
 } from "@/style/transfer/TransferFormStyle";
-import { useForm, UseFormRegister } from "react-hook-form";
+import {
+  useForm,
+  UseFormRegister,
+  SubmitHandler,
+  UseFormSetValue,
+} from "react-hook-form";
 import FormBtn from "@/style/common/FormBtn";
 import { useEffect } from "react";
 
@@ -30,7 +35,7 @@ const DescriptionInput: React.FC<{
 
 const Buttons: React.FC<{
   watchChangePoint?: string;
-  setValue: (field: keyof CreditFormData, value: string) => void;
+  setValue: UseFormSetValue<CreditFormData>;
   handleReset: () => void;
 }> = ({ watchChangePoint, setValue, handleReset }) => (
   <InputContainer>
@@ -72,6 +77,12 @@ const CreditForm: React.FC<CreditFormProps> = (props) => {
     setIsFormValid(isValid);
   }, [isValid, setIsFormValid]);
 
+  const submitHandler: SubmitHandler<CreditFormData> = (data) => {
+    console.log("hey");
+    onSubmit(data);
+    console.log(data);
+  };
+
   const handleReset = () => {
     reset({
       description: "",
@@ -81,9 +92,9 @@ const CreditForm: React.FC<CreditFormProps> = (props) => {
   };
 
   return (
-    <Form id="creditForm" onSubmit={handleSubmit(onSubmit)}>
+    <Form id="creditForm" onSubmit={handleSubmit(submitHandler)}>
       <DescriptionInput register={register} />
-      <StudentList
+      <CreditStudentList
         watchStudentNumbers={watchStudentNumbers}
         setValue={setValue}
         height="361px"

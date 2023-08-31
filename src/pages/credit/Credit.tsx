@@ -17,6 +17,7 @@ import { getEvaluatorLog } from "@/apis/creditApi";
 import { getMyClassInfo, StudentInfo } from "@/apis/infoApi";
 import EvaluatorLogTable from "./EvaluatorLogTable";
 import { useNavigate } from "react-router-dom";
+import { SubmitHandler } from "react-hook-form";
 
 const Horizontal = styled.div`
   display: flex;
@@ -114,7 +115,7 @@ const Credit: React.FC = () => {
   );
   {
     /*
-  //"입력 & 전체변경" 컴포넌트 관련
+ 
   const [isCreditChangeAll, setIsCreditChangeAll] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
 
@@ -122,13 +123,15 @@ const Credit: React.FC = () => {
     setIsCreditChangeAll(boolean);
   };*/
   }
+
+  //"입력 & 전체변경" 컴포넌트 관련
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const onSubmit = async (data: CreditFormData) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<CreditFormData> = async (data) => {
     try {
       const { description, studentNumbers, changePoint } = data;
       console.log(studentNumbers);
+      console.log(description);
 
       if (!Array.isArray(studentNumbers)) {
         console.error("studentNumbers is not an array");
@@ -168,15 +171,10 @@ const Credit: React.FC = () => {
     }
   };
 
-  const SubmitBtn: React.FC<{ onClick: (data: CreditFormData) => void }> = ({
-    onClick,
+  const SubmitBtn: React.FC<{ onSubmit: (data: CreditFormData) => void }> = ({
+    onSubmit,
   }) => (
-    <FormHandleBtn
-      onClick={onClick}
-      buttonType="submit"
-      form="creditForm"
-      isFormValid={isFormValid}
-    >
+    <FormHandleBtn onClick={onSubmit} isFormValid={isFormValid}>
       입력
     </FormHandleBtn>
   );
@@ -213,7 +211,7 @@ const Credit: React.FC = () => {
           }
           width="527px"
           //????
-          buttonPart={<SubmitBtn onClick={onSubmit} />}
+          buttonPart={<SubmitBtn onSubmit={onSubmit} />}
         >
           {/*{!isCreditChangeAll && (
             <CreditForm onSubmit={onSubmit} setIsFormValid={setIsFormValid} />
