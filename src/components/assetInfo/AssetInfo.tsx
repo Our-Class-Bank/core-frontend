@@ -29,36 +29,53 @@ const ToggleWrapper = styled.div`
 
 const assetInfoList = [
   {
+    id: "bank",
     icon: Account,
     category: "통장",
+
     content: "1,000진스",
   },
   {
+    id: "saving",
     icon: InstallmentSaving,
     category: "적금",
+
     content: "1,000진스",
   },
   {
+    id: "stock",
     icon: Stock,
     category: "주식",
+
     content: "1,000진스",
   },
   {
+    id: "credit",
     icon: CreditPoint,
     category: "신용점수",
+
     content: "1,000진스",
   },
 ];
 
-function AssetInfo() {
-  const handleCategoryView = () => {};
+function AssetInfo({
+  handleCategoryView,
+}: {
+  handleCategoryView: (categoryId: string) => void;
+}) {
   return (
     <div>
       <CardWrapper>
         {assetInfoList.map((info) => (
           <CardItemWrapper
-            onClick={handleCategoryView}
-            disabled={info.category === "적금" || info.category === "주식"}
+            onClick={() => {
+              if (info.id === "saving" || info.id === "stock") {
+                alert("아직 이용할 수 없는 서비스입니다.");
+              } else {
+                handleCategoryView(info.id);
+              }
+            }}
+            disabled={info.id === "saving" || info.id === "stock"}
           >
             <CardItem
               icon={info.icon}

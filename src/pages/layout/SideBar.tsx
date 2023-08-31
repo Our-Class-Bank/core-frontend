@@ -14,6 +14,7 @@ import { useLocation } from "react-router-dom";
 import { MyInfoDataType } from "../home/Home";
 import { useQuery } from "@tanstack/react-query";
 import { getMyInfo } from "@/apis/authApi";
+import { parseJwt } from "@/utils/parseJwt";
 
 function SideBar() {
   const location = useLocation();
@@ -24,6 +25,9 @@ function SideBar() {
     if (location.pathname === "/reset-password") return false;
     return true;
   };
+
+  const savedAccessToken = localStorage.getItem("accessToken") as string;
+  const userRoles = visibleSideBar() && parseJwt(savedAccessToken).roles;
 
   return (
     <>
@@ -39,19 +43,22 @@ function SideBar() {
               <NavText>내 통장</NavText>
             </NavContainer>
           </NavLink>
-          <NavLink to="/transfer">
-            <NavContainer>
-              <TransferIcon fill="white" />
-              <NavText>입출금 관리</NavText>
-            </NavContainer>
-          </NavLink>
-
-          <NavLink to="/credit">
-            <NavContainer>
-              <CreditEvaluateIcon fill="white" />
-              <NavText>신용등급 관리</NavText>
-            </NavContainer>
-          </NavLink>
+          {userRoles.includes("ROLE_BANKER") && (
+            <NavLink to="/transfer">
+              <NavContainer>
+                <TransferIcon fill="white" />
+                <NavText>입출금 관리</NavText>
+              </NavContainer>
+            </NavLink>
+          )}
+          {userRoles.includes("ROLE_CREDIT_EVALUATOR") && (
+            <NavLink to="/credit">
+              <NavContainer>
+                <CreditEvaluateIcon fill="white" />
+                <NavText>신용등급 관리</NavText>
+              </NavContainer>
+            </NavLink>
+          )}
         </Wrapper>
       )}
     </>

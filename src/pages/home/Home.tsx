@@ -7,6 +7,7 @@ import { TransactionData } from "@/components/transactionLog/TransactionLog";
 import { Container } from "@/style/common/CommonStyle";
 import { useQuery } from "@tanstack/react-query";
 import { styled } from "styled-components";
+import { useState } from "react";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -32,6 +33,12 @@ const Header = styled.h1`
   margin-bottom: 12px;
 `;
 
+interface UserClassType {
+  schoolName: string;
+  grade: number;
+  classNumber: number;
+  attendanceNumber: number;
+}
 export interface MyInfoDataType {
   data: {
     user: {
@@ -48,6 +55,11 @@ interface MyAccountLog {
 }
 
 function Home() {
+  const [categoryView, setCategoryView] = useState("bank");
+
+  const handleCategoryView = (categoryId: string) => {
+    setCategoryView(categoryId);
+  };
   const { data: myInfoData, isLoading: myInfoLoading } =
     useQuery<MyInfoDataType>(["myInfo"], getMyInfo);
 
@@ -77,25 +89,33 @@ function Home() {
             <Header>
               <span>{myInfoData?.data.user.name}</span>님의 자산정보
             </Header>
-            <AssetInfo />
+            <AssetInfo handleCategoryView={handleCategoryView} />
           </div>
           <div>
             <Header>내 구매상품</Header>
             <PurchaseLog />
           </div>
         </LeftContainer>
-        <div>
-          <Header>
-            <span>통장</span> 상세내역
-          </Header>
-          <MyTransactionLog
-            data={myAccountLogData !== undefined ? myAccountLogData.data : []}
-          />
-        </div>
-        <div>
-          <Header>내 신용점수 내역</Header>
-          <Header>우리반 신용점수</Header>
-        </div>
+        {categoryView === "bank" && (
+          <div>
+            <Header>
+              <span>통장</span> 상세내역
+            </Header>
+            <MyTransactionLog
+              data={myAccountLogData !== undefined ? myAccountLogData.data : []}
+            />
+          </div>
+        )}
+        {categoryView === "credit" && (
+          <div>
+            <div>
+              <Header>내 신용점수 내역</Header>
+            </div>
+            <div>
+              <Header>우리반 신용점수</Header>
+            </div>
+          </div>
+        )}
       </HomeContainer>
     </Container>
   );
