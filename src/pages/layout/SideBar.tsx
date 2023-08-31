@@ -26,8 +26,8 @@ function SideBar() {
     return true;
   };
 
-  const savedAccessToken = localStorage.getItem("accessToken") as string;
-  const userRoles = visibleSideBar() && parseJwt(savedAccessToken).roles;
+  const savedAccessToken = localStorage.getItem("accessToken");
+  const userRoles = savedAccessToken && parseJwt(savedAccessToken).roles;
 
   return (
     <>

@@ -68,6 +68,7 @@ function AssetInfo({
       <CardWrapper>
         {assetInfoList.map((info) => (
           <CardItemWrapper
+            key={info.id}
             onClick={() => {
               if (info.id === "saving" || info.id === "stock") {
                 alert("아직 이용할 수 없는 서비스입니다.");

@@ -57,8 +57,8 @@ function PurchaseLog() {
   return (
     <div>
       <CardWrapper>
-        {purchaseLogList.map((info) => (
-          <CardItemWrapper>
+        {purchaseLogList.map((info, idx) => (
+          <CardItemWrapper key={idx}>
             <CardItem
               icon={info.icon}
               category={info.category}

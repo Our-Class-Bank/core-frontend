@@ -72,9 +72,7 @@ function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <BrowserRouter>
-        <Header />
         <Container>
-          <SideBar />
           <RoutePage />
         </Container>
         <GlobalStyle />
