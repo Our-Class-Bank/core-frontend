@@ -4,15 +4,14 @@ import {
   Input,
   Form,
 } from "@/style/transfer/TransferFormStyle";
-import { useForm } from "react-hook-form";
+import { useForm, UseFormRegister } from "react-hook-form";
 import FormBtn from "@/style/common/FormBtn";
 import { useEffect } from "react";
 
-type CreditFormData = {
-  detail: string;
-  students: string[];
-  amount: string;
-  action: string;
+export type CreditFormData = {
+  description: string;
+  studentNumbers: number[];
+  changePoint: string;
 };
 
 interface CreditFormProps {
@@ -20,33 +19,35 @@ interface CreditFormProps {
   setIsFormValid: (isValid: boolean) => void;
 }
 
-const DetailInput: React.FC<{ register: any }> = ({ register }) => (
+const DescriptionInput: React.FC<{
+  register: UseFormRegister<CreditFormData>;
+}> = ({ register }) => (
   <InputContainer>
     <h3>내용</h3>
-    <Input type="text" width="437px" {...register("detail")} />
+    <Input type="text" width="437px" {...register("description")} />
   </InputContainer>
 );
 
 const Buttons: React.FC<{
-  watchActions?: string;
-  setValue: (field: keyof CreditFormData, value: any) => void;
+  watchChangePoint?: string;
+  setValue: (field: keyof CreditFormData, value: string) => void;
   handleReset: () => void;
-}> = ({ watchActions, setValue, handleReset }) => (
+}> = ({ watchChangePoint, setValue, handleReset }) => (
   <InputContainer>
     <FormBtn
-      isCurrent={watchActions === "+1"}
-      onClick={() => setValue("action", "+1")}
+      isCurrent={watchChangePoint === "+1"}
+      onClick={() => setValue("changePoint", "+1")}
     >
       + 1
     </FormBtn>
     <FormBtn
-      isCurrent={watchActions === "-1"}
-      onClick={() => setValue("action", "-1")}
+      isCurrent={watchChangePoint === "-1"}
+      onClick={() => setValue("changePoint", "-1")}
     >
       - 1
     </FormBtn>
     <FormBtn
-      isCurrent={watchActions === "초기화"}
+      isCurrent={watchChangePoint === "초기화"}
       onClick={() => handleReset()}
     >
       초기화
@@ -59,35 +60,36 @@ const CreditForm: React.FC<CreditFormProps> = (props) => {
     useForm<CreditFormData>();
   const { onSubmit, setIsFormValid } = props;
 
-  const watchDetail = watch("detail");
-  const watchStudents = watch("students", []);
-  const watchActions = watch("action");
+  const watchdescription = watch("description");
+  const watchStudentNumbers = watch("studentNumbers", []);
+  const watchChangePoint = watch("changePoint");
 
   const isValid =
-    (watchDetail && watchActions && watchStudents.length > 0) || false;
+    (watchdescription && watchChangePoint && watchStudentNumbers.length > 0) ||
+    false;
   useEffect(() => {
     console.log(isValid);
     setIsFormValid(isValid);
-  }, [isValid]);
+  }, [isValid, setIsFormValid]);
 
   const handleReset = () => {
     reset({
-      detail: "",
-      students: [],
-      action: "",
+      description: "",
+      studentNumbers: [],
+      changePoint: "",
     });
   };
 
   return (
     <Form id="creditForm" onSubmit={handleSubmit(onSubmit)}>
-      <DetailInput register={register} />
+      <DescriptionInput register={register} />
       <StudentList
-        watchStudents={watchStudents}
+        watchStudentNumbers={watchStudentNumbers}
         setValue={setValue}
         height="361px"
       />
       <Buttons
-        watchActions={watchActions}
+        watchChangePoint={watchChangePoint}
         setValue={setValue}
         handleReset={handleReset}
       />

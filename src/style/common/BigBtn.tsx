@@ -11,7 +11,7 @@ const btnDefault = {
 };
 interface BigBtnProps {
   disabled?: boolean;
-  onClick: (data: any) => void;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
   children: React.ReactNode;
 }
 const BigBtn: React.FC<BigBtnProps> = ({ children, disabled, onClick }) => {

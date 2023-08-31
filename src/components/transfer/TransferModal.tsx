@@ -1,37 +1,116 @@
+import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { SubmitHandler } from "react-hook-form";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Wrapper } from "@/style/transfer/TransferFormStyle";
 import TransferForm from "./TransferForm";
 import ConfirmMessage from "./ConfirmMessage";
-import { SubmitHandler } from "react-hook-form";
+import { getMyClassInfo } from "@/apis/infoApi";
+import { StudentInfo } from "@/apis/infoApi";
+import { postWithdraw, postDeposit } from "@/apis/transferApi";
+import { SubmitData } from "@/components/transfer/TransferForm";
 
-export type FormValues = {
-  type: "수입" | "지출";
+export type TransferData = {
+  accountNo: string;
+  type:
+    | "INCOME_SALARY"
+    | "INCOME_PRIZE_MONEY"
+    | "INCOME_ETC"
+    | "EXPENSE_MARKET"
+    | "EXPENSE_FINE"
+    | "EXPENSE_ETC";
   amount: number;
-  students: string[];
+  description: string;
 };
 
 function TransferModal() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { data: myClassData, isLoading: myClassLoading } = useQuery<
+    StudentInfo[]
+  >({
+    queryKey: ["myClassData"],
+    queryFn: getMyClassInfo,
+  });
   const [showConfirmMessage, setShowConfirmMessage] = useState<boolean>(false);
-  const [submittedData, setSubmittedData] = useState<FormValues | null>(null);
+  const [submittedData, setSubmittedData] = useState<SubmitData | null>(null);
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+  const onSubmit: SubmitHandler<SubmitData> = (data) => {
     setSubmittedData(data);
     setShowConfirmMessage(true);
   };
 
   const showForm = () => {
     setShowConfirmMessage(false);
-    console.log("show Form");
+    setSubmittedData(null);
   };
+
+  const handleTransfer = async () => {
+    if (!submittedData) {
+      return;
+    }
+    const { type, amount, studentNumbers, description, withdrawOrDeposit } =
+      submittedData;
+
+    const postTransfer =
+      withdrawOrDeposit === "지출" ? postWithdraw : postDeposit;
+
+    //submittedData를 api에 보내기 적합한 transferData로 변경
+    const makeTransferData = (attendanceNumber: number) => {
+      const accountNo =
+        myClassData && myClassData[attendanceNumber].pocketmoneyAccountNo;
+      if (!accountNo) {
+        return null;
+      }
+      const transferData: TransferData = {
+        accountNo,
+        type,
+        amount,
+        description,
+      };
+      return transferData;
+    };
+
+    try {
+      for (let i = 0; i < studentNumbers.length; i++) {
+        const data = makeTransferData(i);
+        if (data) {
+          await postTransfer(data);
+        }
+      }
+
+      setShowConfirmMessage(false);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 422) {
+          alert("Error");
+        }
+        if (error.response?.status === 401) {
+          alert("");
+        } else {
+          alert("");
+        }
+      }
+    } finally {
+      setSubmittedData(null);
+      queryClient.invalidateQueries({ queryKey: ["bankerLog"] });
+      navigate("/transfer");
+    }
+  };
+
+  if (myClassLoading) {
+    return <>Loading...</>;
+  }
 
   return (
     <Wrapper>
       {!showConfirmMessage && <TransferForm onSubmit={onSubmit} />}
       {showConfirmMessage && (
         <ConfirmMessage
-          onSubmit={onSubmit}
-          submittedData={submittedData as FormValues}
+          submittedData={submittedData as SubmitData}
           showForm={showForm}
+          handleTransfer={handleTransfer}
         />
       )}
     </Wrapper>

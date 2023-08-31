@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { postSignIn } from "@/apis/authApi";
 
 export interface IFormValues {
-  id: string;
+  username: string;
   password: string;
 }
 
@@ -24,6 +24,7 @@ function Login() {
     try {
       setIsLoading(true);
       const response = await postSignIn(data);
+
       if (response.status === 200) {
         localStorage.setItem("accessToken", response.data.accessToken);
         navigate("/");
@@ -37,9 +38,13 @@ function Login() {
         }
       }
     } finally {
+      navigate("/");
       setIsLoading(false);
     }
   };
+  if (isLoading) {
+    return <>loading...</>;
+  }
 
   if (isLoading) {
     return <>loading...</>;
@@ -51,7 +56,7 @@ function Login() {
         <h1>우리반 은행</h1>
         <Input
           type="text"
-          {...register("id", { required: true })}
+          {...register("username", { required: true })}
           placeholder="아이디"
         />
         <Input

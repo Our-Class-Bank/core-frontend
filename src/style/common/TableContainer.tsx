@@ -11,6 +11,7 @@ const Container = styled.div<{ width?: string }>`
   border-radius: 10px;
   margin: 0px 4px;
   padding: 12px;
+  overflow-y: auto;
 `;
 
 const Title = styled.h1`

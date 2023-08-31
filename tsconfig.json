@@ -23,9 +23,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }],
-  "files": ["custom.d.ts"]
+  "include": ["src", "custom.d.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

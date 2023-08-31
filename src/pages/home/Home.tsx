@@ -30,18 +30,20 @@ const Header = styled.h1`
   margin-bottom: 12px;
 `;
 
+export interface UserClassType {
+  schoolName: string;
+  grade: number;
+  classNumber: number;
+  attendanceNumber: number;
+}
+
 interface MyInfoDataType {
   data: {
     user: {
       username: string;
       name: string;
       pocketmoneyAccountNo: string;
-      userClass: {
-        schoolName: string;
-        grade: number;
-        classNumber: number;
-        attendanceNumber: number;
-      };
+      userClass: UserClassType;
     };
   };
 }

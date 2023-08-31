@@ -8,29 +8,48 @@ import {
   MinusIcon,
   ConfirmBtn,
 } from "@/style/transfer/ConfirmMessageStyle";
-import { FormValues } from "./TransferModal";
+import { SubmitData } from "@/components/transfer/TransferForm";
+import { useQuery } from "@tanstack/react-query";
+import { getMyClassInfo } from "@/apis/infoApi";
+import { StudentInfo } from "@/apis/infoApi";
 
 interface ConfirmMessageProps {
-  submittedData: FormValues;
+  submittedData: SubmitData;
   showForm: () => void;
-  onSubmit: (data: FormValues) => void;
+  handleTransfer: () => void;
 }
 
 function ConfirmMessage({
   submittedData,
   showForm,
-  onSubmit,
+  handleTransfer,
 }: ConfirmMessageProps) {
-  const { type, amount, students } = submittedData;
-  const firstStudent = students[0];
-  const numberOfRestStudents = students.length - 1;
-  const studentBlock: string =
-    students.length === 1
-      ? firstStudent
-      : `${firstStudent}외 ${numberOfRestStudents}명의 학생`;
+  //여기서는 context 쓰는게 낫지 않을까 싶다.
+  const { data: myClassData, isLoading: myClassLoading } = useQuery<
+    StudentInfo[]
+  >({
+    queryKey: ["myClassData"],
+    queryFn: getMyClassInfo,
+  });
+  console.log(submittedData);
+  const { withdrawOrDeposit, amount, studentNumbers } = submittedData;
+  const firstStudent =
+    studentNumbers.length > 0
+      ? // ????
+        myClassData?.[studentNumbers[0]]?.name || ""
+      : "";
 
-  const typeBlock =
-    type === "수입" ? (
+  const numberOfRestStudents = studentNumbers.length - 1;
+  const studentBlock: string =
+    studentNumbers.length > 0
+      ? //????
+        studentNumbers.length === 1
+        ? firstStudent
+        : `${firstStudent}외 ${numberOfRestStudents}명의 학생`
+      : "";
+
+  const withdrawOrDepositBlock =
+    withdrawOrDeposit === "수입" ? (
       <TypeWrapper>
         <PlusIcon />
         <TypeText>수입</TypeText>
@@ -42,6 +61,10 @@ function ConfirmMessage({
       </TypeWrapper>
     );
 
+  if (myClassLoading) {
+    return <>Loading...</>;
+  }
+
   return (
     <>
       <Text>
@@ -49,12 +72,12 @@ function ConfirmMessage({
           <BigText>{studentBlock}</BigText>에게
         </Line>
         <Line>
-          {typeBlock}
+          {withdrawOrDepositBlock}
           <BigText>{amount}진스</BigText>를 입력하시겠습니까?
         </Line>
         <Line>
           <ConfirmBtn
-            onClick={onSubmit}
+            onClick={handleTransfer}
             buttonType="submit"
             form="transferForm"
           >

@@ -1,5 +1,7 @@
 import { styled } from "styled-components";
 import BigBtn from "@/style/common/BigBtn";
+import { ReactComponent as PlusSvg } from "@/assets/images/Plus.svg";
+import { ReactComponent as MinusSvg } from "@/assets/images/Minus.svg";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -53,3 +55,12 @@ export const Input = styled.input`
 `;
 
 export const NextBtn = styled(BigBtn)``;
+
+export const PlusIcon = styled(PlusSvg)`
+  width: 20px;
+  height: 20px;
+`;
+export const MinusIcon = styled(MinusSvg)`
+  width: 20px;
+  height: 20px;
+`;
