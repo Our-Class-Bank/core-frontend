@@ -20,7 +20,7 @@ export type CreditFormData = {
 };
 
 interface CreditFormProps {
-  onSubmit: (data: CreditFormData) => void;
+  onSubmit: (data: any) => void;
   setIsFormValid: (isValid: boolean) => void;
 }
 
@@ -77,12 +77,6 @@ const CreditForm: React.FC<CreditFormProps> = (props) => {
     setIsFormValid(isValid);
   }, [isValid, setIsFormValid]);
 
-  const submitHandler: SubmitHandler<CreditFormData> = (data) => {
-    console.log("hey");
-    onSubmit(data);
-    console.log(data);
-  };
-
   const handleReset = () => {
     reset({
       description: "",
@@ -92,7 +86,7 @@ const CreditForm: React.FC<CreditFormProps> = (props) => {
   };
 
   return (
-    <Form id="creditForm" onSubmit={handleSubmit(submitHandler)}>
+    <Form id="creditForm" onSubmit={handleSubmit(onSubmit)}>
       <DescriptionInput register={register} />
       <CreditStudentList
         watchStudentNumbers={watchStudentNumbers}
