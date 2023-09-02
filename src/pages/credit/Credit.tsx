@@ -82,8 +82,6 @@ const Credit: React.FC = () => {
     CreditLog[]
   >(["evaluatorLog"], getEvaluatorLog);
 
-  console.log(evaluatorLogData);
-
   const changeToStudentCredit = (studentName: string) => {
     if (myClassData) {
       const studentDetail = myClassData.find(
@@ -128,8 +126,6 @@ const Credit: React.FC = () => {
   const onSubmit = async (data: any) => {
     try {
       const { description, studentNumbers, changePoint } = data;
-      console.log(studentNumbers);
-      console.log(description);
 
       if (!Array.isArray(studentNumbers)) {
         console.error("studentNumbers is not an array");
@@ -169,10 +165,8 @@ const Credit: React.FC = () => {
     }
   };
 
-  const SubmitBtn: React.FC<{ onSubmit: (data: any) => void }> = ({
-    onSubmit,
-  }) => (
-    <FormHandleBtn onClick={onSubmit} isFormValid={isFormValid}>
+  const SubmitBtn: React.FC<{ onSubmit: (data: any) => void }> = () => (
+    <FormHandleBtn isFormValid={isFormValid} form="creditForm">
       입력
     </FormHandleBtn>
   );

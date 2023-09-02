@@ -74,7 +74,7 @@ function TransferModal() {
 
     try {
       for (let i = 0; i < studentNumbers.length; i++) {
-        const data = makeTransferData(i);
+        const data = makeTransferData(studentNumbers[i]);
         if (data) {
           await postTransfer(data);
         }
