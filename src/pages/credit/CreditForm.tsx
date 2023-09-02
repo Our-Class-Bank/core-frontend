@@ -4,12 +4,7 @@ import {
   Input,
   Form,
 } from "@/style/transfer/TransferFormStyle";
-import {
-  useForm,
-  UseFormRegister,
-  SubmitHandler,
-  UseFormSetValue,
-} from "react-hook-form";
+import { useForm, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import FormBtn from "@/style/common/FormBtn";
 import { useEffect } from "react";
 
@@ -20,7 +15,7 @@ export type CreditFormData = {
 };
 
 interface CreditFormProps {
-  onSubmit: (data: any) => void;
+  onSubmit: (data: CreditFormData) => void;
   setIsFormValid: (isValid: boolean) => void;
 }
 
