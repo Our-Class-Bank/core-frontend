@@ -169,10 +169,8 @@ const Credit: React.FC = () => {
     }
   };
 
-  const SubmitBtn: React.FC<{ onSubmit: (data: any) => void }> = ({
-    onSubmit,
-  }) => (
-    <FormHandleBtn onClick={onSubmit} isFormValid={isFormValid}>
+  const SubmitBtn: React.FC<{ onSubmit: (data: any) => void }> = () => (
+    <FormHandleBtn isFormValid={isFormValid} form="creditForm">
       입력
     </FormHandleBtn>
   );

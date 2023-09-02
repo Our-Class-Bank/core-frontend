@@ -31,7 +31,7 @@ export type SubmitData = {
 };
 
 interface TransferFormProps {
-  onSubmit: (data: any) => void;
+  onSubmit: (data: SubmitData) => void;
 }
 
 const WithdrawOrDepositSelection: React.FC<{
