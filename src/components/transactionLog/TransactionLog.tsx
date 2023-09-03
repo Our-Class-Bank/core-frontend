@@ -17,6 +17,7 @@ export interface TransactionData {
 function TransactionLog({ data }: { data: TransactionData }) {
   const { amount, description, balance } = data;
   const [type, _] = data.type.split("_");
+  console.log(data);
 
   return (
     <TestContainer>

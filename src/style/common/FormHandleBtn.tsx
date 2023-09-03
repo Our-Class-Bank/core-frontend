@@ -1,8 +1,31 @@
 import React, { useEffect } from "react";
-import Button from "./Button";
+import styled from "styled-components";
+
+interface StyledBtnProps {
+  border: string;
+  color: string;
+  backgroundcolor: string;
+  height: string;
+  width: string;
+  fontWeight: string;
+  margin: string;
+}
+
+const StyledBtn = styled.button<StyledBtnProps>`
+  border-radius: 10px;
+  border: ${({ border }) => border};
+  color: ${({ color }) => color};
+  background-color: ${({ backgroundcolor }) => backgroundcolor};
+  height: ${({ height }) => height};
+  width: ${({ width }) => width};
+  font-weight: ${({ fontWeight }) => fontWeight};
+  margin: ${({ margin }) => margin};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 interface FormHandleBtnProps {
-  onClick: (data: any) => void;
   children: React.ReactNode;
   buttonType?: "button" | "reset" | "submit";
   form?: string;
@@ -21,9 +44,7 @@ const btnDefault = {
 };
 
 const FormHandleBtn: React.FC<FormHandleBtnProps> = ({
-  onClick,
   children,
-  buttonType,
   form,
   isFormValid,
 }) => {
@@ -39,14 +60,9 @@ const FormHandleBtn: React.FC<FormHandleBtnProps> = ({
   };
 
   return (
-    <Button
-      form={form}
-      onClick={onClick}
-      buttonType={buttonType ? buttonType : "button"}
-      {...buttonStyle}
-    >
+    <StyledBtn type="submit" form={form} {...buttonStyle}>
       {children}
-    </Button>
+    </StyledBtn>
   );
 };
 

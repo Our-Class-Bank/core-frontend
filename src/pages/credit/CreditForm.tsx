@@ -15,7 +15,7 @@ export type CreditFormData = {
 };
 
 interface CreditFormProps {
-  onSubmit: (data: any) => void;
+  onSubmit: (data: CreditFormData) => void;
   setIsFormValid: (isValid: boolean) => void;
 }
 
@@ -93,6 +93,7 @@ const CreditForm: React.FC<CreditFormProps> = (props) => {
         setValue={setValue}
         handleReset={handleReset}
       />
+      <button type="submit">제출</button>
     </Form>
   );
 };
