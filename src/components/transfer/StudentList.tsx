@@ -33,8 +33,6 @@ const StudentList: React.FC<StudentListProps> = ({
           (watchStudent) => watchStudent !== attendanceNumber
         )
       : [...watchStudentNumbers, attendanceNumber];
-    console.log(updatedAttendanceNumbers);
-    console.log("hi");
 
     setValue("studentNumbers", updatedAttendanceNumbers);
   };

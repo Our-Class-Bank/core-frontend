@@ -68,7 +68,6 @@ const CreditForm: React.FC<CreditFormProps> = (props) => {
     (watchdescription && watchChangePoint && watchStudentNumbers.length > 0) ||
     false;
   useEffect(() => {
-    console.log(isValid);
     setIsFormValid(isValid);
   }, [isValid, setIsFormValid]);
 

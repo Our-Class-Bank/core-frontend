@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 
 interface StyledBtnProps {
@@ -48,8 +48,6 @@ const FormHandleBtn: React.FC<FormHandleBtnProps> = ({
   form,
   isFormValid,
 }) => {
-  useEffect(() => console.log(isFormValid), [isFormValid]);
-
   const buttonStyle = {
     ...btnDefault,
     backgroundcolor: isFormValid ? BUTTON_VALID_COLOR : BUTTON_WHITE_COLOR,

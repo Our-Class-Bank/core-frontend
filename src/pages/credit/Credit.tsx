@@ -138,7 +138,6 @@ const Credit: React.FC = () => {
         const studentInfo = myClassData && myClassData[studentNumbers[i]];
         if (studentInfo && studentInfo.username) {
           const { username } = studentInfo;
-          console.log(creditData, username);
           await postCredit(creditData, username);
         }
       }
@@ -158,7 +157,6 @@ const Credit: React.FC = () => {
         console.error("An error occurred:", error);
       }
     } finally {
-      console.log("finally");
       queryClient.invalidateQueries({ queryKey: ["myClassData"] });
       queryClient.invalidateQueries({ queryKey: ["evaluatorLog"] });
       navigate("/credit");

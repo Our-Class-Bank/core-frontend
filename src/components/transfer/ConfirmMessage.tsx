@@ -31,7 +31,6 @@ function ConfirmMessage({
     queryKey: ["myClassData"],
     queryFn: getMyClassInfo,
   });
-  console.log(submittedData);
   const { withdrawOrDeposit, amount, studentNumbers } = submittedData;
   const firstStudent =
     studentNumbers.length > 0
