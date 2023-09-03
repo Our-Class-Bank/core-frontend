@@ -1,7 +1,6 @@
 import { getMyInfo } from "@/apis/authApi";
 import { getMyAccountLog } from "@/apis/myBankApi";
 import AssetInfo from "@/components/assetInfo/AssetInfo";
-import MyTransactionLog from "@/components/myTransactionLog/MyTransactionLog";
 import PurchaseLog from "@/components/purchaseLog/PurchaseLog";
 import { TransactionData } from "@/components/transactionLog/TransactionLog";
 import { useQuery } from "@tanstack/react-query";
@@ -11,6 +10,7 @@ import ClassCreditTable from "../credit/ClassCreditTable";
 import TableContainer from "@/style/common/TableContainer";
 import CreditLogTable from "../credit/CreditLogTable";
 import { getMyCredit } from "@/apis/creditApi";
+import TransactionList from "@/components/transactionLog/TransactionList";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -111,7 +111,14 @@ function Home() {
             </Header>
           }
         >
-          <AssetInfo handleCategoryView={handleCategoryView} />
+          <AssetInfo
+            assetInfo={{
+              creditPoint: myCreditData?.data.at(-1).changePoint as number,
+              accoutBalance: myAccountLogData?.data[0]?.balance as number,
+            }}
+            handleCategoryView={handleCategoryView}
+            selected={categoryView}
+          />
         </TableContainer>
         <TableContainer title="내 구매상품" width="100%" height="100%">
           <PurchaseLog />
@@ -127,7 +134,7 @@ function Home() {
             </Header>
           }
         >
-          <MyTransactionLog
+          <TransactionList
             data={myAccountLogData !== undefined ? myAccountLogData.data : []}
           />
         </TableContainer>

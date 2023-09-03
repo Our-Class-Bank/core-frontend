@@ -77,7 +77,7 @@ function Login() {
           로그인
         </SubmitBtn>
         <Link to="/reset-password">
-          <ResetPasswordBtn>비밀번호 초기화</ResetPasswordBtn>
+          <ResetPasswordBtn>비밀번호 바꾸기</ResetPasswordBtn>
         </Link>
       </LoginForm>
     </FullContainer>

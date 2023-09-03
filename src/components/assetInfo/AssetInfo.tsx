@@ -6,12 +6,14 @@ import Stock from "@/assets/images/Chart.svg";
 import CreditPoint from "@/assets/images/Bank.svg";
 import { ReactComponent as Toggle } from "@/assets/images/Arrow.svg";
 
-const CardItemWrapper = styled.li<{ disabled: boolean }>`
+const CardItemWrapper = styled.li<{ disabled: boolean; selected: boolean }>`
   min-width: 300px;
   display: flex;
   align-items: center;
   opacity: ${(props) => (props.disabled ? "0.4" : "none")};
   cursor: pointer;
+  color: ${(props) =>
+    props.selected && !props.disabled && props.theme.mainBlue};
 `;
 
 const ToggleWrapper = styled.div`
@@ -19,42 +21,49 @@ const ToggleWrapper = styled.div`
   padding: 8px;
 `;
 
-const assetInfoList = [
-  {
-    id: "bank",
-    icon: Account,
-    category: "통장",
-
-    content: "1,000진스",
-  },
-  {
-    id: "saving",
-    icon: InstallmentSaving,
-    category: "적금",
-
-    content: "1,000진스",
-  },
-  {
-    id: "stock",
-    icon: Stock,
-    category: "주식",
-
-    content: "1,000진스",
-  },
-  {
-    id: "credit",
-    icon: CreditPoint,
-    category: "신용점수",
-
-    content: "1,000진스",
-  },
-];
+interface AssetInfoProps {
+  assetInfo: {
+    creditPoint: number;
+    accoutBalance: number;
+  };
+  handleCategoryView: (categoryId: string) => void;
+  selected: string;
+}
 
 function AssetInfo({
+  assetInfo,
   handleCategoryView,
-}: {
-  handleCategoryView: (categoryId: string) => void;
-}) {
+  selected,
+}: AssetInfoProps) {
+  const assetInfoList = [
+    {
+      id: "bank",
+      icon: Account,
+      category: "통장",
+      content: `${assetInfo.accoutBalance}진스`,
+    },
+    {
+      id: "saving",
+      icon: InstallmentSaving,
+      category: "적금",
+
+      content: "1,000진스",
+    },
+    {
+      id: "stock",
+      icon: Stock,
+      category: "주식",
+
+      content: "1,000진스",
+    },
+    {
+      id: "credit",
+      icon: CreditPoint,
+      category: "신용점수",
+
+      content: `${assetInfo.creditPoint}점`,
+    },
+  ];
   return (
     <div>
       {assetInfoList.map((info) => (
@@ -68,6 +77,7 @@ function AssetInfo({
             }
           }}
           disabled={info.id === "saving" || info.id === "stock"}
+          selected={info.id === selected}
         >
           <CardItem
             icon={info.icon}
@@ -75,7 +85,7 @@ function AssetInfo({
             content={info.content}
           />
           <ToggleWrapper>
-            <Toggle />
+            <Toggle fill={info.id === selected ? "blue" : "black"} />
           </ToggleWrapper>
         </CardItemWrapper>
       ))}
