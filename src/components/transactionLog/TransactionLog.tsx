@@ -33,7 +33,6 @@ function TransactionLog({
   const [type, _] = data.type.split("_");
   const executorName = executor.name;
   const accountOwnerName = owner.name;
-  console.log(transactionType);
 
   return (
     <TestContainer>
