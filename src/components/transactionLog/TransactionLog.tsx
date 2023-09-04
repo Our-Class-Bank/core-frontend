@@ -7,28 +7,49 @@ import { MY_TRANSACTION_LOG_TYPE } from "./constants";
 
 export interface TransactionData {
   accountNo: string;
+  owner: {
+    username: string;
+    name: string;
+  };
   type: keyof typeof MY_TRANSACTION_LOG_TYPE;
   amount: number;
   description: string;
   balance: number;
   transactionAt: string;
+  executor: {
+    username: string;
+    name: string;
+  };
 }
 
-function TransactionLog({ data }: { data: TransactionData }) {
-  const { amount, description, balance } = data;
+function TransactionLog({
+  data,
+  transactionType,
+}: {
+  data: TransactionData;
+  transactionType: string;
+}) {
+  const { amount, description, balance, executor, owner } = data;
   const [type, _] = data.type.split("_");
+  const executorName = executor.name;
+  const accountOwnerName = owner.name;
+  console.log(transactionType);
 
   return (
     <TestContainer>
       <Test $logType={type}>
-        <p>{MY_TRANSACTION_LOG_TYPE[data.type]}</p>
+        <p>
+          {transactionType === "myTransaction" ? description : accountOwnerName}
+        </p>
         <p>
           {type === "EXPENSE" ? "-" : "+"}
           {amount}진스
         </p>
       </Test>
       <TestTest>
-        <p>{description}</p>
+        <p>
+          {transactionType === "myTransaction" ? executorName : description}
+        </p>
         <p>잔액 {balance}진스</p>
       </TestTest>
     </TestContainer>

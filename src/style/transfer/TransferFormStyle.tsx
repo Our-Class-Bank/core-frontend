@@ -3,7 +3,8 @@ import BigBtn from "@/style/common/BigBtn";
 import { ReactComponent as PlusSvg } from "@/assets/images/Plus.svg";
 import { ReactComponent as MinusSvg } from "@/assets/images/Minus.svg";
 
-export const Wrapper = styled.div`
+{
+  /*export const Wrapper = styled.div`
   display: flex;
   width: fit-content;
   height: fit-content;
@@ -12,6 +13,12 @@ export const Wrapper = styled.div`
   background-color: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   padding: 15px 20px;
+`;*/
+}
+export const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: space-between;
 `;
 export const Form = styled.form`
   display: flex;

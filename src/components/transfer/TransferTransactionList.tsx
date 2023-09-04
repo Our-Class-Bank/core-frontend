@@ -1,17 +1,50 @@
-import TransactionList from "@/components/transactionLog/TransactionList";
-import { TransactionData } from "../transactionLog/TransactionLog";
+import { Fragment } from "react";
+import TransactionLog, {
+  TransactionData,
+} from "@/components/transactionLog/TransactionLog";
+import {
+  DatePoint,
+  DateRow,
+  DateText,
+  LogDateStick,
+  TransctionListWrapper,
+  TransctionLogWrapper,
+} from "@/style/components/TransactionLogStyle";
+import { getDate } from "../transactionLog/utills/getDate";
 
-interface TransferTransactionListProps {
-  bankerLogData: TransactionData[];
-}
-function TransferTransactionList({
-  bankerLogData,
-}: TransferTransactionListProps) {
+function TransactionList({ data }: { data: TransactionData[] }) {
+  const dateSet = new Set();
+  const displayDate = (transactionDate: string) => {
+    dateSet.add(transactionDate);
+    return transactionDate;
+  };
   return (
-    <>
-      <TransactionList data={bankerLogData} />
-    </>
+    <TransctionListWrapper>
+      <LogDateStick />
+      <TransctionLogWrapper>
+        {data.map((transaction, idx) => {
+          const transactionDate = getDate(transaction.transactionAt);
+          return (
+            <Fragment key={idx}>
+              {dateSet.has(transactionDate) ? null : (
+                <DateRow>
+                  <DatePoint />
+                  <DateText>{displayDate(transactionDate)}</DateText>
+                </DateRow>
+              )}
+              <TransactionLog data={transaction} />
+              {data.length - 1 === idx && (
+                <DateRow>
+                  <DatePoint />
+                  <DateText>마지막 내역입니다.</DateText>
+                </DateRow>
+              )}
+            </Fragment>
+          );
+        })}
+      </TransctionLogWrapper>
+    </TransctionListWrapper>
   );
 }
 
-export default TransferTransactionList;
+export default TransactionList;
