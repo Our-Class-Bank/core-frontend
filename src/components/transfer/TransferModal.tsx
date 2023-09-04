@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SubmitHandler } from "react-hook-form";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Wrapper } from "@/style/transfer/TransferFormStyle";
 import TransferForm from "./TransferForm";
 import ConfirmMessage from "./ConfirmMessage";
 import { getMyClassInfo } from "@/apis/infoApi";
@@ -104,7 +103,7 @@ function TransferModal() {
   }
 
   return (
-    <Wrapper>
+    <>
       {!showConfirmMessage && <TransferForm onSubmit={onSubmit} />}
       {showConfirmMessage && (
         <ConfirmMessage
@@ -113,7 +112,7 @@ function TransferModal() {
           handleTransfer={handleTransfer}
         />
       )}
-    </Wrapper>
+    </>
   );
 }
 

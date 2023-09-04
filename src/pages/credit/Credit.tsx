@@ -128,7 +128,6 @@ const Credit: React.FC = () => {
       const { description, studentNumbers, changePoint } = data;
 
       if (!Array.isArray(studentNumbers)) {
-        console.error("studentNumbers is not an array");
         return;
       }
 

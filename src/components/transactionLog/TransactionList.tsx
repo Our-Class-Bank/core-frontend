@@ -12,7 +12,13 @@ import {
 } from "@/style/components/TransactionLogStyle";
 import { getDate } from "./utills/getDate";
 
-function TransactionList({ data }: { data: TransactionData[] }) {
+function TransactionList({
+  data,
+  transactionType,
+}: {
+  data: TransactionData[];
+  transactionType: string;
+}) {
   const dateSet = new Set();
   const displayDate = (transactionDate: string) => {
     dateSet.add(transactionDate);
@@ -32,7 +38,10 @@ function TransactionList({ data }: { data: TransactionData[] }) {
                   <DateText>{displayDate(transactionDate)}</DateText>
                 </DateRow>
               )}
-              <TransactionLog data={transaction} />
+              <TransactionLog
+                data={transaction}
+                transactionType={transactionType}
+              />
               {data.length - 1 === idx && (
                 <DateRow>
                   <DatePoint />

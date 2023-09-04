@@ -136,6 +136,7 @@ function Home() {
         >
           <TransactionList
             data={myAccountLogData !== undefined ? myAccountLogData.data : []}
+            transactionType="myTransaction"
           />
         </TableContainer>
       )}

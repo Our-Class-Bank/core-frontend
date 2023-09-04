@@ -3,10 +3,11 @@ import { styled, useTheme } from "styled-components";
 import { ReactComponent as Plus } from "@/assets/images/Plus.svg";
 import { ReactComponent as Minus } from "@/assets/images/Minus.svg";
 import Button from "../common/Button";
+import { SubmitData } from "@/components/transfer/TransferForm";
 
 interface ConfirmBtnProps {
   children: React.ReactNode;
-  onClick: (data: any) => void;
+  onClick: (data: SubmitData) => void;
   buttonType: "submit" | "reset" | "button";
   form: string;
 }
