@@ -1,6 +1,4 @@
 import TransferModal from "@/components/transfer/TransferModal";
-import { Container } from "@/style/common/CommonStyle";
-import { Wrapper } from "@/style/transfer/TransferStyle";
 import { useQuery } from "@tanstack/react-query";
 import { getBankerLog } from "@/apis/transferApi";
 import { TransactionData } from "@/components/transactionLog/TransactionLog";

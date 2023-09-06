@@ -150,7 +150,10 @@ function Home() {
             >
               <CreditPointCardWrapper>
                 <span>내 신용점수</span>
-                {myCreditData?.data.at(-1).changePoint}점
+                {myCreditData?.data.length !== 0
+                  ? myCreditData?.data.at(-1).changePoint
+                  : 0}
+                점
               </CreditPointCardWrapper>
             </TableContainer>
             <TableContainer width="240px" height="100%" minHeight="416px">
