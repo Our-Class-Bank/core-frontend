@@ -113,7 +113,10 @@ function Home() {
         >
           <AssetInfo
             assetInfo={{
-              creditPoint: myCreditData?.data.at(-1).changePoint as number,
+              creditPoint:
+                myCreditData?.data.length !== 0
+                  ? myCreditData?.data.at(-1).changePoint
+                  : 0,
               accoutBalance: myAccountLogData?.data[0]?.balance as number,
             }}
             handleCategoryView={handleCategoryView}
