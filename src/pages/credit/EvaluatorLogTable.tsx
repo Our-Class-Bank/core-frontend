@@ -30,8 +30,8 @@ const columns: Column<CreditLog>[] = [
     Header: "내용",
     accessor: (row: CreditLog) => (
       <div>
-        <BlackTxt>{row.description}</BlackTxt>
-        <GrayTxt>{formatDateToCustomString(row.createdAt)}</GrayTxt>
+        <BlackTxt>{row.username}</BlackTxt>
+        <GrayTxt>{row.description}</GrayTxt>
       </div>
     ),
   },
@@ -40,7 +40,7 @@ const columns: Column<CreditLog>[] = [
     accessor: (row: CreditLog) => (
       <div>
         <BlueTxt>{row.changePoint}점</BlueTxt>
-        <GrayTxt>{row.score}점</GrayTxt>
+        <GrayTxt>{formatDateToCustomString(row.createdAt)}</GrayTxt>
       </div>
     ),
   },

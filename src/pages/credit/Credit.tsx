@@ -16,6 +16,7 @@ import { getEvaluatorLog } from "@/apis/creditApi";
 import { getMyClassInfo, StudentInfo } from "@/apis/infoApi";
 import EvaluatorLogTable from "./EvaluatorLogTable";
 import { useNavigate } from "react-router-dom";
+import { CreditFormData } from "@/pages/credit/CreditForm";
 
 const Horizontal = styled.div`
   display: flex;
@@ -123,7 +124,7 @@ const Credit: React.FC = () => {
   //"입력 & 전체변경" 컴포넌트 관련
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: CreditFormData) => {
     try {
       const { description, studentNumbers, changePoint } = data;
 
