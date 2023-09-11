@@ -7,6 +7,7 @@ import {
 import { useForm, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import FormBtn from "@/style/common/FormBtn";
 import { useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 export type CreditFormData = {
   description: string;
@@ -59,6 +60,7 @@ const CreditForm: React.FC<CreditFormProps> = (props) => {
   const { register, watch, handleSubmit, setValue, reset } =
     useForm<CreditFormData>();
   const { onSubmit, setIsFormValid } = props;
+  const queryClient = useQueryClient();
 
   const watchdescription = watch("description");
   const watchStudentNumbers = watch("studentNumbers", []);
@@ -79,8 +81,14 @@ const CreditForm: React.FC<CreditFormProps> = (props) => {
     });
   };
 
+  const submitHandler = (data: CreditFormData) => {
+    onSubmit(data);
+    handleReset();
+    queryClient.invalidateQueries({ queryKey: ["classCreditData"] });
+  };
+
   return (
-    <Form id="creditForm" onSubmit={handleSubmit(onSubmit)}>
+    <Form id="creditForm" onSubmit={handleSubmit(submitHandler)}>
       <DescriptionInput register={register} />
       <CreditStudentList
         watchStudentNumbers={watchStudentNumbers}
@@ -92,7 +100,6 @@ const CreditForm: React.FC<CreditFormProps> = (props) => {
         setValue={setValue}
         handleReset={handleReset}
       />
-      <button type="submit">제출</button>
     </Form>
   );
 };

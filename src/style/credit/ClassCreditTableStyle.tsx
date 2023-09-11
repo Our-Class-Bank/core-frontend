@@ -42,5 +42,6 @@ export const StyledDetailIcon = styled(DetailIcon)`
   position: relative;
   right: 15px;
   top: 10%;
+  margin-left: 7px;
   transform: translateY(-50%);
 `;
