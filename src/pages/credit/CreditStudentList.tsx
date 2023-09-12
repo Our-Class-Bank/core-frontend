@@ -11,31 +11,27 @@ import { CreditFormData } from "@/pages/credit/CreditForm";
 //setValue의 interface를 CreditFormData로 하지 않으면 에러가 떠서 결국 StudentList를 복사한 컴포넌트를 만듦
 interface StudentListProps {
   setValue: UseFormSetValue<CreditFormData>;
-  watchStudentNumbers: number[];
+  watchStudentIds: string[];
   height?: string;
 }
 
 const CreditStudentList: React.FC<StudentListProps> = ({
   setValue,
-  watchStudentNumbers,
+  watchStudentIds,
   height,
 }: StudentListProps) => {
   const { data: myClassData, isLoading: myClassLoading } = useQuery<
-    StudentInfo[]
+    Record<string, StudentInfo>
   >({
     queryKey: ["myClassData"],
     queryFn: getMyClassInfo,
   });
-  const handleStudentClick = (attendanceNumber: number) => {
-    const updatedAttendanceNumbers = watchStudentNumbers.includes(
-      attendanceNumber
-    )
-      ? watchStudentNumbers.filter(
-          (watchStudent) => watchStudent !== attendanceNumber
-        )
-      : [...watchStudentNumbers, attendanceNumber];
+  const handleStudentClick = (username: string) => {
+    const updatedUsernames = watchStudentIds.includes(username)
+      ? watchStudentIds.filter((watchStudent) => watchStudent !== username)
+      : [...watchStudentIds, username];
 
-    setValue("studentNumbers", updatedAttendanceNumbers);
+    setValue("studentIds", updatedUsernames);
   };
   if (myClassLoading) {
     return <>Loading...</>;
@@ -45,17 +41,18 @@ const CreditStudentList: React.FC<StudentListProps> = ({
     <Wrapper height={height}>
       <StudentBtns>
         {myClassData &&
-          myClassData.slice(1).map((student) => {
+          Object.values(myClassData).map((student) => {
             const {
               name,
+              username,
               userClass: { attendanceNumber },
             } = student;
             if (!student) return null;
             return (
               <FormBtn
-                onClick={() => handleStudentClick(attendanceNumber)}
-                isCurrent={watchStudentNumbers.includes(attendanceNumber)}
-                key={attendanceNumber}
+                onClick={() => handleStudentClick(username)}
+                isCurrent={watchStudentIds.includes(username)}
+                key={username}
               >
                 {attendanceNumber}.{name}
               </FormBtn>

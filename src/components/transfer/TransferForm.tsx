@@ -25,7 +25,7 @@ export type SubmitData = {
     | "EXPENSE_MARKET"
     | "EXPENSE_ETC";
   amount: number;
-  studentNumbers: number[];
+  studentIds: string[];
   description: string;
   withdrawOrDeposit: "수입" | "지출";
 };
@@ -135,9 +135,10 @@ const TransferForm: React.FC<TransferFormProps> = ({ onSubmit }) => {
 
   const submitHandler: SubmitHandler<SubmitData> = (SubmitData) => {
     onSubmit(SubmitData);
+    console.log(SubmitData);
   };
 
-  const watchStudentNumbers = watch("studentNumbers", []);
+  const watchstudentIds = watch("studentIds", []);
   const watchWithdrawOrDeposit = watch("withdrawOrDeposit");
   const watchType = watch("type");
   const watchAmount = watch("amount");
@@ -146,14 +147,11 @@ const TransferForm: React.FC<TransferFormProps> = ({ onSubmit }) => {
     watchWithdrawOrDeposit &&
     watchType &&
     watchAmount &&
-    watchStudentNumbers.length > 0;
+    watchstudentIds.length > 0;
 
   return (
     <Form id="trasferForm" onSubmit={handleSubmit(submitHandler)}>
-      <StudentList
-        watchStudentNumbers={watchStudentNumbers}
-        setValue={setValue}
-      />
+      <StudentList watchstudentIds={watchstudentIds} setValue={setValue} />
       <WithdrawOrDepositSelection
         watchWithdrawOrDeposit={watchWithdrawOrDeposit}
         setValue={setValue}

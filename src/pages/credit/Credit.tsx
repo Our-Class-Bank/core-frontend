@@ -73,7 +73,7 @@ const Credit: React.FC = () => {
   );
 
   const { data: myClassData, isLoading: myClassLoading } = useQuery<
-    StudentInfo[]
+    Record<string, StudentInfo>
   >({
     queryKey: ["myClassData"],
     queryFn: getMyClassInfo,
@@ -126,20 +126,12 @@ const Credit: React.FC = () => {
 
   const onSubmit = async (data: CreditFormData) => {
     try {
-      const { description, studentNumbers, changePoint } = data;
-
-      if (!Array.isArray(studentNumbers)) {
-        return;
-      }
+      const { description, studentIds, changePoint } = data;
 
       const creditData = { description, changePoint };
 
-      for (let i = 0; i < studentNumbers.length; i++) {
-        const studentInfo = myClassData && myClassData[studentNumbers[i]];
-        if (studentInfo && studentInfo.username) {
-          const { username } = studentInfo;
-          await postCredit(creditData, username);
-        }
+      for (let i = 0; i < studentIds.length; i++) {
+        await postCredit(creditData, studentIds[i]);
       }
 
       setIsFormValid(false);

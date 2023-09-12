@@ -4,6 +4,8 @@ import { BlackTxt, GrayTxt, BlueTxt } from "@/style/credit/CreditLogTableStyle";
 import { CreditLog } from "./Credit";
 import { getEvaluatorLog } from "@/apis/creditApi";
 import { useQuery } from "@tanstack/react-query";
+import { getMyClassInfo } from "@/apis/infoApi";
+import { StudentInfo } from "@/apis/infoApi";
 
 const formatDateToCustomString = (createdAt: string) => {
   const date = new Date(createdAt);
