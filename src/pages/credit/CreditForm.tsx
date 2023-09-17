@@ -11,7 +11,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 export type CreditFormData = {
   description: string;
-  studentNumbers: number[];
+  studentIds: string[];
   changePoint: string;
 };
 
@@ -63,11 +63,11 @@ const CreditForm: React.FC<CreditFormProps> = (props) => {
   const queryClient = useQueryClient();
 
   const watchdescription = watch("description");
-  const watchStudentNumbers = watch("studentNumbers", []);
+  const watchStudentIds = watch("studentIds", []);
   const watchChangePoint = watch("changePoint");
 
   const isValid =
-    (watchdescription && watchChangePoint && watchStudentNumbers.length > 0) ||
+    (watchdescription && watchChangePoint && watchStudentIds.length > 0) ||
     false;
   useEffect(() => {
     setIsFormValid(isValid);
@@ -76,12 +76,13 @@ const CreditForm: React.FC<CreditFormProps> = (props) => {
   const handleReset = () => {
     reset({
       description: "",
-      studentNumbers: [],
+      studentIds: [],
       changePoint: "",
     });
   };
 
   const submitHandler = (data: CreditFormData) => {
+    console.log(data);
     onSubmit(data);
     handleReset();
     queryClient.invalidateQueries({ queryKey: ["classCreditData"] });
@@ -91,7 +92,7 @@ const CreditForm: React.FC<CreditFormProps> = (props) => {
     <Form id="creditForm" onSubmit={handleSubmit(submitHandler)}>
       <DescriptionInput register={register} />
       <CreditStudentList
-        watchStudentNumbers={watchStudentNumbers}
+        watchStudentIds={watchStudentIds}
         setValue={setValue}
         height="361px"
       />
