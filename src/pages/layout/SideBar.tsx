@@ -43,7 +43,8 @@ function SideBar() {
               <NavText>내 통장</NavText>
             </NavContainer>
           </NavLink>
-          {userRoles.includes("ROLE_BANKER") && (
+          {(userRoles.includes("ROLE_BANKER") ||
+            userRoles.includes("ROLE_TEACHER")) && (
             <NavLink to="/transfer">
               <NavContainer>
                 <TransferIcon fill="white" />
@@ -51,7 +52,8 @@ function SideBar() {
               </NavContainer>
             </NavLink>
           )}
-          {userRoles.includes("ROLE_CREDIT_EVALUATOR") && (
+          {(userRoles.includes("ROLE_CREDIT_EVALUATOR") ||
+            userRoles.includes("ROLE_TEACHER")) && (
             <NavLink to="/credit">
               <NavContainer>
                 <CreditEvaluateIcon fill="white" />
