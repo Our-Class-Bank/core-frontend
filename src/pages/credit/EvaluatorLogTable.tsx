@@ -6,6 +6,7 @@ import { getEvaluatorLog } from "@/apis/creditApi";
 import { useQuery } from "@tanstack/react-query";
 import { getMyClassInfo } from "@/apis/infoApi";
 import { StudentInfo } from "@/apis/infoApi";
+import { useMemo } from "react";
 
 const formatDateToCustomString = (createdAt: string) => {
   const date = new Date(createdAt);
@@ -27,36 +28,49 @@ export type StudentCreditLog = {
   score: number;
   createdAt: string;
 };
-const columns: Column<CreditLog>[] = [
-  {
-    Header: "내용",
-    accessor: (row: CreditLog) => (
-      <div>
-        <BlackTxt>{row.username}</BlackTxt>
-        <GrayTxt>{row.description}</GrayTxt>
-      </div>
-    ),
-  },
-  {
-    Header: "점수",
-    accessor: (row: CreditLog) => (
-      <div>
-        <BlueTxt>{row.changePoint}점</BlueTxt>
-        <GrayTxt>{formatDateToCustomString(row.createdAt)}</GrayTxt>
-      </div>
-    ),
-  },
-];
 
 const EvaluatorLogTable: React.FC = () => {
   const { data: evaluatorLogData, isLoading: evaluatorLogLoading } = useQuery<
     CreditLog[]
   >(["evaluatorLog"], getEvaluatorLog);
 
+  const { data: myClassData, isLoading: myClassLoading } = useQuery<
+    Record<string, StudentInfo>
+  >({
+    queryKey: ["myClassData"],
+    queryFn: getMyClassInfo,
+  });
+
+  const columns: Column<CreditLog>[] = useMemo(
+    () => [
+      {
+        Header: "내용",
+        accessor: (row: CreditLog) => (
+          <div>
+            <BlackTxt>
+              {myClassData && myClassData[row.username]?.name}
+            </BlackTxt>
+            <GrayTxt>{row.description}</GrayTxt>
+          </div>
+        ),
+      },
+      {
+        Header: "점수",
+        accessor: (row: CreditLog) => (
+          <div>
+            <BlueTxt>{row.changePoint}점</BlueTxt>
+            <GrayTxt>{formatDateToCustomString(row.createdAt)}</GrayTxt>
+          </div>
+        ),
+      },
+    ],
+    [myClassData]
+  );
+
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable<CreditLog>({ columns, data: evaluatorLogData || [] });
 
-  if (evaluatorLogLoading) {
+  if (evaluatorLogLoading || myClassLoading) {
     return <>Loading...</>;
   }
   if (!evaluatorLogData || evaluatorLogData.length === 0) {

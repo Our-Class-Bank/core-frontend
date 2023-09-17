@@ -33,7 +33,9 @@ export async function getClassCredit() {
       },
     }
   );
-  return response.data;
+  const dataWithoutTeacher = response.data.slice(1);
+
+  return dataWithoutTeacher;
 }
 
 export async function getMyCredit() {
