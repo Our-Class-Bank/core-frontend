@@ -164,12 +164,7 @@ function Home() {
             </TableContainer>
           </div>
           <div>
-            <TableContainer
-              title="우리반 신용점수"
-              width="100%"
-              height="100%"
-              minHeight="550px"
-            >
+            <TableContainer title="우리반 신용점수" width="100%" height="550px">
               <ClassCreditTable />
             </TableContainer>
           </div>
