@@ -26,21 +26,19 @@ function ConfirmMessage({
 }: ConfirmMessageProps) {
   //여기서는 context 쓰는게 낫지 않을까 싶다.
   const { data: myClassData, isLoading: myClassLoading } = useQuery<
-    StudentInfo[]
+    Record<string, StudentInfo>
   >({
     queryKey: ["myClassData"],
     queryFn: getMyClassInfo,
   });
-  const { withdrawOrDeposit, amount, studentNumbers } = submittedData;
+  const { withdrawOrDeposit, amount, studentIds } = submittedData;
   const firstStudent =
-    studentNumbers.length > 0
-      ? myClassData?.[studentNumbers[0]]?.name || ""
-      : "";
+    studentIds.length > 0 ? myClassData?.[studentIds[0]]?.name || "" : "";
 
-  const numberOfRestStudents = studentNumbers.length - 1;
+  const numberOfRestStudents = studentIds.length - 1;
   const studentBlock: string =
-    studentNumbers.length > 0
-      ? studentNumbers.length === 1
+    studentIds.length > 0
+      ? studentIds.length === 1
         ? firstStudent
         : `${firstStudent}외 ${numberOfRestStudents}명의 학생`
       : "";

@@ -13,10 +13,11 @@ import CreditFormTitle from "@/style/credit/CreditFormTitle";
 import { postCredit } from "@/apis/creditApi";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getEvaluatorLog } from "@/apis/creditApi";
-import { getMyClassInfo, StudentInfo } from "@/apis/infoApi";
+import { StudentInfo } from "@/apis/infoApi";
 import EvaluatorLogTable from "./EvaluatorLogTable";
 import { useNavigate } from "react-router-dom";
 import { CreditFormData } from "@/pages/credit/CreditForm";
+import { getMyClassInfo } from "@/apis/infoApi";
 
 const Horizontal = styled.div`
   display: flex;
@@ -51,60 +52,41 @@ export type CreditPostData = {
   changePoint: string;
 };
 
-const defaultCreditDetailStudent = {
-  username: "",
-  name: "",
-  pocketmoneyAccountNo: "",
-  userClass: {
-    schoolName: "",
-    grade: 0,
-    classNumber: 0,
-    attendanceNumber: 0,
-  },
-};
-
 const Credit: React.FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  //"우리반 신용점수" 컴포넌트 관련
-  const [studentDetailMode, setStudentDetailMode] = useState(false);
-  const [creditDetailStudent, setCreditDetailStudent] = useState<StudentInfo>(
-    defaultCreditDetailStudent
-  );
 
   const { data: myClassData, isLoading: myClassLoading } = useQuery<
-    StudentInfo[]
+    Record<string, StudentInfo>
   >({
     queryKey: ["myClassData"],
     queryFn: getMyClassInfo,
   });
 
+  //"우리반 신용점수" 컴포넌트 관련
+  const [studentDetailMode, setStudentDetailMode] = useState(false);
+  const [creditDetailStudent, setCreditDetailStudent] = useState("");
+
   const { data: evaluatorLogData, isLoading: evaluatorLogLoading } = useQuery<
     CreditLog[]
   >(["evaluatorLog"], getEvaluatorLog);
 
-  const changeToStudentCredit = (studentName: string) => {
-    if (myClassData) {
-      const studentDetail = myClassData.find(
-        (student) => student.name === studentName
-      );
-      if (studentDetail) {
-        setStudentDetailMode(true);
-        setCreditDetailStudent(studentDetail);
-      }
-    }
+  const changeToStudentCredit = (username: string) => {
+    setStudentDetailMode(true);
+    setCreditDetailStudent(username);
   };
 
   const backToClassCredit = () => {
     setStudentDetailMode(false);
-    setCreditDetailStudent(defaultCreditDetailStudent);
+    setCreditDetailStudent("");
   };
 
   const containerTitle = studentDetailMode ? (
     <TitleContainer>
       <BackIcon onClick={backToClassCredit} />
       <Title>
-        <Blue>{creditDetailStudent.name}</Blue>의 신용점수 내역
+        <Blue>{myClassData && myClassData[creditDetailStudent].name}</Blue>의
+        신용점수 내역
       </Title>
     </TitleContainer>
   ) : (
@@ -126,20 +108,12 @@ const Credit: React.FC = () => {
 
   const onSubmit = async (data: CreditFormData) => {
     try {
-      const { description, studentNumbers, changePoint } = data;
-
-      if (!Array.isArray(studentNumbers)) {
-        return;
-      }
+      const { description, studentIds, changePoint } = data;
 
       const creditData = { description, changePoint };
 
-      for (let i = 0; i < studentNumbers.length; i++) {
-        const studentInfo = myClassData && myClassData[studentNumbers[i]];
-        if (studentInfo && studentInfo.username) {
-          const { username } = studentInfo;
-          await postCredit(creditData, username);
-        }
+      for (let i = 0; i < studentIds.length; i++) {
+        await postCredit(creditData, studentIds[i]);
       }
 
       setIsFormValid(false);
@@ -180,9 +154,8 @@ const Credit: React.FC = () => {
           {!studentDetailMode && (
             <ClassCreditTable changeToStudentCredit={changeToStudentCredit} />
           )}
-
           {studentDetailMode && (
-            <CreditLogTable username={creditDetailStudent.username} />
+            <CreditLogTable username={creditDetailStudent} />
           )}
         </TableContainer>
 

@@ -27,7 +27,7 @@ function TransferModal() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { data: myClassData, isLoading: myClassLoading } = useQuery<
-    StudentInfo[]
+    Record<string, StudentInfo>
   >({
     queryKey: ["myClassData"],
     queryFn: getMyClassInfo,
@@ -49,16 +49,17 @@ function TransferModal() {
     if (!submittedData) {
       return;
     }
-    const { type, amount, studentNumbers, description, withdrawOrDeposit } =
+    const { type, amount, studentIds, description, withdrawOrDeposit } =
       submittedData;
 
     const postTransfer =
       withdrawOrDeposit === "지출" ? postWithdraw : postDeposit;
 
     //submittedData를 api에 보내기 적합한 transferData로 변경
-    const makeTransferData = (attendanceNumber: number) => {
+    const makeTransferData = (studentId: string) => {
       const accountNo =
-        myClassData && myClassData[attendanceNumber].pocketmoneyAccountNo;
+        myClassData && myClassData[studentId].pocketmoneyAccountNo;
+      console.log(accountNo);
       if (!accountNo) {
         return null;
       }
@@ -72,8 +73,8 @@ function TransferModal() {
     };
 
     try {
-      for (let i = 0; i < studentNumbers.length; i++) {
-        const data = makeTransferData(studentNumbers[i]);
+      for (let i = 0; i < studentIds.length; i++) {
+        const data = makeTransferData(studentIds[i]);
         if (data) {
           await postTransfer(data);
         }

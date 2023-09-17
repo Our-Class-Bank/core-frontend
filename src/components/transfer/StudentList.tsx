@@ -10,31 +10,27 @@ import { SubmitData } from "./TransferForm";
 
 interface StudentListProps {
   setValue: UseFormSetValue<SubmitData>;
-  watchStudentNumbers: number[];
+  watchstudentIds: string[];
   height?: string;
 }
 
 const StudentList: React.FC<StudentListProps> = ({
   setValue,
-  watchStudentNumbers,
+  watchstudentIds,
   height,
 }: StudentListProps) => {
   const { data: myClassData, isLoading: myClassLoading } = useQuery<
-    StudentInfo[]
+    Record<string, StudentInfo>
   >({
     queryKey: ["myClassData"],
     queryFn: getMyClassInfo,
   });
-  const handleStudentClick = (attendanceNumber: number) => {
-    const updatedAttendanceNumbers = watchStudentNumbers.includes(
-      attendanceNumber
-    )
-      ? watchStudentNumbers.filter(
-          (watchStudent) => watchStudent !== attendanceNumber
-        )
-      : [...watchStudentNumbers, attendanceNumber];
+  const handleStudentClick = (username: string) => {
+    const updatedUsernames = watchstudentIds.includes(username)
+      ? watchstudentIds.filter((watchStudent) => watchStudent !== username)
+      : [...watchstudentIds, username];
 
-    setValue("studentNumbers", updatedAttendanceNumbers);
+    setValue("studentIds", updatedUsernames);
   };
   if (myClassLoading) {
     return <>Loading...</>;
@@ -44,17 +40,18 @@ const StudentList: React.FC<StudentListProps> = ({
     <Wrapper height={height}>
       <StudentBtns>
         {myClassData &&
-          myClassData.slice(1).map((student) => {
+          Object.values(myClassData).map((student) => {
             const {
               name,
+              username,
               userClass: { attendanceNumber },
             } = student;
             if (!student) return null;
             return (
               <FormBtn
-                onClick={() => handleStudentClick(attendanceNumber)}
-                isCurrent={watchStudentNumbers.includes(attendanceNumber)}
-                key={attendanceNumber}
+                onClick={() => handleStudentClick(username)}
+                isCurrent={watchstudentIds.includes(username)}
+                key={username}
               >
                 {attendanceNumber}.{name}
               </FormBtn>
