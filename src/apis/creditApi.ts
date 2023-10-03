@@ -30,7 +30,9 @@ export async function postCreditChangeAll(
   username: string
 ) {
   const response = await axios.post(
-    `http://43.202.160.79:8080/api/v1/credit-evaluation/${username}/reset`,
+    `${
+      import.meta.env.VITE_SERVER_IP
+    }/api/v1/credit-evaluation/${username}/reset`,
     data,
     {
       headers: {
@@ -43,7 +45,7 @@ export async function postCreditChangeAll(
 
 export async function getClassCredit() {
   const response = await axios.get(
-    `http://43.202.160.79:8080/api/v1/same-class/credit-evaluation`,
+    `${import.meta.env.VITE_SERVER_IP}/api/v1/same-class/credit-evaluation`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
