@@ -1,5 +1,6 @@
 //import { privateApi } from "@/apis/authApi";
 import { CreditPostData } from "@/pages/credit/Credit";
+import { CreditChangeAllFormData } from "@/pages/credit/CreditChangeAll";
 import axios from "axios";
 
 {
@@ -24,9 +25,25 @@ export async function postCredit(data: CreditPostData, username: string) {
   return response;
 }
 
+export async function postCreditChangeAll(
+  data: CreditChangeAllFormData,
+  username: string
+) {
+  const response = await axios.post(
+    `http://43.202.160.79:8080/api/v1/credit-evaluation/${username}/reset`,
+    data,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    }
+  );
+  return response;
+}
+
 export async function getClassCredit() {
   const response = await axios.get(
-    `${import.meta.env.VITE_SERVER_IP}/api/v1/same-class/credit-evaluation`,
+    `http://43.202.160.79:8080/api/v1/same-class/credit-evaluation`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -66,9 +83,7 @@ export async function getMyCredit() {
 
 export async function getEvaluatorLog() {
   const response = await axios.get(
-    `${
-      import.meta.env.VITE_SERVER_IP
-    }/api/v1/credit-evaluation/history/by-credit-evaluator`,
+    `http://43.202.160.79:8080/api/v1/credit-evaluation/history/by-credit-evaluator`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

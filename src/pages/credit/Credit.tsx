@@ -9,7 +9,6 @@ import CreditForm from "./CreditForm";
 import { ReactComponent as BackIcon } from "@/assets/images/back.svg";
 import FormHandleBtn from "@/style/common/FormHandleBtn";
 import CreditFormTitle from "@/style/credit/CreditFormTitle";
-//import CreditChangeAll from "./CreditChangeAll";
 import { postCredit } from "@/apis/creditApi";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getEvaluatorLog } from "@/apis/creditApi";
@@ -18,6 +17,9 @@ import EvaluatorLogTable from "./EvaluatorLogTable";
 import { useNavigate } from "react-router-dom";
 import { CreditFormData } from "@/pages/credit/CreditForm";
 import { getMyClassInfo } from "@/apis/infoApi";
+import CreditChangeAll from "./CreditChangeAll";
+import { CreditChangeAllFormData } from "./CreditChangeAll";
+import { postCreditChangeAll } from "@/apis/creditApi";
 
 const Horizontal = styled.div`
   display: flex;
@@ -44,7 +46,7 @@ export interface CreditLog {
   changePoint: number;
   description: string;
   score: number;
-  createdAt: string;
+  transactionAt: string;
 }
 
 export type CreditPostData = {
@@ -92,28 +94,34 @@ const Credit: React.FC = () => {
   ) : (
     <Title>우리반 신용점수</Title>
   );
-  {
-    /*
- 
+
   const [isCreditChangeAll, setIsCreditChangeAll] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
 
   const handleCreditChangeAll = (boolean: boolean) => {
     setIsCreditChangeAll(boolean);
-  };*/
-  }
+  };
 
-  //"입력 & 전체변경" 컴포넌트 관련
-  const [isFormValid, setIsFormValid] = useState(false);
-
-  const onSubmit = async (data: CreditFormData) => {
+  const onSubmit = async (data: any) => {
     try {
-      const { description, studentIds, changePoint } = data;
+      if (!isCreditChangeAll) {
+        const { description, studentIds, changePoint } = data;
 
-      const creditData = { description, changePoint };
+        const creditData = { description, changePoint };
 
-      for (let i = 0; i < studentIds.length; i++) {
-        await postCredit(creditData, studentIds[i]);
+        for (let i = 0; i < studentIds.length; i++) {
+          await postCredit(creditData, studentIds[i]);
+        }
+      } else {
+        if (!myClassData || typeof myClassData !== "object") {
+          return;
+        }
+        const classDataKeys = Object.keys(myClassData);
+
+        for (let i = 0; i < classDataKeys.length; i++) {
+          const username = classDataKeys[i];
+          await postCreditChangeAll(data, username);
+        }
       }
 
       setIsFormValid(false);
@@ -131,14 +139,17 @@ const Credit: React.FC = () => {
         console.error("An error occurred:", error);
       }
     } finally {
-      queryClient.invalidateQueries({ queryKey: ["myClassData"] });
+      queryClient.invalidateQueries({ queryKey: ["classCreditData"] });
       queryClient.invalidateQueries({ queryKey: ["evaluatorLog"] });
       navigate("/credit");
     }
   };
 
   const SubmitBtn: React.FC<{ onSubmit: (data: any) => void }> = () => (
-    <FormHandleBtn isFormValid={isFormValid} form="creditForm">
+    <FormHandleBtn
+      isFormValid={isFormValid}
+      form={isCreditChangeAll ? "creditChangeAllForm" : "creditForm"}
+    >
       입력
     </FormHandleBtn>
   );
@@ -168,19 +179,22 @@ const Credit: React.FC = () => {
         <TableContainer
           titlePart={
             <CreditFormTitle
-            //isCreditChangeAll={isCreditChangeAll}
-            //handleCreditChangeAll={handleCreditChangeAll}
+              isCreditChangeAll={isCreditChangeAll}
+              handleCreditChangeAll={handleCreditChangeAll}
             />
           }
           width="527px"
-          //????
           buttonPart={<SubmitBtn onSubmit={onSubmit} />}
         >
-          {/*{!isCreditChangeAll && (
+          {!isCreditChangeAll && (
             <CreditForm onSubmit={onSubmit} setIsFormValid={setIsFormValid} />
           )}
-          {isCreditChangeAll && <CreditChangeAll />}*/}
-          <CreditForm onSubmit={onSubmit} setIsFormValid={setIsFormValid} />
+          {isCreditChangeAll && (
+            <CreditChangeAll
+              onSubmit={onSubmit}
+              setIsFormValid={setIsFormValid}
+            />
+          )}
         </TableContainer>
       </Horizontal>
     </Container>

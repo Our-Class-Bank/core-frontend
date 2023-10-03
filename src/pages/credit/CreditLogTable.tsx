@@ -5,8 +5,8 @@ import { CreditLog } from "./Credit";
 import { getStudentCreditLog } from "@/apis/creditApi";
 import { useQuery } from "@tanstack/react-query";
 
-const formatDateToCustomString = (createdAt: string) => {
-  const date = new Date(createdAt);
+const formatDateToCustomString = (transactionAt: string) => {
+  const date = new Date(transactionAt);
   const month = date.getMonth() + 1;
   const day = date.getDate();
 
@@ -23,7 +23,7 @@ export type StudentCreditLog = {
   changePoint: number;
   description: string;
   score: number;
-  createdAt: string;
+  transactionAt: string;
 };
 const columns: Column<CreditLog>[] = [
   {
@@ -31,7 +31,7 @@ const columns: Column<CreditLog>[] = [
     accessor: (row: CreditLog) => (
       <div>
         <BlackTxt>{row.description}</BlackTxt>
-        <GrayTxt>{formatDateToCustomString(row.createdAt)}</GrayTxt>
+        <GrayTxt>{formatDateToCustomString(row.transactionAt)}</GrayTxt>
       </div>
     ),
   },
