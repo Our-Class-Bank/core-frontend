@@ -15,10 +15,8 @@ import { getEvaluatorLog } from "@/apis/creditApi";
 import { StudentInfo } from "@/apis/infoApi";
 import EvaluatorLogTable from "./EvaluatorLogTable";
 import { useNavigate } from "react-router-dom";
-import { CreditFormData } from "@/pages/credit/CreditForm";
 import { getMyClassInfo } from "@/apis/infoApi";
 import CreditChangeAll from "./CreditChangeAll";
-import { CreditChangeAllFormData } from "./CreditChangeAll";
 import { postCreditChangeAll } from "@/apis/creditApi";
 
 const Horizontal = styled.div`

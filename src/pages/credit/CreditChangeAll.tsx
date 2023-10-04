@@ -4,7 +4,7 @@ import {
   Input,
   Form,
 } from "@/style/transfer/TransferFormStyle";
-import { useForm, UseFormRegister } from "react-hook-form";
+import { useForm, UseFormRegister, UseFormSetValue } from "react-hook-form";
 
 export type CreditChangeAllFormData = {
   description: string;
@@ -16,10 +16,15 @@ interface CreditChangeAllFormProps {
   setIsFormValid: (isValid: boolean) => void;
 }
 
-const DescriptionInput: React.FC<{
+interface DescriptionInputProps {
   register: UseFormRegister<CreditChangeAllFormData>;
-  setValue: (name: string, value: string) => void;
-}> = ({ register, setValue }) => {
+  setValue: UseFormSetValue<CreditChangeAllFormData>;
+}
+
+const DescriptionInput: React.FC<DescriptionInputProps> = ({
+  register,
+  setValue,
+}) => {
   const [defaultDescription, setDefaultDescription] = useState<string>("");
 
   useEffect(() => {
