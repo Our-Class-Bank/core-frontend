@@ -115,7 +115,7 @@ function Home() {
             assetInfo={{
               creditPoint:
                 myCreditData?.data.length !== 0
-                  ? myCreditData?.data.at(-1).changePoint
+                  ? myCreditData?.data[0].score
                   : 0,
               accoutBalance: myAccountLogData?.data[0]?.balance as number,
             }}
@@ -154,7 +154,7 @@ function Home() {
               <CreditPointCardWrapper>
                 <span>내 신용점수</span>
                 {myCreditData?.data.length !== 0
-                  ? myCreditData?.data.at(-1).changePoint
+                  ? myCreditData?.data[0].score
                   : 0}
                 점
               </CreditPointCardWrapper>
