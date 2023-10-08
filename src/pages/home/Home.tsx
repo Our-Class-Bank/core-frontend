@@ -11,6 +11,8 @@ import TableContainer from "@/style/common/TableContainer";
 import CreditLogTable from "../credit/CreditLogTable";
 import { getMyCredit } from "@/apis/creditApi";
 import TransactionList from "@/components/transactionLog/TransactionList";
+import { parseJwt } from "@/utils/parseJwt";
+import TeacherHome from "./TeacherHome";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -69,6 +71,8 @@ interface MyAccountLog {
 
 function Home() {
   const [categoryView, setCategoryView] = useState("bank");
+  const savedAccessToken = localStorage.getItem("accessToken");
+  const userRoles = savedAccessToken && parseJwt(savedAccessToken).roles;
 
   const handleCategoryView = (categoryId: string) => {
     setCategoryView(categoryId);
@@ -101,73 +105,87 @@ function Home() {
 
   return (
     <HomeContainer>
-      <LeftContainer>
-        <TableContainer
-          width="100%"
-          height="100%"
-          titlePart={
-            <Header>
-              <span>{myInfoData?.data.user.name}</span>님의 자산정보
-            </Header>
-          }
-        >
-          <AssetInfo
-            assetInfo={{
-              creditPoint:
-                myCreditData?.data.length !== 0
-                  ? myCreditData?.data[0].score
-                  : 0,
-              accoutBalance: myAccountLogData?.data[0]?.balance as number,
-            }}
-            handleCategoryView={handleCategoryView}
-            selected={categoryView}
-          />
-        </TableContainer>
-        <TableContainer title="내 구매상품" width="100%" height="100%">
-          <PurchaseLog />
-        </TableContainer>
-      </LeftContainer>
-      {categoryView === "bank" && (
-        <TableContainer
-          width="100%"
-          height="100%"
-          titlePart={
-            <Header>
-              <span>통장</span> 상세내역
-            </Header>
-          }
-        >
-          <TransactionList
-            data={myAccountLogData !== undefined ? myAccountLogData.data : []}
-            transactionType="myTransaction"
-          />
-        </TableContainer>
-      )}
-      {categoryView === "credit" && (
+      {userRoles.includes("ROLE_TEACHER") ? (
+        <TeacherHome />
+      ) : (
         <>
-          <div>
+          <LeftContainer>
             <TableContainer
-              title="내 신용점수 내역"
-              width="240px"
-              height="86px"
+              width="100%"
+              height="100%"
+              titlePart={
+                <Header>
+                  <span>{myInfoData?.data.user.name}</span>님의 자산정보
+                </Header>
+              }
             >
-              <CreditPointCardWrapper>
-                <span>내 신용점수</span>
-                {myCreditData?.data.length !== 0
-                  ? myCreditData?.data[0].score
-                  : 0}
-                점
-              </CreditPointCardWrapper>
+              <AssetInfo
+                assetInfo={{
+                  creditPoint:
+                    myCreditData?.data.length !== 0
+                      ? myCreditData?.data[0].score
+                      : 0,
+                  accoutBalance: myAccountLogData?.data[0]?.balance as number,
+                }}
+                handleCategoryView={handleCategoryView}
+                selected={categoryView}
+              />
             </TableContainer>
-            <TableContainer width="240px" height="100%" minHeight="416px">
-              <CreditLogTable username={myInfoData?.data.user.name as string} />
+            <TableContainer title="내 구매상품" width="100%" height="100%">
+              <PurchaseLog />
             </TableContainer>
-          </div>
-          <div>
-            <TableContainer title="우리반 신용점수" width="100%" height="550px">
-              <ClassCreditTable />
+          </LeftContainer>
+          {categoryView === "bank" && (
+            <TableContainer
+              width="100%"
+              height="100%"
+              titlePart={
+                <Header>
+                  <span>통장</span> 상세내역
+                </Header>
+              }
+            >
+              <TransactionList
+                data={
+                  myAccountLogData !== undefined ? myAccountLogData.data : []
+                }
+                transactionType="myTransaction"
+              />
             </TableContainer>
-          </div>
+          )}
+          {categoryView === "credit" && (
+            <>
+              <div>
+                <TableContainer
+                  title="내 신용점수 내역"
+                  width="240px"
+                  height="86px"
+                >
+                  <CreditPointCardWrapper>
+                    <span>내 신용점수</span>
+                    {myCreditData?.data.length !== 0
+                      ? myCreditData?.data[0].score
+                      : 0}
+                    점
+                  </CreditPointCardWrapper>
+                </TableContainer>
+                <TableContainer width="240px" height="100%" minHeight="416px">
+                  <CreditLogTable
+                    username={myInfoData?.data.user.name as string}
+                  />
+                </TableContainer>
+              </div>
+              <div>
+                <TableContainer
+                  title="우리반 신용점수"
+                  width="100%"
+                  height="550px"
+                >
+                  <ClassCreditTable />
+                </TableContainer>
+              </div>
+            </>
+          )}
         </>
       )}
     </HomeContainer>

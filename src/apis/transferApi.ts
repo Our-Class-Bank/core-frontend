@@ -72,3 +72,21 @@ export async function getBankerLog() {
   );
   return response;
 }
+
+export async function getStudentTransferLogByTeacher() {
+  const response = await axios.get(
+    `${
+      import.meta.env.VITE_SERVER_IP
+    }/api/v1/account/pocketmoney/history/by-teacher`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      params: {
+        fromAt: "2020-05-05T10:10:10",
+        toAt: "2025-05-05T10:10:10",
+      },
+    }
+  );
+  return response;
+}
