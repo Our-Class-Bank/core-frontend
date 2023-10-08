@@ -160,7 +160,9 @@ function Home() {
               </CreditPointCardWrapper>
             </TableContainer>
             <TableContainer width="240px" height="100%" minHeight="416px">
-              <CreditLogTable username={myInfoData?.data.user.name as string} />
+              <CreditLogTable
+                username={myInfoData?.data.user.username as string}
+              />
             </TableContainer>
           </div>
           <div>

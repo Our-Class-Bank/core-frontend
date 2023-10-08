@@ -5,17 +5,6 @@ interface TitleProps {
   isactive?: boolean;
 }
 
-{
-  /*const Title = styled.h1<TitleProps>`
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 600;
-  margin-left: 8px;
-  cursor: pointer;
-  padding-right: 4px;
-  color: ${(props) => (props.isactive ? "black" : "#d9d9d9")};
-`;*/
-}
 const Title = styled.h1<TitleProps>`
   font-size: 20px;
   font-style: normal;
@@ -23,40 +12,41 @@ const Title = styled.h1<TitleProps>`
   margin-left: 8px;
   cursor: pointer;
   padding-right: 4px;
+  color: ${(props) => (props.isactive ? "black" : "#d9d9d9")};
 `;
+
 const TitleWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-{
-  /*interface CreditFormTitleProps {
-  //isCreditChangeAll: boolean;
+interface CreditFormTitleProps {
+  isCreditChangeAll: boolean;
   handleCreditChangeAll: (value: boolean) => void;
 }
-*/
-}
-const CreditFormTitle: React.FC = () => {
+
+const CreditFormTitle: React.FC<CreditFormTitleProps> = ({
+  isCreditChangeAll,
+  handleCreditChangeAll,
+}) => {
   return (
     <TitleWrapper>
       <Title
-      //isactive={!isCreditChangeAll}
-      //onClick={() => handleCreditChangeAll(false)}
+        isactive={!isCreditChangeAll}
+        onClick={() => handleCreditChangeAll(false)}
       >
         입력
       </Title>
-      {/*<Title
-      //isactive={isCreditChangeAll}
-      >
+      <Title isactive={isCreditChangeAll}>
         <span>|</span>
       </Title>
       <Title
-      //isactive={isCreditChangeAll}
-      //onClick={() => handleCreditChangeAll(true)}
+        isactive={isCreditChangeAll}
+        onClick={() => handleCreditChangeAll(true)}
       >
         전체변경
-  </Title>*/}
+      </Title>
     </TitleWrapper>
   );
 };

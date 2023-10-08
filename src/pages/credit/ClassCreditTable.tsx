@@ -70,7 +70,6 @@ function ClassCreditTable(props: Props) {
 
   const handleClick = (row: Row<ClassCreditData>) => {
     const clickedUsername = row.original.username;
-    console.log(clickedUsername);
     changeToStudentCredit && changeToStudentCredit(clickedUsername);
   };
 

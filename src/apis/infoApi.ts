@@ -41,6 +41,5 @@ export async function getMyClassInfo() {
   students.forEach((student: StudentInfo) => {
     usernameIdxData[student.username] = student;
   });
-  console.log(usernameIdxData);
   return usernameIdxData;
 }

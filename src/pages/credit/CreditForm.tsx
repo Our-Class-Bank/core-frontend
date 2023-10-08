@@ -82,10 +82,10 @@ const CreditForm: React.FC<CreditFormProps> = (props) => {
   };
 
   const submitHandler = (data: CreditFormData) => {
-    console.log(data);
     onSubmit(data);
     handleReset();
     queryClient.invalidateQueries({ queryKey: ["classCreditData"] });
+    queryClient.invalidateQueries({ queryKey: ["myClassData"] });
   };
 
   return (

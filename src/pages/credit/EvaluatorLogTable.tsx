@@ -8,8 +8,8 @@ import { getMyClassInfo } from "@/apis/infoApi";
 import { StudentInfo } from "@/apis/infoApi";
 import { useMemo } from "react";
 
-const formatDateToCustomString = (createdAt: string) => {
-  const date = new Date(createdAt);
+const formatDateToCustomString = (transactionAt: string) => {
+  const date = new Date(transactionAt);
   const month = date.getMonth() + 1;
   const day = date.getDate();
 
@@ -26,7 +26,7 @@ export type StudentCreditLog = {
   changePoint: number;
   description: string;
   score: number;
-  createdAt: string;
+  transactionAt: string;
 };
 
 const EvaluatorLogTable: React.FC = () => {
@@ -59,7 +59,7 @@ const EvaluatorLogTable: React.FC = () => {
         accessor: (row: CreditLog) => (
           <div>
             <BlueTxt>{row.changePoint}점</BlueTxt>
-            <GrayTxt>{formatDateToCustomString(row.createdAt)}</GrayTxt>
+            <GrayTxt>{formatDateToCustomString(row.transactionAt)}</GrayTxt>
           </div>
         ),
       },

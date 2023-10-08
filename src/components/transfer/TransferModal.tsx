@@ -59,7 +59,7 @@ function TransferModal() {
     const makeTransferData = (studentId: string) => {
       const accountNo =
         myClassData && myClassData[studentId].pocketmoneyAccountNo;
-      console.log(accountNo);
+
       if (!accountNo) {
         return null;
       }
