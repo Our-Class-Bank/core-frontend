@@ -15,6 +15,7 @@ import {
   SubmitHandler,
   UseFormSetValue,
 } from "react-hook-form";
+import axios from "axios";
 
 export type SubmitData = {
   type:
@@ -134,8 +135,17 @@ const TransferForm: React.FC<TransferFormProps> = ({ onSubmit }) => {
   const { register, setValue, handleSubmit, watch } = useForm<SubmitData>();
 
   const submitHandler: SubmitHandler<SubmitData> = (SubmitData) => {
-    onSubmit(SubmitData);
-    console.log(SubmitData);
+    try {
+      onSubmit(SubmitData);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 400) {
+          alert("아이디와 비밀번호를 다시 확인해주세요.");
+        } else {
+          alert("예상치못한 에러가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        }
+      }
+    }
   };
 
   const watchstudentIds = watch("studentIds", []);
