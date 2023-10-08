@@ -124,3 +124,21 @@ export async function getStudentCreditLog(username: string) {
   );
   return response.data;
 }
+
+export async function getStudentCreditLogByTeacher() {
+  const response = await axios.get(
+    `${
+      import.meta.env.VITE_SERVER_IP
+    }/api/v1/credit-evaluation/history/by-teacher`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      params: {
+        fromAt: "2020-05-05T10:10:10",
+        toAt: "2025-05-05T10:10:10",
+      },
+    }
+  );
+  return response.data;
+}
