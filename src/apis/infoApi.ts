@@ -29,7 +29,7 @@ export interface StudentInfo {
 
 export async function getMyClassInfo() {
   const response = await axios.get(
-    `http://43.200.121.145:8080/api/v1/same-class/user`,
+    `${import.meta.env.VITE_SERVER_IP}/api/v1/same-class/user`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

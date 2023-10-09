@@ -14,7 +14,7 @@ import axios from "axios";
 }
 export async function postCredit(data: CreditPostData, username: string) {
   const response = await axios.post(
-    `http://43.200.121.145:8080/api/v1/credit-evaluation/${username}`,
+    `${import.meta.env.VITE_SERVER_IP}/api/v1/credit-evaluation/${username}`,
     data,
     {
       headers: {
@@ -30,7 +30,9 @@ export async function postCreditChangeAll(
   username: string
 ) {
   const response = await axios.post(
-    `http://43.200.121.145:8080/api/v1/credit-evaluation/${username}/reset`,
+    `${
+      import.meta.env.VITE_SERVER_IP
+    }/api/v1/credit-evaluation/${username}/reset`,
     data,
     {
       headers: {
@@ -43,7 +45,7 @@ export async function postCreditChangeAll(
 
 export async function getClassCredit() {
   const response = await axios.get(
-    `http://43.200.121.145:8080/api/v1/same-class/credit-evaluation`,
+    `${import.meta.env.VITE_SERVER_IP}/api/v1/same-class/credit-evaluation`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -57,7 +59,7 @@ export async function getClassCredit() {
 
 export async function getMyCredit() {
   const response = await axios.get(
-    `http://43.200.121.145:8080/api/v1/my/credit-evaluation/history`,
+    `${import.meta.env.VITE_SERVER_IP}/api/v1/my/credit-evaluation/history`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -83,7 +85,7 @@ export async function getMyCredit() {
 
 export async function getEvaluatorLog() {
   const response = await axios.get(
-    `http://43.200.121.145:8080/api/v1/credit-evaluation/history/by-credit-evaluator`,
+    `http://43.202.160.79:8080/api/v1/credit-evaluation/history/by-credit-evaluator`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -108,7 +110,7 @@ export type StudentCreditLog = {
 
 export async function getStudentCreditLog(username: string) {
   const response = await axios.get(
-    `http://43.200.121.145:8080/api/v1/credit-evaluation/history`,
+    `${import.meta.env.VITE_SERVER_IP}/api/v1/credit-evaluation/history`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

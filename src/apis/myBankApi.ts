@@ -25,7 +25,7 @@ export async function getMyAccountLog({
 }: QueryFunctionContext<QueryKey>) {
   const [_, accountNo] = queryKey;
   const response = await axios.get(
-    `http://43.200.121.145:8080/api/v1/my/account/history/${accountNo}`,
+    `${import.meta.env.VITE_SERVER_IP}/api/v1/my/account/history/${accountNo}`,
     {
       params: {
         fromAt: "2020-05-05T10:10:10",
