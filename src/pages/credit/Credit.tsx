@@ -71,16 +71,12 @@ const Credit: React.FC = () => {
   const { data: evaluatorLogData, isLoading: evaluatorLogLoading } = useQuery<
     CreditLog[]
   >(["evaluatorLog"], getEvaluatorLog);
-  useEffect(() => {
-    console.log(creditDetailStudent);
-  }, [creditDetailStudent]);
 
   useEffect(() => {
     if (creditDetailStudent) {
       getStudentCreditLog(creditDetailStudent)
         .then((data) => {
           setCreditLogData(data);
-          console.log(data);
         })
         .catch((error) => {
           return error;
