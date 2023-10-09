@@ -22,16 +22,16 @@ import { postCreditChangeAll, getStudentCreditLog } from "@/apis/creditApi";
 const Horizontal = styled.div`
   display: flex;
 `;
-const Blue = styled.span`
+export const Blue = styled.span`
   color: #2f3fd4;
   margin-left: 7px;
 `;
 
-const TitleContainer = styled.span`
+export const TitleContainer = styled.span`
   display: flex;
   align-items: center;
 `;
-const Title = styled.h1`
+export const Title = styled.h1`
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -98,7 +98,7 @@ const Credit: React.FC = () => {
     setCreditDetailStudent("");
   };
 
-  const containerTitle = studentDetailMode ? (
+  const creditTitle = studentDetailMode ? (
     <TitleContainer>
       <BackIcon onClick={backToClassCredit} />
       <Title>
@@ -176,7 +176,7 @@ const Credit: React.FC = () => {
   return (
     <Container>
       <Horizontal>
-        <TableContainer titlePart={containerTitle}>
+        <TableContainer titlePart={creditTitle}>
           {!studentDetailMode && (
             <ClassCreditTable changeToStudentCredit={changeToStudentCredit} />
           )}

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import TableContainer from "@/style/common/TableContainer";
 import TransactionList from "@/components/transactionLog/TransactionList";
 import { styled } from "styled-components";
@@ -6,6 +7,12 @@ import { getStudentCreditLogByTeacher } from "@/apis/creditApi";
 import { getStudentTransferLogByTeacher } from "@/apis/transferApi";
 import ClassCreditTable from "../credit/ClassCreditTable";
 import CreditLogTable from "../credit/CreditLogTable";
+import { getStudentCreditLog } from "@/apis/creditApi";
+import { CreditLog } from "../credit/Credit";
+import { Blue, TitleContainer, Title } from "@/pages/credit/Credit";
+import { ReactComponent as BackIcon } from "@/assets/images/back.svg";
+import { StudentInfo } from "@/apis/infoApi";
+import { getMyClassInfo } from "@/apis/infoApi";
 
 const Header = styled.h1`
   font-size: 20px;
@@ -17,6 +24,18 @@ const Header = styled.h1`
 `;
 
 function TeacherHome() {
+  const [studentDetailMode, setStudentDetailMode] = useState(false);
+  const [creditDetailStudent, setCreditDetailStudent] = useState("");
+  const [creditStudentLogData, setCreditStudentLogData] = useState<CreditLog[]>(
+    []
+  );
+  const { data: myClassData, isLoading: myClassLoading } = useQuery<
+    Record<string, StudentInfo>
+  >({
+    queryKey: ["myClassData"],
+    queryFn: getMyClassInfo,
+  });
+
   const { data: classCreditData, isLoading: classCreditLoading } = useQuery(
     ["classCredit"],
     getStudentCreditLogByTeacher
@@ -27,11 +46,42 @@ function TeacherHome() {
     getStudentTransferLogByTeacher
   );
 
-  if (classCreditLoading || classTransferLoading) {
+  useEffect(() => {
+    if (creditDetailStudent) {
+      getStudentCreditLog(creditDetailStudent)
+        .then((data) => {
+          setCreditStudentLogData(data);
+        })
+        .catch((error) => {
+          return error;
+        });
+    }
+  }, [creditDetailStudent]);
+
+  const changeToStudentCredit = (username: string) => {
+    setStudentDetailMode(true);
+    setCreditDetailStudent(username);
+  };
+  const backToClassCredit = () => {
+    setStudentDetailMode(false);
+    setCreditDetailStudent("");
+  };
+
+  if (classCreditLoading || classTransferLoading || myClassLoading) {
     return <>Loading...</>;
   }
 
-  console.log(classCreditData);
+  const creditTitle = studentDetailMode ? (
+    <TitleContainer>
+      <BackIcon onClick={backToClassCredit} />
+      <Title>
+        <Blue>{myClassData && myClassData[creditDetailStudent].name}</Blue>의
+        신용점수 내역
+      </Title>
+    </TitleContainer>
+  ) : (
+    <Title>우리반 신용점수</Title>
+  );
 
   return (
     <>
@@ -45,8 +95,11 @@ function TeacherHome() {
           transactionType="myTransaction"
         />
       </TableContainer>
-      <TableContainer title="신용점수" width="100%" height="550px">
-        <ClassCreditTable />
+      <TableContainer titlePart={creditTitle} width="100%" height="550px">
+        {!studentDetailMode && (
+          <ClassCreditTable changeToStudentCredit={changeToStudentCredit} />
+        )}
+        {studentDetailMode && <CreditLogTable data={creditStudentLogData} />}
       </TableContainer>
       <TableContainer
         title="신용점수 내역"
