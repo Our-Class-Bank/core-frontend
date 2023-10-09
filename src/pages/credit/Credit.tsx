@@ -181,7 +181,7 @@ const Credit: React.FC = () => {
 
         {evaluatorLogData && (
           <TableContainer title="최신 입력내역">
-            <EvaluatorLogTable />
+            <EvaluatorLogTable data={evaluatorLogData} />
           </TableContainer>
         )}
 

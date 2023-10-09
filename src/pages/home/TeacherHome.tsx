@@ -13,6 +13,7 @@ import { Blue, TitleContainer, Title } from "@/pages/credit/Credit";
 import { ReactComponent as BackIcon } from "@/assets/images/back.svg";
 import { StudentInfo } from "@/apis/infoApi";
 import { getMyClassInfo } from "@/apis/infoApi";
+import EvaluatorLogTable from "@/pages/credit/EvaluatorLogTable";
 
 const Header = styled.h1`
   font-size: 20px;
@@ -107,7 +108,7 @@ function TeacherHome() {
         height="100%"
         minHeight="416px"
       >
-        <CreditLogTable data={classCreditData} />
+        <EvaluatorLogTable data={classCreditData} />
       </TableContainer>
     </>
   );
