@@ -3,7 +3,7 @@ import { ResetPasswordFormValues } from "@/pages/reset-password/ResetPassword";
 import { LoginFormValues } from "@/pages/login/Login";
 
 export const publicApi = axios.create({
-  baseURL: `${import.meta.env.VITE_SERVER_IP}`,
+  baseURL: `http://43.200.121.145:8080`,
 });
 
 export const privateApi = axios.create({
@@ -15,7 +15,7 @@ export const privateApi = axios.create({
 
 export async function postSignIn(data: LoginFormValues) {
   const response = await axios.post(
-    `${import.meta.env.VITE_SERVER_IP}/api/v1/auth/signin`,
+    `http://43.200.121.145:8080/api/v1/auth/signin`,
     {
       username: data.username,
       password: data.password,
@@ -32,14 +32,11 @@ export async function postSignIn(data: LoginFormValues) {
 }
 
 export async function getMyInfo() {
-  const response = await axios.get(
-    `${import.meta.env.VITE_SERVER_IP}/api/v1/my`,
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    }
-  );
+  const response = await axios.get(`http://43.200.121.145:8080/api/v1/my`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+  });
   return response;
 }
 

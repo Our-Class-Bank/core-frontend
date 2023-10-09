@@ -20,7 +20,7 @@ export async function postDeposit(data: TransferData) {
 }
 export async function postWithdraw(data: TransferData) {
   const response = await axios.post(
-    `${import.meta.env.VITE_SERVER_IP}/api/v1/account/pocketmoney/withdraw`,
+    `http://43.200.121.145:8080/api/v1/account/pocketmoney/withdraw`,
     data,
     {
       headers: {
@@ -33,7 +33,7 @@ export async function postWithdraw(data: TransferData) {
 
 export async function postDeposit(data: TransferData) {
   const response = await axios.post(
-    `${import.meta.env.VITE_SERVER_IP}/api/v1/account/pocketmoney/deposit`,
+    `http://43.200.121.145:8080/api/v1/account/pocketmoney/deposit`,
     data,
     {
       headers: {
@@ -57,9 +57,7 @@ export async function getBankerHistory() {
 }
 export async function getBankerLog() {
   const response = await axios.get(
-    `${
-      import.meta.env.VITE_SERVER_IP
-    }/api/v1/account/pocketmoney/history/by-banker`,
+    `http://43.200.121.145:8080/api/v1/account/pocketmoney/history/by-banker`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
