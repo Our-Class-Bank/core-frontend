@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TableContainer from "@/style/common/TableContainer";
 import axios from "axios";
 import { Container } from "@/style/common/CommonStyle";
@@ -17,7 +17,7 @@ import EvaluatorLogTable from "./EvaluatorLogTable";
 import { useNavigate } from "react-router-dom";
 import { getMyClassInfo } from "@/apis/infoApi";
 import CreditChangeAll from "./CreditChangeAll";
-import { postCreditChangeAll } from "@/apis/creditApi";
+import { postCreditChangeAll, getStudentCreditLog } from "@/apis/creditApi";
 
 const Horizontal = styled.div`
   display: flex;
@@ -66,10 +66,27 @@ const Credit: React.FC = () => {
   //"우리반 신용점수" 컴포넌트 관련
   const [studentDetailMode, setStudentDetailMode] = useState(false);
   const [creditDetailStudent, setCreditDetailStudent] = useState("");
+  const [creditLogData, setCreditLogData] = useState<CreditLog[]>([]);
 
   const { data: evaluatorLogData, isLoading: evaluatorLogLoading } = useQuery<
     CreditLog[]
   >(["evaluatorLog"], getEvaluatorLog);
+  useEffect(() => {
+    console.log(creditDetailStudent);
+  }, [creditDetailStudent]);
+
+  useEffect(() => {
+    if (creditDetailStudent) {
+      getStudentCreditLog(creditDetailStudent)
+        .then((data) => {
+          setCreditLogData(data);
+          console.log(data);
+        })
+        .catch((error) => {
+          return error;
+        });
+    }
+  }, [creditDetailStudent]);
 
   const changeToStudentCredit = (username: string) => {
     setStudentDetailMode(true);
@@ -163,9 +180,7 @@ const Credit: React.FC = () => {
           {!studentDetailMode && (
             <ClassCreditTable changeToStudentCredit={changeToStudentCredit} />
           )}
-          {studentDetailMode && (
-            <CreditLogTable username={creditDetailStudent} />
-          )}
+          {studentDetailMode && <CreditLogTable data={creditLogData} />}
         </TableContainer>
 
         {evaluatorLogData && (
