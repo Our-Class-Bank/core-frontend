@@ -2,7 +2,7 @@ import TableContainer from "@/style/common/TableContainer";
 import TransactionList from "@/components/transactionLog/TransactionList";
 import { styled } from "styled-components";
 import { useQuery } from "@tanstack/react-query";
-/* import { getStudentCreditLogByTeacher } from "@/apis/creditApi"; */
+import { getStudentCreditLogByTeacher } from "@/apis/creditApi";
 import { getStudentTransferLogByTeacher } from "@/apis/transferApi";
 import ClassCreditTable from "../credit/ClassCreditTable";
 import CreditLogTable from "../credit/CreditLogTable";
@@ -17,19 +17,21 @@ const Header = styled.h1`
 `;
 
 function TeacherHome() {
-  /*   const { data: classCreditData, isLoading: classCreditLoading } = useQuery(
+  const { data: classCreditData, isLoading: classCreditLoading } = useQuery(
     ["classCredit"],
     getStudentCreditLogByTeacher
-  ); */
+  );
 
   const { data: classTransferData, isLoading: classTransferLoading } = useQuery(
     ["classTransfer"],
     getStudentTransferLogByTeacher
   );
 
-  if (/* classCreditLoading || */ classTransferLoading) {
+  if (classCreditLoading || classTransferLoading) {
     return <>Loading...</>;
   }
+
+  console.log(classCreditData);
 
   return (
     <>
@@ -52,7 +54,7 @@ function TeacherHome() {
         height="100%"
         minHeight="416px"
       >
-        <CreditLogTable username={"홍길동"} />
+        <CreditLogTable data={classCreditData} />
       </TableContainer>
     </>
   );
