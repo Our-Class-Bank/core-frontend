@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TableContainer from "@/style/common/TableContainer";
 import axios from "axios";
 import { Container } from "@/style/common/CommonStyle";
@@ -17,21 +17,21 @@ import EvaluatorLogTable from "./EvaluatorLogTable";
 import { useNavigate } from "react-router-dom";
 import { getMyClassInfo } from "@/apis/infoApi";
 import CreditChangeAll from "./CreditChangeAll";
-import { postCreditChangeAll } from "@/apis/creditApi";
+import { postCreditChangeAll, getStudentCreditLog } from "@/apis/creditApi";
 
 const Horizontal = styled.div`
   display: flex;
 `;
-const Blue = styled.span`
+export const Blue = styled.span`
   color: #2f3fd4;
   margin-left: 7px;
 `;
 
-const TitleContainer = styled.span`
+export const TitleContainer = styled.span`
   display: flex;
   align-items: center;
 `;
-const Title = styled.h1`
+export const Title = styled.h1`
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -66,10 +66,23 @@ const Credit: React.FC = () => {
   //"우리반 신용점수" 컴포넌트 관련
   const [studentDetailMode, setStudentDetailMode] = useState(false);
   const [creditDetailStudent, setCreditDetailStudent] = useState("");
+  const [creditLogData, setCreditLogData] = useState<CreditLog[]>([]);
 
   const { data: evaluatorLogData, isLoading: evaluatorLogLoading } = useQuery<
     CreditLog[]
   >(["evaluatorLog"], getEvaluatorLog);
+
+  useEffect(() => {
+    if (creditDetailStudent) {
+      getStudentCreditLog(creditDetailStudent)
+        .then((data) => {
+          setCreditLogData(data);
+        })
+        .catch((error) => {
+          return error;
+        });
+    }
+  }, [creditDetailStudent]);
 
   const changeToStudentCredit = (username: string) => {
     setStudentDetailMode(true);
@@ -81,7 +94,7 @@ const Credit: React.FC = () => {
     setCreditDetailStudent("");
   };
 
-  const containerTitle = studentDetailMode ? (
+  const creditTitle = studentDetailMode ? (
     <TitleContainer>
       <BackIcon onClick={backToClassCredit} />
       <Title>
@@ -159,18 +172,16 @@ const Credit: React.FC = () => {
   return (
     <Container>
       <Horizontal>
-        <TableContainer titlePart={containerTitle}>
+        <TableContainer titlePart={creditTitle}>
           {!studentDetailMode && (
             <ClassCreditTable changeToStudentCredit={changeToStudentCredit} />
           )}
-          {studentDetailMode && (
-            <CreditLogTable username={creditDetailStudent} />
-          )}
+          {studentDetailMode && <CreditLogTable data={creditLogData} />}
         </TableContainer>
 
         {evaluatorLogData && (
           <TableContainer title="최신 입력내역">
-            <EvaluatorLogTable />
+            <EvaluatorLogTable data={evaluatorLogData} />
           </TableContainer>
         )}
 

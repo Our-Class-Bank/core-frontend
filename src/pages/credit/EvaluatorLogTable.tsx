@@ -1,12 +1,11 @@
 import { useTable, Column } from "react-table";
 import { Thead, Table, Tbody } from "@/style/credit/ClassCreditTableStyle";
 import { BlackTxt, GrayTxt, BlueTxt } from "@/style/credit/CreditLogTableStyle";
-import { CreditLog } from "./Credit";
-import { getEvaluatorLog } from "@/apis/creditApi";
 import { useQuery } from "@tanstack/react-query";
 import { getMyClassInfo } from "@/apis/infoApi";
 import { StudentInfo } from "@/apis/infoApi";
 import { useMemo } from "react";
+import { parseJwt } from "@/utils/parseJwt";
 
 const formatDateToCustomString = (transactionAt: string) => {
   const date = new Date(transactionAt);
@@ -27,13 +26,11 @@ export type StudentCreditLog = {
   description: string;
   score: number;
   transactionAt: string;
+  executeUsername?: string;
 };
 
-const EvaluatorLogTable: React.FC = () => {
-  const { data: evaluatorLogData, isLoading: evaluatorLogLoading } = useQuery<
-    CreditLog[]
-  >(["evaluatorLog"], getEvaluatorLog);
-
+const EvaluatorLogTable: React.FC<{ data: any }> = (props) => {
+  const { data } = props;
   const { data: myClassData, isLoading: myClassLoading } = useQuery<
     Record<string, StudentInfo>
   >({
@@ -41,13 +38,20 @@ const EvaluatorLogTable: React.FC = () => {
     queryFn: getMyClassInfo,
   });
 
-  const columns: Column<CreditLog>[] = useMemo(
+  const savedAccessToken = localStorage.getItem("accessToken");
+  const userRoles = savedAccessToken && parseJwt(savedAccessToken).roles;
+
+  const columns: Column<StudentCreditLog>[] = useMemo(
     () => [
       {
         Header: "내용",
-        accessor: (row: CreditLog) => (
+        accessor: (row: StudentCreditLog) => (
           <div>
             <BlackTxt>
+              {myClassData &&
+                userRoles.includes("ROLE_TEACHER") &&
+                row.executeUsername &&
+                `${myClassData[row.executeUsername]?.name}→`}
               {myClassData && myClassData[row.username]?.name}
             </BlackTxt>
             <GrayTxt>{row.description}</GrayTxt>
@@ -56,7 +60,7 @@ const EvaluatorLogTable: React.FC = () => {
       },
       {
         Header: "점수",
-        accessor: (row: CreditLog) => (
+        accessor: (row: StudentCreditLog) => (
           <div>
             <BlueTxt>{row.changePoint}점</BlueTxt>
             <GrayTxt>{formatDateToCustomString(row.transactionAt)}</GrayTxt>
@@ -68,12 +72,12 @@ const EvaluatorLogTable: React.FC = () => {
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable<CreditLog>({ columns, data: evaluatorLogData || [] });
+    useTable<StudentCreditLog>({ columns, data: data || [] });
 
-  if (evaluatorLogLoading || myClassLoading) {
+  if (myClassLoading) {
     return <>Loading...</>;
   }
-  if (!evaluatorLogData || evaluatorLogData.length === 0) {
+  if (!data || data.length === 0) {
     return <>내역이 없습니다.</>;
   }
 

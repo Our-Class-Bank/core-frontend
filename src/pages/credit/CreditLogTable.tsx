@@ -2,8 +2,6 @@ import { useTable, Column } from "react-table";
 import { Thead, Table, Tbody } from "@/style/credit/ClassCreditTableStyle";
 import { BlackTxt, GrayTxt, BlueTxt } from "@/style/credit/CreditLogTableStyle";
 import { CreditLog } from "./Credit";
-import { getStudentCreditLog } from "@/apis/creditApi";
-import { useQuery } from "@tanstack/react-query";
 
 const formatDateToCustomString = (transactionAt: string) => {
   const date = new Date(transactionAt);
@@ -46,20 +44,13 @@ const columns: Column<CreditLog>[] = [
   },
 ];
 
-const CreditLogTable: React.FC<{ username: string }> = (props) => {
-  const { username } = props;
-  const { data: studentCreditLogData, isLoading: studentCreditLogLoading } =
-    useQuery<CreditLog[]>(["studentCreditLog", username], () =>
-      getStudentCreditLog(username)
-    );
+const CreditLogTable: React.FC<{ data: any }> = (props) => {
+  const { data } = props;
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable<CreditLog>({ columns, data: studentCreditLogData || [] });
+    useTable<CreditLog>({ columns, data: data || [] });
 
-  if (studentCreditLogLoading) {
-    return <>Loading...</>;
-  }
-  if (!studentCreditLogData || studentCreditLogData.length === 0) {
+  if (!data || data.length === 0) {
     return <>내역이 없습니다.</>;
   }
 
