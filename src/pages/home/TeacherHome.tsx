@@ -89,6 +89,7 @@ function TeacherHome() {
       <TableContainer
         width="100%"
         height="100%"
+        maxHeight="550px"
         titlePart={<Header>입출금 내역</Header>}
       >
         <TransactionList
@@ -107,6 +108,7 @@ function TeacherHome() {
         width="100%"
         height="100%"
         minHeight="416px"
+        maxHeight="550px"
       >
         <EvaluatorLogTable data={classCreditData} />
       </TableContainer>

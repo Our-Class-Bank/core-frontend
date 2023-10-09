@@ -139,6 +139,7 @@ function Home() {
             <TableContainer
               width="100%"
               height="100%"
+              maxHeight="550px"
               titlePart={
                 <Header>
                   <span>통장</span> 상세내역
@@ -160,6 +161,7 @@ function Home() {
                   title="내 신용점수 내역"
                   width="240px"
                   height="86px"
+                  maxHeight="550px"
                 >
                   <CreditPointCardWrapper>
                     <span>내 신용점수</span>
