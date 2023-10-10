@@ -83,18 +83,16 @@ function TransferModal() {
       setShowConfirmMessage(false);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        if (error.response?.status === 422) {
-          alert("Error");
-        }
-        if (error.response?.status === 401) {
-          alert("");
+        if (error.response?.status === 400) {
+          alert("잔액이 부족합니다");
         } else {
           alert("");
         }
       }
     } finally {
+      setShowConfirmMessage(false);
       setSubmittedData(null);
-      queryClient.invalidateQueries({ queryKey: ["bankerLog"] });
+      //queryClient.invalidateQueries({ queryKey: ["bankerLog"] });
       navigate("/transfer");
     }
   };

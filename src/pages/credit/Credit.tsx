@@ -138,7 +138,7 @@ const Credit: React.FC = () => {
       setIsFormValid(false);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        if (error.response?.status === 422) {
+        if (error.response?.status === 400) {
           alert("");
         }
         if (error.response?.status === 401) {
