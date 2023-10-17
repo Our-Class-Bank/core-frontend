@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SubmitHandler } from "react-hook-form";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import TransferForm from "./TransferForm";
 import ConfirmMessage from "./ConfirmMessage";
 import { getMyClassInfo } from "@/apis/infoApi";
@@ -25,7 +25,6 @@ export type TransferData = {
 
 function TransferModal() {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const { data: myClassData, isLoading: myClassLoading } = useQuery<
     Record<string, StudentInfo>
   >({
