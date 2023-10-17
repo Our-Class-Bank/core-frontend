@@ -2,13 +2,14 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SubmitHandler } from "react-hook-form";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import TransferForm from "./TransferForm";
 import ConfirmMessage from "./ConfirmMessage";
 import { getMyClassInfo } from "@/apis/infoApi";
 import { StudentInfo } from "@/apis/infoApi";
 import { postWithdraw, postDeposit } from "@/apis/transferApi";
 import { SubmitData } from "@/components/transfer/TransferForm";
+import { useQueryClient } from "@tanstack/react-query";
 
 export type TransferData = {
   accountNo: string;
@@ -83,16 +84,14 @@ function TransferModal() {
       setShowConfirmMessage(false);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        if (error.response?.status === 422) {
-          alert("Error");
-        }
-        if (error.response?.status === 401) {
-          alert("");
+        if (error.response?.status === 400) {
+          alert("잔액이 부족합니다");
         } else {
           alert("");
         }
       }
     } finally {
+      setShowConfirmMessage(false);
       setSubmittedData(null);
       queryClient.invalidateQueries({ queryKey: ["bankerLog"] });
       navigate("/transfer");
