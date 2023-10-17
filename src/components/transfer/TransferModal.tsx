@@ -9,6 +9,7 @@ import { getMyClassInfo } from "@/apis/infoApi";
 import { StudentInfo } from "@/apis/infoApi";
 import { postWithdraw, postDeposit } from "@/apis/transferApi";
 import { SubmitData } from "@/components/transfer/TransferForm";
+import { useQueryClient } from "@tanstack/react-query";
 
 export type TransferData = {
   accountNo: string;
@@ -25,6 +26,7 @@ export type TransferData = {
 
 function TransferModal() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { data: myClassData, isLoading: myClassLoading } = useQuery<
     Record<string, StudentInfo>
   >({
@@ -91,7 +93,7 @@ function TransferModal() {
     } finally {
       setShowConfirmMessage(false);
       setSubmittedData(null);
-      //queryClient.invalidateQueries({ queryKey: ["bankerLog"] });
+      queryClient.invalidateQueries({ queryKey: ["bankerLog"] });
       navigate("/transfer");
     }
   };
