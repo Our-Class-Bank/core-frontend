@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { postSignIn } from "@/apis/authApi";
 import { styled } from "styled-components";
+import DashBoard from "./Dashboard";
 
 export interface LoginFormValues {
   username: string;
@@ -61,6 +62,7 @@ function Login() {
 
   return (
     <FullContainer>
+      <DashBoard />
       <LoginForm onSubmit={handleSubmit(submitHandler)}>
         <h1>우리반 은행</h1>
         <Input
