@@ -30,6 +30,7 @@ interface ButtonProps extends StyledBtnProps {
   children?: React.ReactNode;
   form?: string;
   buttonType: "submit" | "reset" | "button";
+  disabled: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -44,6 +45,7 @@ const Button: React.FC<ButtonProps> = ({
   children,
   buttonType,
   form,
+  disabled,
 }) => {
   return (
     <StyledBtn
@@ -57,6 +59,7 @@ const Button: React.FC<ButtonProps> = ({
       fontWeight={fontWeight}
       margin={margin}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </StyledBtn>

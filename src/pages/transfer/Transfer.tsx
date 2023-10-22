@@ -5,6 +5,7 @@ import { TransactionData } from "@/components/transactionLog/TransactionLog";
 import TransactionList from "@/components/transactionLog/TransactionList";
 import TableContainer from "@/style/common/TableContainer";
 import { styled } from "styled-components";
+import explanations from "@/utils/explanation";
 
 export interface BankerLog {
   data: TransactionData[];
@@ -27,13 +28,23 @@ function Transfer() {
   }
   return (
     <TransferContainer>
-      <TableContainer title="내가 입력한 내역" width="100%" height="600px">
+      <TableContainer
+        title="내가 입력한 내역"
+        width="100%"
+        height="600px"
+        explanation={explanations.transactionListExplanation}
+      >
         <TransactionList
           data={bankerLogData !== undefined ? bankerLogData.data : []}
           transactionType="bankerTransaction"
         />
       </TableContainer>
-      <TableContainer title="입출금 입력" width="100%" height="600px">
+      <TableContainer
+        title="입출금 입력"
+        width="100%"
+        height="600px"
+        explanation={explanations.transferFormExplanation}
+      >
         <TransferModal />
       </TableContainer>
     </TransferContainer>

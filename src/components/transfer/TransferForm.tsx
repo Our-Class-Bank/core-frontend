@@ -161,7 +161,11 @@ const TransferForm: React.FC<TransferFormProps> = ({ onSubmit }) => {
 
   return (
     <Form id="trasferForm" onSubmit={handleSubmit(submitHandler)}>
-      <StudentList watchstudentIds={watchstudentIds} setValue={setValue} />
+      <StudentList
+        watchstudentIds={watchstudentIds}
+        setValue={setValue}
+        height="230px"
+      />
       <WithdrawOrDepositSelection
         watchWithdrawOrDeposit={watchWithdrawOrDeposit}
         setValue={setValue}

@@ -67,3 +67,53 @@ export const Number = styled.span`
   font-size: 30px;
   font-weight: 400;
 `;
+
+export const DemoLoginBtnContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 7px;
+`;
+
+export const DemoLoginBtn = styled.button`
+  font-weight: 600;
+  color: ${(props) => props.theme.mainBlue};
+  background-color: white;
+`;
+export const ExplanationContainer = styled.div``;
+
+export const DemoLoginContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const AccountBtn = styled.button`
+  background-color: ${(props) => props.theme.mainBlue};
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 0 20px;
+  color: white;
+  transition: background-color 0.3s ease;
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+`;
+
+export const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const GoBackButton = styled.button`
+  font-weight: 600;
+  color: ${(props) => props.theme.mainBlue};
+  background-color: white;
+`;

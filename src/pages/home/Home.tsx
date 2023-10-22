@@ -13,6 +13,7 @@ import { getMyCredit } from "@/apis/creditApi";
 import TransactionList from "@/components/transactionLog/TransactionList";
 import { parseJwt } from "@/utils/parseJwt";
 import TeacherHome from "./TeacherHome";
+import explanations from "@/utils/explanation";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -111,6 +112,7 @@ function Home() {
         <>
           <LeftContainer>
             <TableContainer
+              explanation={explanations.assetInfoExplanation}
               width="100%"
               height="100%"
               titlePart={
@@ -131,12 +133,18 @@ function Home() {
                 selected={categoryView}
               />
             </TableContainer>
-            <TableContainer title="내 구매상품" width="100%" height="100%">
+            <TableContainer
+              explanation={explanations.purchaseLogExplanation}
+              title="내 구매상품"
+              width="100%"
+              height="100%"
+            >
               <PurchaseLog />
             </TableContainer>
           </LeftContainer>
           {categoryView === "bank" && (
             <TableContainer
+              explanation={explanations.myBankTableExplanation}
               width="100%"
               height="100%"
               maxHeight="550px"
@@ -162,6 +170,7 @@ function Home() {
                   width="240px"
                   height="86px"
                   maxHeight="550px"
+                  explanation={explanations.myCreditTableExplanation}
                 >
                   <CreditPointCardWrapper>
                     <span>내 신용점수</span>
@@ -180,6 +189,7 @@ function Home() {
                   title="우리반 신용점수"
                   width="100%"
                   height="550px"
+                  explanation={explanations.classCreditTableExplanation}
                 >
                   <ClassCreditTable />
                 </TableContainer>
