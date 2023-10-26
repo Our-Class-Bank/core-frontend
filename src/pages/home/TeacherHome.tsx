@@ -14,6 +14,7 @@ import { ReactComponent as BackIcon } from "@/assets/images/back.svg";
 import { StudentInfo } from "@/apis/infoApi";
 import { getMyClassInfo } from "@/apis/infoApi";
 import EvaluatorLogTable from "@/pages/credit/EvaluatorLogTable";
+import explanations from "@/utils/explanation";
 
 const Header = styled.h1`
   font-size: 20px;
@@ -91,19 +92,26 @@ function TeacherHome() {
         height="100%"
         maxHeight="550px"
         titlePart={<Header>입출금 내역</Header>}
+        explanation={explanations.classTransactionLogExplaantion}
       >
         <TransactionList
           data={classTransferData !== undefined ? classTransferData.data : []}
           transactionType="myTransaction"
         />
       </TableContainer>
-      <TableContainer titlePart={creditTitle} width="100%" height="550px">
+      <TableContainer
+        explanation={explanations.classCreditTableForEvaluatorExplanation}
+        titlePart={creditTitle}
+        width="100%"
+        height="550px"
+      >
         {!studentDetailMode && (
           <ClassCreditTable changeToStudentCredit={changeToStudentCredit} />
         )}
         {studentDetailMode && <CreditLogTable data={creditStudentLogData} />}
       </TableContainer>
       <TableContainer
+        explanation={explanations.classCreditLogExplanation}
         title="신용점수 내역"
         width="100%"
         height="100%"

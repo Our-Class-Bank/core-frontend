@@ -32,7 +32,7 @@ function Transfer() {
         title="내가 입력한 내역"
         width="100%"
         height="600px"
-        explanation={explanations.transactionListExplanation}
+        explanation={explanations.transactionLogForBankerExplanation}
       >
         <TransactionList
           data={bankerLogData !== undefined ? bankerLogData.data : []}

@@ -19,11 +19,14 @@ import {
   getRoles,
   getCreditEvaluationCount,
   getAccountHistoryCount,
+  postDemoLogin,
 } from "@/apis/dashboardApi";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function DashBoard() {
+  const navigate = useNavigate();
   const [demoLoginMode, setDemoLoginMode] = useState(false);
   const { data: userCountData, isLoading: userCountLoading } = useQuery(
     ["userCount"],
@@ -48,6 +51,31 @@ function DashBoard() {
   const goToDemoLogin = () => {
     setDemoLoginMode(true);
   };
+
+  const sendDemoUserType = useMutation(
+    (demoUserType: string) => postDemoLogin(demoUserType),
+    {
+      onSuccess: (response) => {
+        if (response.status === 200) {
+          localStorage.setItem("accessToken", response.data.accessToken);
+          navigate("/");
+        }
+      },
+    }
+  );
+
+  const handleAccountBtnClick = (demoUserType: string) => {
+    sendDemoUserType.mutate(demoUserType);
+  };
+
+  if (
+    userCountLoading ||
+    rolesLoading ||
+    creditEvaluationLoading ||
+    accountHistoryLoading
+  ) {
+    return <>Loading...</>;
+  }
 
   const dashBoard = (
     <>
@@ -107,14 +135,26 @@ function DashBoard() {
       <h1>체험할 역할을 선택해주세요</h1>
       <DemoLoginContainer>
         <Column>
-          <AccountBtn>교사</AccountBtn>
-          <AccountBtn>은행원</AccountBtn>
-          <AccountBtn>신용평가위원</AccountBtn>
+          <AccountBtn onClick={() => handleAccountBtnClick("TEACHER")}>
+            교사
+          </AccountBtn>
+          <AccountBtn onClick={() => handleAccountBtnClick("BANKER")}>
+            은행원
+          </AccountBtn>
+          <AccountBtn onClick={() => handleAccountBtnClick("CREDIT_EVALUATOR")}>
+            신용평가위원
+          </AccountBtn>
         </Column>
         <Column>
-          <AccountBtn>학생1</AccountBtn>
-          <AccountBtn>학생2</AccountBtn>
-          <AccountBtn>학생3</AccountBtn>
+          <AccountBtn onClick={() => handleAccountBtnClick("STUDENT1")}>
+            학생1
+          </AccountBtn>
+          <AccountBtn onClick={() => handleAccountBtnClick("STUDENT2")}>
+            학생2
+          </AccountBtn>
+          <AccountBtn onClick={() => handleAccountBtnClick("STUDENT3")}>
+            학생3
+          </AccountBtn>
         </Column>
       </DemoLoginContainer>
     </>

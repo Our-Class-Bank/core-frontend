@@ -144,7 +144,7 @@ function Home() {
           </LeftContainer>
           {categoryView === "bank" && (
             <TableContainer
-              explanation={explanations.myBankTableExplanation}
+              explanation={explanations.myTransactionLogExplanation}
               width="100%"
               height="100%"
               maxHeight="550px"
@@ -170,7 +170,7 @@ function Home() {
                   width="240px"
                   height="86px"
                   maxHeight="550px"
-                  explanation={explanations.myCreditTableExplanation}
+                  explanation={explanations.myCreditLogExplanation}
                 >
                   <CreditPointCardWrapper>
                     <span>내 신용점수</span>

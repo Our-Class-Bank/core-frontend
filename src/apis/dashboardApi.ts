@@ -31,3 +31,15 @@ export async function getAccountHistoryCount() {
   );
   return response;
 }
+export async function postDemoLogin(demoUserType: string) {
+  const requestData = {
+    demoUserType: demoUserType,
+  };
+
+  const response = await axios.post(
+    `${import.meta.env.VITE_SERVER_IP}/api/v1/auth/signin/demo`,
+    requestData
+  );
+
+  return response;
+}
