@@ -10,7 +10,7 @@ function LogoutBtn() {
       onClick={() => {
         localStorage.removeItem("accessToken");
         navigation("/login");
-        queryClient.removeQueries(["myInfo"]);
+        queryClient.removeQueries();
       }}
     >
       <Text>로그아웃</Text>
