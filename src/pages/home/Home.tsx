@@ -127,7 +127,9 @@ function Home() {
                     myCreditData?.data.length !== 0
                       ? myCreditData?.data[0].score
                       : 0,
-                  accoutBalance: myAccountLogData?.data[0]?.balance as number,
+                  accoutBalance: myAccountLogData?.data[0]
+                    ? (myAccountLogData?.data[0]?.balance as number)
+                    : 0,
                 }}
                 handleCategoryView={handleCategoryView}
                 selected={categoryView}
