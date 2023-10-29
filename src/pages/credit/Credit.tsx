@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { getMyClassInfo } from "@/apis/infoApi";
 import CreditChangeAll from "./CreditChangeAll";
 import { postCreditChangeAll, getStudentCreditLog } from "@/apis/creditApi";
+import explanations from "@/utils/explanation";
 
 const Horizontal = styled.div`
   display: flex;
@@ -172,7 +173,10 @@ const Credit: React.FC = () => {
   return (
     <Container>
       <Horizontal>
-        <TableContainer titlePart={creditTitle}>
+        <TableContainer
+          titlePart={creditTitle}
+          explanation={explanations.classCreditTableForEvaluatorExplanation}
+        >
           {!studentDetailMode && (
             <ClassCreditTable changeToStudentCredit={changeToStudentCredit} />
           )}
@@ -180,7 +184,10 @@ const Credit: React.FC = () => {
         </TableContainer>
 
         {evaluatorLogData && (
-          <TableContainer title="최신 입력내역">
+          <TableContainer
+            title="최신 입력내역"
+            explanation={explanations.evaluatorLogForEvaluatorExplanation}
+          >
             <EvaluatorLogTable data={evaluatorLogData} />
           </TableContainer>
         )}
@@ -193,6 +200,7 @@ const Credit: React.FC = () => {
             />
           }
           width="527px"
+          explanation={explanations.creditFormExplanation}
           buttonPart={<SubmitBtn onSubmit={onSubmit} />}
         >
           {!isCreditChangeAll && (

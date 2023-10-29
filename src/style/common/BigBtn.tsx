@@ -10,7 +10,7 @@ const btnDefault = {
   margin: "10px 0px",
 };
 interface BigBtnProps {
-  disabled?: boolean;
+  disabled: boolean;
   onClick: (data: any) => void;
   children: React.ReactNode;
 }
@@ -23,7 +23,12 @@ const BigBtn: React.FC<BigBtnProps> = ({ children, disabled, onClick }) => {
   };
 
   return (
-    <Button {...buttonStyle} buttonType="submit" onClick={onClick}>
+    <Button
+      {...buttonStyle}
+      disabled={disabled}
+      buttonType="submit"
+      onClick={onClick}
+    >
       {children}
     </Button>
   );

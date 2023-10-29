@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import GuideLine from "@/pages/layout/GuideLine";
+import React from "react";
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -34,6 +37,12 @@ const TitleWrapper = styled.div`
   align-items: center;
   height: 48px;
 `;
+
+const LeftSideWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 interface ContainerProps {
   title?: string;
   width?: string;
@@ -43,6 +52,7 @@ interface ContainerProps {
   buttonPart?: React.ReactNode;
   titlePart?: React.ReactNode;
   children: React.ReactNode;
+  explanation?: string;
 }
 
 const TableContainer: React.FC<ContainerProps> = ({
@@ -54,12 +64,16 @@ const TableContainer: React.FC<ContainerProps> = ({
   buttonPart,
   titlePart,
   children,
+  explanation,
 }) => {
   return (
     <Wrapper>
       <TitleWrapper>
-        {!titlePart && <Title>{title}</Title>}
-        {titlePart}
+        <LeftSideWrapper>
+          {!titlePart && <Title>{title}</Title>}
+          {titlePart}
+          {explanation && <GuideLine explanation={explanation} />}
+        </LeftSideWrapper>
         {buttonPart}
       </TitleWrapper>
 

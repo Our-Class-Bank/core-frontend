@@ -37,13 +37,16 @@ export const NavLink = styled(Link)`
 `;
 export const NavContainer = styled.span`
   width: 100%;
-  padding-left: 20px;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 `;
 
 export const NavText = styled.span`
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 27px;
   padding: 12px;
   color: #ffffff;
