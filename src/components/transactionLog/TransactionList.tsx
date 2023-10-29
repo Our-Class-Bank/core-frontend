@@ -28,29 +28,33 @@ function TransactionList({
     <TransctionListWrapper>
       <LogDateStick />
       <TransctionLogWrapper>
-        {data.map((transaction, idx) => {
-          const transactionDate = getDate(transaction.transactionAt);
-          return (
-            <Fragment key={idx}>
-              {dateSet.has(transactionDate) ? null : (
-                <DateRow>
-                  <DatePoint />
-                  <DateText>{displayDate(transactionDate)}</DateText>
-                </DateRow>
-              )}
-              <TransactionLog
-                data={transaction}
-                transactionType={transactionType}
-              />
-              {data.length - 1 === idx && (
-                <DateRow>
-                  <DatePoint />
-                  <DateText>마지막 내역입니다.</DateText>
-                </DateRow>
-              )}
-            </Fragment>
-          );
-        })}
+        {data.length === 0
+          ? "거래 내역이 없습니다"
+          : data.map((transaction, idx) => {
+              const transactionDate = getDate(transaction.transactionAt);
+              return (
+                <Fragment key={idx}>
+                  {dateSet.has(transactionDate) ? null : (
+                    <DateRow>
+                      <DatePoint />
+                      <DateText>{displayDate(transactionDate)}</DateText>
+                    </DateRow>
+                  )}
+                  <TransactionLog
+                    data={transaction}
+                    transactionType={transactionType}
+                  />
+                  {data.length - 1 === idx && (
+                    <DateRow>
+                      <DatePoint />
+                      <DateText>마지막 내역입니다.</DateText>
+                    </DateRow>
+                  )}
+                </Fragment>
+              );
+            })}
+
+        {}
       </TransctionLogWrapper>
     </TransctionListWrapper>
   );

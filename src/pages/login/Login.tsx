@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { postSignIn } from "@/apis/authApi";
 import { styled } from "styled-components";
 import DashBoard from "./Dashboard";
+import { useQueryClient } from "@tanstack/react-query";
 
 export interface LoginFormValues {
   username: string;
@@ -23,6 +24,7 @@ const ResetPasswordBtn = styled.button`
 
 function Login() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -43,6 +45,11 @@ function Login() {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 400) {
           alert("아이디와 비밀번호를 다시 확인해주세요.");
+        } else if (error.response?.status === 401) {
+          alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
+          localStorage.removeItem("accessToken");
+          navigate("/login");
+          queryClient.removeQueries(["myInfo"]);
         } else {
           alert("예상치못한 에러가 발생했습니다. 잠시 후 다시 시도해주세요.");
         }

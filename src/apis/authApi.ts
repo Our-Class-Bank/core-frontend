@@ -24,22 +24,8 @@ export async function postSignIn(data: LoginFormValues) {
   return response;
 }
 
-{
-  /*export async function getMyInfo() {
-  const response = await privateApi.get("/api/v1/my");
-  return response;
-}*/
-}
-
 export async function getMyInfo() {
-  const response = await axios.get(
-    `${import.meta.env.VITE_SERVER_IP}/api/v1/my`,
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    }
-  );
+  const response = await privateApi.get("/api/v1/my");
   return response;
 }
 
@@ -51,3 +37,30 @@ export async function postResetPassword(data: ResetPasswordFormValues) {
   });
   return response;
 }
+
+privateApi.interceptors.response.use(
+  // 200번대 응답이 올때 처리
+  (response) => {
+    return response;
+  },
+  // 200번대 응답이 아닐 경우 처리
+  async (error) => {
+    const {
+      response: { status },
+    } = error;
+
+    //토큰이 만료되었을 때
+    if (status === 401) {
+      alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
+      window.location.replace("/login");
+    }
+    return Promise.reject(error);
+  }
+);
+
+privateApi.interceptors.request.use((config) => {
+  const token = localStorage.getItem("accessToken");
+  config.headers.Authorization = "Bearer " + token;
+
+  return config;
+});
