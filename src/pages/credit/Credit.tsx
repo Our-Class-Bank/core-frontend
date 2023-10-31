@@ -200,7 +200,7 @@ const Credit: React.FC = () => {
             />
           }
           width="527px"
-          explanation={explanations.creditFormExplanation}
+          explanation={explanations.creditFormForEvaluatorExplanation}
           buttonPart={<SubmitBtn onSubmit={onSubmit} />}
         >
           {!isCreditChangeAll && (

@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const Button = styled.button`
+interface ButtonProps {
+  show: boolean;
+}
+
+const Button = styled.button<ButtonProps>`
   background-color: ${(props) =>
     props.show ? props.theme.mainBlue : props.theme.mainGray};
   border-radius: 20px;
@@ -23,7 +27,11 @@ const Container = styled.div`
   position: relative; // Ensure the container is relatively positioned
 `;
 
-const Explanation = styled.div`
+interface ExplanationProps {
+  show: boolean;
+}
+
+const Explanation = styled.div<ExplanationProps>`
   display: ${(props) => (props.show ? "block" : "none")};
   background: white;
   border: 1px solid ${(props) => props.theme.mainGray};

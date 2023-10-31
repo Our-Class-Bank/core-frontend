@@ -30,7 +30,7 @@ interface ButtonProps extends StyledBtnProps {
   children?: React.ReactNode;
   form?: string;
   buttonType: "submit" | "reset" | "button";
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
