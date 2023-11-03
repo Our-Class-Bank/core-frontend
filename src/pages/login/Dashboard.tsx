@@ -111,14 +111,14 @@ function DashBoard() {
         <DashboardCard>
           <Title>총 입출금 횟수</Title>
           <Content>
-            <Number>{creditEvaluationCountData?.data}</Number>
+            <Number>{accountHistoryCountData?.data}</Number>
             <span>회</span>
           </Content>
         </DashboardCard>
         <DashboardCard>
           <Title>총 신용평가 횟수</Title>
           <Content>
-            <Number>{accountHistoryCountData?.data}</Number>
+            <Number>{creditEvaluationCountData?.data}</Number>
             <span>회</span>
           </Content>
         </DashboardCard>
