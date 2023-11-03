@@ -48,7 +48,9 @@ export async function getMyCredit() {
 
 export async function getEvaluatorLog() {
   const response = await privateApi.get(
-    `http://43.202.160.79:8080/api/v1/credit-evaluation/history/by-credit-evaluator`,
+    `${
+      import.meta.env.VITE_SERVER_IP
+    }/api/v1/credit-evaluation/history/by-credit-evaluator`,
     {
       params: {
         fromAt: "2020-05-05T10:10:10",
