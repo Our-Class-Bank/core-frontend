@@ -1,6 +1,8 @@
-import { createGlobalStyle } from "styled-components";
+import { ThemeProvider, createGlobalStyle, styled } from "styled-components";
 import RoutePage from "@/routes/RoutePage";
 import { BrowserRouter } from "react-router-dom";
+import defaultTheme from "@/style/theme";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -15,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
   article, aside, canvas, details, embed, 
   figure, figcaption, footer, header, hgroup, 
   menu, nav, output, ruby, section, summary,
-  time, mark, audio, video {
+  time, mark, audio, video, button {
     margin: 0;
     padding: 0;
     border: 0;
@@ -31,13 +33,16 @@ const GlobalStyle = createGlobalStyle`
   body {
     line-height: 1;
     font-weight: 300;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
   }
   ol, ul {
     list-style: none;
   }
   blockquote, q {
     quotes: none;
+  }
+  button {
+    cursor: pointer;
   }
   blockquote:before, blockquote:after,
   q:before, q:after {
@@ -57,12 +62,21 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const Container = styled.div`
+  display: flex;
+`;
+
 function App() {
   return (
-    <BrowserRouter>
-      <RoutePage />
-      <GlobalStyle />
-    </BrowserRouter>
+    <ThemeProvider theme={defaultTheme}>
+      <BrowserRouter>
+        <Container>
+          <RoutePage />
+        </Container>
+        <GlobalStyle />
+      </BrowserRouter>
+      <ReactQueryDevtools />
+    </ThemeProvider>
   );
 }
 
